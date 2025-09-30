@@ -1,4 +1,4 @@
-import BlogForm from "./Components/BlogForm";
+import BlogForm from "./components/BlogForm";
 
 export default async function Home() {
   let res = await fetch("http://localhost:3000/api/blogs");
