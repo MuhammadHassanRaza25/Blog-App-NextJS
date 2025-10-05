@@ -17,6 +17,7 @@ export default function BlogForm() {
             author: formData.get("author"),
           };
         //    console.log("Form Data ==>", obj);
+        
           addBlog(obj);
         //   formRef.current?.reset();
         }}
@@ -27,18 +28,21 @@ export default function BlogForm() {
           type="text"
           name="title"
           placeholder="Enter Blog"
+          required
         />
         <textarea
           className="w-[80%] bg-white border font-sans p-2.5 rounded-lg focus:outline-none"
           type="text"
           name="description"
           placeholder="Enter Description"
+          required
         ></textarea>
         <input
           className="w-[80%] bg-white border font-sans p-2.5 rounded-lg focus:outline-none"
           type="text"
           name="author"
           placeholder="Enter Author Name"
+          required
         />
         <button
           type="submit"
