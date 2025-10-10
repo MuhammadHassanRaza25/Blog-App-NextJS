@@ -1,4 +1,4 @@
-import BlogForm from "./components/BlogForm";
+import Header from "../components/Header";
 
 export default async function Home() {
   let res = await fetch("http://localhost:3000/api/blogs");
@@ -6,9 +6,7 @@ export default async function Home() {
 
   return (
     <>
-      <h1 className="bg-fuchsia-200 text-fuchsia-900 font-semibold text-center mb-10 text-2xl p-3">Blog App</h1>
-
-      <BlogForm/>
+      <Header/>
 
       <div className="flex flex-wrap gap-5 justify-center bg-green-50 pt-10 pb-10 px-5 w-[100%]">
         {

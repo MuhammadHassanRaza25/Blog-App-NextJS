@@ -1,13 +1,16 @@
 "use client";
 
+import { addBlog } from "@/app/actions/blogs";
+import Header from "@/components/Header";
 import { useRef } from "react";
-import { addBlog } from "../actions/blogs";
 
-export default function BlogForm() {
+export default function CreateBlog() {
   const formRef = useRef(null);
 
   return (
     <>
+    <Header/>
+    
       <form
         ref={formRef}
         action={async (formData) => {
@@ -17,7 +20,6 @@ export default function BlogForm() {
             author: formData.get("author"),
           };
         //    console.log("Form Data ==>", obj);
-        
           addBlog(obj);
         //   formRef.current?.reset();
         }}
