@@ -1,3 +1,4 @@
+import Hero from "@/components/Hero";
 import Header from "../components/Header";
 
 export default async function Home() {
@@ -7,6 +8,7 @@ export default async function Home() {
   return (
     <>
       <Header/>
+      <Hero/>
 
       <div className="flex flex-wrap gap-5 justify-center bg-green-50 pt-10 pb-10 px-5 w-[100%]">
         {
