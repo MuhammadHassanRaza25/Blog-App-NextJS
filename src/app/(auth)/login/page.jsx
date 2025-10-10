@@ -13,18 +13,22 @@ export default function Login() {
           )}
         />
 
-        <div className="w-full max-w-md bg-white/10 backdrop-blur-md p-8 py-10 rounded-xl border border-white/20 shadow-md">
+        <div className="w-full max-w-md bg-white/10 backdrop-blur-md p-8 py-8 rounded-xl border border-white/20 shadow-md">
           <h2 className="text-2xl font-bold text-white text-center mb-8 drop-shadow-md">
             Login to{" "}
-            <span className="font-mono bg-gradient-to-r from-purple-700 to-purple-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-purple-700 to-purple-400 bg-clip-text text-transparent">
               GlassyBlog
             </span>
           </h2>
 
-
           <form className="space-y-5">
             <div>
-              <label htmlFor="email" className="block text-sm text-gray-300 mb-1 cursor-pointer">Email</label>
+              <label
+                htmlFor="email"
+                className="block text-sm text-gray-300 mb-1 cursor-pointer"
+              >
+                Email
+              </label>
               <input
                 type="email"
                 id="email"
@@ -35,7 +39,12 @@ export default function Login() {
             </div>
 
             <div>
-              <label htmlFor="pass" className="block text-sm text-gray-300 mb-1 cursor-pointer">Password</label>
+              <label
+                htmlFor="pass"
+                className="block text-sm text-gray-300 mb-1 cursor-pointer"
+              >
+                Password
+              </label>
               <input
                 type="password"
                 id="pass"
@@ -60,7 +69,6 @@ export default function Login() {
             </Link>
           </p>
         </div>
-
       </div>
     </>
   );

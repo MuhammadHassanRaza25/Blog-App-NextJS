@@ -15,11 +15,11 @@ export default function Signup() {
         />
 
         {/* Form Container */}
-        <div className="w-full max-w-md bg-white/10 backdrop-blur-md p-8 py-10 rounded-xl border border-white/20 shadow-md">
-          <h2 className="text-2xl font-extrabold text-white text-center mb-8 drop-shadow-md">
+        <div className="w-full max-w-md bg-white/10 backdrop-blur-md p-8 py-5 rounded-xl border border-white/20 shadow-md">
+          <h2 className="text-2xl font-bold text-white text-center mb-8 drop-shadow-md">
             Create{" "}
-            <span className="font-mono bg-gradient-to-r from-purple-700 to-purple-400 bg-clip-text text-transparent">
-              account
+            <span className="bg-gradient-to-r from-purple-700 to-purple-400 bg-clip-text text-transparent">
+              Account
             </span>{" "}
           </h2>
 
@@ -32,7 +32,7 @@ export default function Signup() {
               <input
                 type="text"
                 id="username"
-                placeholder="yourusername"
+                placeholder="your name"
                 required
                 className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/30 text-white placeholder-gray-400 focus:outline-none focus:border-purple-500/50"
               />

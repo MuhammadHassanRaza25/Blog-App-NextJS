@@ -28,7 +28,7 @@ export default function Hero() {
           <div className="flex flex-col items-center">
             <h1 className="lg:text-5xl md:text-3xl text-xl font-semibold text-white text-center">
               Welcome to {" "}
-              <span className="font-mono bg-gradient-to-r from-purple-700 to-purple-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-purple-700 to-purple-400 bg-clip-text text-transparent">
                 GlassyBlog
               </span>
             </h1>
