@@ -1,6 +1,7 @@
 "use client";
 
 import { addBlog } from "@/app/actions/blogs";
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { useRef } from "react";
 
@@ -9,53 +10,71 @@ export default function CreateBlog() {
 
   return (
     <>
-    <Header/>
-    
-      <form
-        ref={formRef}
-        action={async (formData) => {
-          let obj = {
-            title: formData.get("title"),
-            description: formData.get("description"),
-            author: formData.get("author"),
-          };
-        //    console.log("Form Data ==>", obj);
-          addBlog(obj);
-        //   formRef.current?.reset();
-        }}
-        className="flex flex-col items-center gap-5 px-5 w-[100%] mt-10 mb-10"
-      >
-        <input
-          className="w-[80%] bg-white border font-sans p-2.5 rounded-lg focus:outline-none"
-          type="text"
-          name="title"
-          placeholder="Enter Blog"
-          required
-        />
-        <textarea
-          className="w-[80%] bg-white border font-sans p-2.5 rounded-lg focus:outline-none"
-          type="text"
-          name="description"
-          placeholder="Enter Description"
-          required
-        ></textarea>
-        <input
-          className="w-[80%] bg-white border font-sans p-2.5 rounded-lg focus:outline-none"
-          type="text"
-          name="author"
-          placeholder="Enter Author Name"
-          required
-        />
-        <button
-          type="submit"
-          className="w-[80%] font-semibold text-2xl bg-amber-100 text-amber-800 cursor-pointer p-2 rounded-md"
-          value={"Add Blog"}
-        >
-          Add Blog
-        </button>
-      </form>
+      <Header />
 
-      {/*Summary: hamny actions ke folder main todos.js main server action banaya hai or function name: addTodos rakha hai or form ke action main wohi function name dia hai or addTodo() wale function main formData dia hai phir form ko reset kia hai. input main jo name ki key hai us se addTodo wale function ke andar data mil raha hai.*/}
+      <div className="w-full mx-auto mt-10 mb-10 px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col lg:flex-row bg-white/10 backdrop-blur-md border border-white/20 rounded-xl shadow-lg overflow-hidden">
+          {/* Left side image */}
+          <div className="w-full lg:w-1/2">
+            <img
+              src="https://images.pexels.com/photos/7046399/pexels-photo-7046399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+              alt="Blog illustration"
+              className="w-full h-full object-cover"
+            />
+          </div>
+
+          {/* Right side form */}
+          <form
+            ref={formRef}
+            action={async (formData) => {
+              let obj = {
+                title: formData.get("title"),
+                description: formData.get("description"),
+                author: formData.get("author"),
+              };
+              addBlog(obj);
+              // formRef.current?.reset();
+            }}
+            className="w-full lg:w-1/2 p-8 flex flex-col gap-6"
+          >
+            <input
+              className="w-full bg-white/10 border border-white/30 text-white placeholder-white/70 font-sans py-2 px-4 rounded-lg focus:outline-none focus:border-purple-500 transition"
+              type="text"
+              name="title"
+              placeholder="Enter Blog Title"
+              required
+            />
+            <textarea
+              className="w-full bg-white/10 border border-white/30 text-white placeholder-white/70 font-sans py-2 px-4 rounded-lg focus:outline-none focus:border-purple-500 transition"
+              name="description"
+              placeholder="Enter Description"
+              required
+              rows={3}
+            ></textarea>
+            <input
+              type="file"
+              accept="image/*"
+              className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/30 text-white file:text-white file:bg-transparent file:border-0 file:p-0 placeholder-gray-400 focus:outline-none focus:border-purple-500/50"
+            />
+            <input
+              className="w-full bg-white/10 border border-white/30 text-white placeholder-white/70 font-sans py-2 px-4 rounded-lg focus:outline-none focus:border-purple-500 transition"
+              type="text"
+              name="author"
+              placeholder="Enter Author Name"
+              required
+            />
+            <button
+              type="submit"
+              className="w-full bg-purple-700/30 backdrop-blur-md border border-purple-500/50 hover:bg-purple-700/50 hover:border-purple-700 text-white py-2 px-4 rounded-full font-semibold transition cursor-pointer"
+              value={"Add Blog"}
+            >
+              Publish Your Blog
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <Footer />
     </>
   );
 }
