@@ -1,5 +1,6 @@
 import Hero from "@/components/Hero";
 import Header from "../components/Header";
+import Footer from "@/components/Footer";
 
 export default async function Home() {
   // let res = await fetch("http://localhost:3000/api/blogs");
@@ -21,6 +22,8 @@ export default async function Home() {
           ))
         } */}
       </div>
+
+      <Footer/>
     </>
   );
 }

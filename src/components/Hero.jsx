@@ -21,15 +21,15 @@ export default function Hero() {
             <span className="text-sm font-medium text-white drop-shadow-sm">
               Thoughts, Stories & Ideas
             </span>
-            <HiOutlineLightBulb className="w-4 h-4 text-purple-400 mr-2 drop-shadow-sm" />
+            <HiOutlineLightBulb className="w-4 h-4 text-yellow-400 mr-2 drop-shadow-sm" />
           </div>
 
           {/* Heading and para */}
           <div className="flex flex-col items-center">
             <h1 className="lg:text-5xl md:text-3xl text-xl font-semibold text-white text-center">
-              Welcome to our{" "}
-              <span className="bg-gradient-to-r from-purple-700 to-purple-400 bg-clip-text text-transparent">
-                Blog Website
+              Welcome to {" "}
+              <span className="font-mono bg-gradient-to-r from-purple-700 to-purple-400 bg-clip-text text-transparent">
+                GlassyBlog
               </span>
             </h1>
             <p className="lg:w-[70%] md:w-[70%] w-[90%] lg:text-lg md:text-base text-sm text-center text-gray-100 mt-5">
