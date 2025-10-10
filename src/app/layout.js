@@ -12,8 +12,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Blog App",
-  description: "Blog App created by Hassan Raza",
+  title: "GlassyBlog", 
+  description: "GlassyBlog, crafted by Muhammad Hassan Raza, is a cutting-edge blogging platform that empowers users to effortlessly create, share, and explore high-quality content through a sophisticated glassmorphic interface designed for an exceptional user experience.",
 };
 
 export default function RootLayout({ children }) {

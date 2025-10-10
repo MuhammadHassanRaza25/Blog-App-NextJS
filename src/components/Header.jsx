@@ -68,7 +68,7 @@ export default function Header() {
             {/* Desktop Login Button */}
             <div className="hidden md:block">
               <Link
-                href="/contact"
+                href="/login"
                 className="bg-purple-700/30 backdrop-blur-md border border-purple-500/50 hover:bg-purple-700/50 hover:border-purple-700 text-white px-6 py-2 rounded-full transition-all duration-300 font-medium text-sm"
               >
                 Login
