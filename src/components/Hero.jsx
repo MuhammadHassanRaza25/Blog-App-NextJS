@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 import { FaPenNib } from "react-icons/fa6";
 import { HiOutlineLightBulb } from "react-icons/hi";
 
@@ -27,26 +28,26 @@ export default function Hero() {
           {/* Heading and para */}
           <div className="flex flex-col items-center">
             <h1 className="lg:text-5xl md:text-3xl text-xl font-semibold text-white text-center">
-              Welcome to {" "}
+              Welcome to{" "}
               <span className="bg-gradient-to-r from-purple-700 to-purple-400 bg-clip-text text-transparent">
                 GlassyBlog
               </span>
             </h1>
             <p className="lg:w-[70%] md:w-[70%] w-[90%] lg:text-lg md:text-base text-sm text-center text-gray-100 mt-5">
-              Every day brings a new story, a fresh perspective! Dive into our blogs to
-              discover inspiring tips, heartfelt stories, and everything that fuels your
-              passion to chase your dreams. Join us on this journey where every word is
-              meant to touch your heart and spark your curiosity.
+              Every day brings a new story, a fresh perspective! Dive into our
+              blogs to discover inspiring tips, heartfelt stories, and
+              everything that fuels your passion to chase your dreams. Join us
+              on this journey where every word is meant to touch your heart and
+              spark your curiosity.
             </p>
           </div>
 
           {/* Login Button */}
-          <button
-            className="flex gap-3 items-center bg-purple-700/30 backdrop-blur-md text-white px-6 py-2 rounded-full border border-purple-500/50 hover:bg-purple-700/50 hover:border-purple-700 transition-all duration-300 font-semibold text-md cursor-pointer"
-          >
-            Create Your Blog <FaPenNib />
-          </button>
-
+          <Link href="/blogs/create">
+            <button className="flex gap-3 items-center bg-purple-700/30 backdrop-blur-md text-white px-6 py-2 rounded-full border border-purple-500/50 hover:bg-purple-700/50 hover:border-purple-700 transition-all duration-300 font-semibold text-md cursor-pointer">
+              Create Your Blog <FaPenNib />
+            </button>
+          </Link>
         </div>
       </div>
     </>

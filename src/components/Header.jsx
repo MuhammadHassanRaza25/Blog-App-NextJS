@@ -20,7 +20,7 @@ export default function Header() {
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center">
-              <h1 className="font-semibold text-2xl text-white">GlassyBlog</h1>
+              <h1 className="font-semibold text-2xl bg-gradient-to-r from-purple-700 to-purple-400 bg-clip-text text-transparent">GlassyBlog</h1>
             </Link>
 
             {/* Desktop Links*/}
