@@ -26,7 +26,7 @@ export default function Hero() {
 
           {/* Heading and para */}
           <div className="flex flex-col items-center">
-            <h1 className="lg:text-5xl md:text-3xl text-xl font-semibold text-white text-center">
+            <h1 className="lg:text-5xl md:text-3xl text-2xl font-semibold text-white text-center">
               Welcome to{" "}
               <span className="bg-gradient-to-r from-emerald-600 to-emerald-400 bg-clip-text text-transparent">
                 GlassyBlog

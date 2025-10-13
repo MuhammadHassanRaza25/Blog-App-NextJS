@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { IoShareSocialSharp } from "react-icons/io5";
+import { FaArrowLeft } from "react-icons/fa6";
+import { FaBookReader } from "react-icons/fa";
 
 export default function BlogDetailCard({ blog }) {
   const {
@@ -39,12 +42,12 @@ export default function BlogDetailCard({ blog }) {
         <div className="flex items-center justify-between mb-4">
           <Link
             href="/"
-            className="text-emerald-400 hover:text-emerald-300 text-sm font-medium"
+            className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 text-sm font-medium"
           >
-            ← Back to Blogs
+            <FaArrowLeft /> Back to Blogs
           </Link>
-          <span className="bg-emerald-800/30 text-emerald-300 text-xs px-3 py-1 rounded-full">
-            #{id?.slice(0, 6)}
+          <span className="bg-emerald-800/30 text-emerald-300 text-sm px-3 py-1 rounded-full">
+            <FaBookReader className="text-emerald-500"/>
           </span>
         </div>
 
@@ -114,12 +117,10 @@ export default function BlogDetailCard({ blog }) {
 
         {/* Buttons */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <div className="flex gap-3">
-            <button className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-sm font-medium rounded-full transition">
-              Save
-            </button>
-            <button className="px-4 py-2 border border-white/10 hover:bg-white/10 text-sm font-medium rounded-full transition">
-              Share
+          <div className="w-24">
+            <button className="w-full flex gap-1 items-center px-4 py-1.5 backdrop-blur-sm border bg-emerald-700/30 focus:outline-none focus:bg-emerald-700/40 hover:bg-emerald-700/40 border-emerald-500/50 hover:border-emerald-500 rounded-full transition-all duration-300 cursor-pointer">
+              Share <IoShareSocialSharp className="text-xl" />
+              <div className="absolute inset-x-0  h-px -bottom-px bg-gradient-to-r w-3/4 mx-auto from-transparent via-emerald-500 to-transparent" />
             </button>
           </div>
           <p className="text-gray-400 text-sm">

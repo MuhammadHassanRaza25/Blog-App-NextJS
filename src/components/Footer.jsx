@@ -12,29 +12,29 @@ export default function Footer() {
                     </p>
                      <div className="flex space-x-4 items-center">
                     <a
-                        href="https://github.com/your-username"
+                        href="https://github.com/MuhammadHassanRaza25"
                         target="_blank"
                         title="GitHub"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1 hover:text-purple-400 transition"
+                        className="flex items-center gap-1 hover:text-emerald-400 transition"
                     >
                         <FaGithub className="w-4 h-4" />
                     </a>
                     <a
-                        href="https://www.linkedin.com/in/your-profile"
+                        href="https://www.linkedin.com/in/muhammad-hassan-raza-aab5402b7/"
                         target="_blank"
                         title="LinkedIn"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1 hover:text-purple-400 transition"
+                        className="flex items-center gap-1 hover:text-emerald-400 transition"
                     >
                         <FaLinkedin className="w-4 h-4" />
                     </a>
                     <a
-                        href="https://your-portfolio.com"
-                        target="_blank"
+                        href="#"
+                        // target="_blank"
                         title="Portfolio"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1 hover:text-purple-400 transition"
+                        className="flex items-center gap-1 hover:text-emerald-400 transition"
                     >
                         <FaGlobe className="w-4 h-4" />
                     </a>
