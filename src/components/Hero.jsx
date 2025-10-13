@@ -43,7 +43,7 @@ export default function Hero() {
 
           {/* Button */}
           <Link href="/blogs/create">
-            <button className="flex gap-3 items-center px-4 py-2 font-semibold backdrop-blur-sm border bg-emerald-700/30 focus:outline-none focus:bg-emerald-700/40 hover:bg-emerald-700/40 border-emerald-500/50 hover:border-emerald-500 text-white mx-auto text-center rounded-full relative transition-all duration-300 cursor-pointer">
+            <button className="flex gap-3 items-center px-4 py-2 font-semibold backdrop-blur-sm border bg-emerald-700/30 focus:outline-none focus:bg-emerald-700/40 hover:bg-emerald-700/40 border-emerald-500/50 hover:border-emerald-500 text-white mx-auto text-center rounded-full transition-all duration-300 cursor-pointer">
               Create Your Blog <FaPenNib />
               <div className="absolute inset-x-0  h-px -bottom-px bg-gradient-to-r w-3/4 mx-auto from-transparent via-emerald-500 to-transparent" />
             </button>
