@@ -13,7 +13,7 @@ export default function Login() {
           )}
         />
 
-        <div className="w-full max-w-md bg-white/10 backdrop-blur-md p-8 py-8 rounded-xl border border-white/20 shadow-md">
+        <div className="w-96 max-w-md bg-white/10 backdrop-blur-md p-8 py-8 rounded-xl border border-white/20 shadow-md">
           <h2 className="text-2xl font-bold text-white text-center mb-8 drop-shadow-md">
             Login to{" "}
             <span className="bg-gradient-to-r from-emerald-600 to-emerald-400 bg-clip-text text-transparent">

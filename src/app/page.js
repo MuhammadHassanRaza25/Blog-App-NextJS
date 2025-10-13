@@ -29,7 +29,7 @@ export default async function Home() {
           <div className="absolute inset-0 w-full h-full bg-black [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"></div>
         </div>
       </div>
-      <div className="mt-10 flex flex-wrap gap-5 justify-center max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="mt-10 mb-18 flex flex-wrap gap-5 justify-center max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {res.data?.map((blogs) => (
           <BlogCard key={blogs._id} data={blogs} />
         ))}
