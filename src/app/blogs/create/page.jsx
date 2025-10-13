@@ -39,14 +39,14 @@ export default function CreateBlog() {
             </div>
 
             <input
-              className="w-full bg-white/10 border border-white/30 text-white placeholder-white/70 py-2 px-4 rounded-lg focus:outline-none focus:border-purple-500 transition"
+              className="w-full text-sm bg-white/10 border border-white/30 text-white placeholder-white/70 py-2 px-4 rounded-full focus:outline-none focus:border-emerald-500 transition"
               type="text"
               name="title"
               placeholder="Enter Blog Title"
               required
             />
             <textarea
-              className="w-full bg-white/10 border border-white/30 text-white placeholder-white/70 py-2 px-4 rounded-lg focus:outline-none focus:border-purple-500 transition"
+              className="w-full text-sm bg-white/10 border border-white/30 text-white placeholder-white/70 py-2 px-4 rounded-xl focus:outline-none focus:border-emerald-500 transition"
               name="description"
               placeholder="Enter Description"
               required
@@ -55,10 +55,10 @@ export default function CreateBlog() {
             <input
               type="file"
               accept="image/*"
-              className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/30 text-white/70 file:text-white/70 file:bg-transparent file:border-0 file:p-0 placeholder-gray-400 focus:outline-none focus:border-purple-500/50"
+              className="w-full text-sm px-4 py-2 rounded-full bg-white/10 border border-white/30 text-white/70 file:text-white/70 file:bg-transparent file:border-0 file:p-0 placeholder-gray-400 focus:outline-none focus:border-emerald-500/50"
             />
             <input
-              className="w-full bg-white/10 border border-white/30 text-white placeholder-white/70 py-2 px-4 rounded-lg focus:outline-none focus:border-purple-500 transition"
+              className="w-full text-sm bg-white/10 border border-white/30 text-white placeholder-white/70 py-2 px-4 rounded-full focus:outline-none focus:border-emerald-500 transition"
               type="text"
               name="author"
               placeholder="Enter Author Name"
@@ -66,10 +66,11 @@ export default function CreateBlog() {
             />
             <button
               type="submit"
-              className="w-full bg-purple-700/30 backdrop-blur-md border border-purple-500/50 hover:bg-purple-700/50 hover:border-purple-700 text-white py-2 px-4 rounded-full font-semibold transition cursor-pointer"
+              className="w-full px-4 py-2 font-semibold backdrop-blur-sm border bg-emerald-400/10 focus:outline-none focus:ring-1 focus:ring-emerald-500 hover:bg-emerald-700/40 border-emerald-500/50 hover:border-emerald-500 text-white mx-auto text-center rounded-full relative transition-all duration-300 cursor-pointer"
               value={"Add Blog"}
             >
               Publish Your Blog
+              <div className="absolute inset-x-0  h-px -bottom-px bg-gradient-to-r w-3/4 mx-auto from-transparent via-emerald-500 to-transparent" />
             </button>
           </form>
 

@@ -47,6 +47,11 @@ body {
   background: #0a0a0a;
 }
 
+a:focus{
+  outline: none;
+  color: #34D399;
+}
+
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);

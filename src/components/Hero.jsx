@@ -17,7 +17,6 @@ export default function Hero() {
 
         {/* Hero Content Div */}
         <div className="flex flex-col gap-5 items-center justify-center max-w-7xl mx-auto px-4 pt-20 pb-20 sm:px-6 lg:px-8 relative z-10">
-          
           <div className="inline-flex gap-2 items-center bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 shadow-sm">
             <span className="text-sm font-medium text-white drop-shadow-sm">
               Thoughts, Stories & Ideas
@@ -29,7 +28,7 @@ export default function Hero() {
           <div className="flex flex-col items-center">
             <h1 className="lg:text-5xl md:text-3xl text-xl font-semibold text-white text-center">
               Welcome to{" "}
-              <span className="bg-gradient-to-r from-purple-700 to-purple-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-emerald-600 to-emerald-400 bg-clip-text text-transparent">
                 GlassyBlog
               </span>
             </h1>
@@ -42,10 +41,11 @@ export default function Hero() {
             </p>
           </div>
 
-          {/* Login Button */}
+          {/* Button */}
           <Link href="/blogs/create">
-            <button className="flex gap-3 items-center bg-purple-700/30 backdrop-blur-md text-white px-6 py-2 rounded-full border border-purple-500/50 hover:bg-purple-700/50 hover:border-purple-700 transition-all duration-300 font-semibold text-md cursor-pointer">
+            <button className="flex gap-3 items-center px-4 py-2 font-semibold backdrop-blur-sm border bg-emerald-300/10 focus:outline-none focus:ring-1 focus:ring-emerald-500 hover:bg-emerald-700/40 border-emerald-500/50 hover:border-emerald-500 text-white mx-auto text-center rounded-full relative transition-all duration-300 cursor-pointer">
               Create Your Blog <FaPenNib />
+              <div className="absolute inset-x-0  h-px -bottom-px bg-gradient-to-r w-3/4 mx-auto from-transparent via-emerald-500 to-transparent" />
             </button>
           </Link>
         </div>

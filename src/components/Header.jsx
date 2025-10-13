@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -20,71 +20,91 @@ export default function Header() {
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center">
-              <h1 className="font-semibold text-2xl bg-gradient-to-r from-purple-700 to-purple-400 bg-clip-text text-transparent">GlassyBlog</h1>
+              <h1 className="font-semibold text-2xl bg-gradient-to-r from-emerald-600 to-emerald-400 bg-clip-text text-transparent">
+                GlassyBlog
+              </h1>
             </Link>
 
             {/* Desktop Links*/}
             <nav className="hidden md:flex space-x-8">
               <Link
                 href="/"
-                className={`relative px-3 py-2 text-sm font-medium transition-all duration-300 ${isActive("/")
-                    ? "text-purple-400 font-bold"
-                    : "text-gray-200 hover:text-purple-400"
-                  }`}
+                className={`relative px-3 py-2 text-sm font-medium transition-all duration-300 ${
+                  isActive("/")
+                    ? "text-emerald-400 font-bold"
+                    : "text-gray-200 hover:text-emerald-400"
+                }`}
               >
                 Home
                 {isActive("/") && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-400 to-purple-800 rounded-full" />
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-emerald-400 to-emerald-800 rounded-full" />
                 )}
               </Link>
 
               <Link
                 href="/blogs/create"
-                className={`relative px-3 py-2 text-sm font-medium transition-all duration-300 ${isActive("/blogs/create")
-                    ? "text-purple-400 font-bold"
-                    : "text-gray-200 hover:text-purple-400"
-                  }`}
+                className={`relative px-3 py-2 text-sm font-medium transition-all duration-300 ${
+                  isActive("/blogs/create")
+                    ? "text-emerald-400 font-bold"
+                    : "text-gray-200 hover:text-emerald-400"
+                }`}
               >
                 Create Blog
                 {isActive("/blogs/create") && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-400 to-purple-800 rounded-full" />
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-emerald-400 to-emerald-800 rounded-full" />
                 )}
               </Link>
 
               <Link
                 href="/blogs/my-blogs"
-                className={`relative px-3 py-2 text-sm font-medium transition-all duration-300 ${isActive("/blogs/my-blogs")
-                    ? "text-purple-400 font-bold"
-                    : "text-gray-200 hover:text-purple-400"
-                  }`}
+                className={`relative px-3 py-2 text-sm font-medium transition-all duration-300 ${
+                  isActive("/blogs/my-blogs")
+                    ? "text-emerald-400 font-bold"
+                    : "text-gray-200 hover:text-emerald-400"
+                }`}
               >
                 My Blogs
                 {isActive("/blogs/my-blogs") && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-400 to-purple-800 rounded-full" />
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-emerald-400 to-emerald-800 rounded-full" />
                 )}
               </Link>
             </nav>
 
-            {/* Desktop Login Button */}
+            {/* Login Button */}
             <div className="hidden md:block">
-              <Link
-                href="/login"
-                className="bg-purple-700/30 backdrop-blur-md border border-purple-500/50 hover:bg-purple-700/50 hover:border-purple-700 text-white px-6 py-2 rounded-full transition-all duration-300 font-medium text-sm"
-              >
-                Login
+              <Link href="/login">
+                <button className="bg-emerald-700/30 backdrop-blur-md border border-emerald-500/50 hover:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 hover:bg-emerald-700/40 text-white px-6 py-2 rounded-full transition-all duration-300 font-medium text-sm cursor-pointer">
+                  Login
+                  <div className="absolute inset-x-0  h-px -bottom-px bg-gradient-to-r w-3/4 mx-auto from-transparent via-emerald-500 to-transparent" />
+                </button>
               </Link>
             </div>
 
             {/* Mobile Menu Button */}
             <button
               onClick={toggleMenu}
-              className="md:hidden p-2 rounded-md text-gray-200 hover:text-purple-400 focus:outline-none"
+              className="md:hidden p-2 rounded-md text-gray-200 hover:text-emerald-400 focus:outline-none cursor-pointer"
             >
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
                 {isMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
                 )}
               </svg>
             </button>
@@ -97,10 +117,11 @@ export default function Header() {
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               <Link
                 href="/"
-                className={`block px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${isActive("/")
-                    ? "text-purple-400 font-bold bg-white/10"
-                    : "text-gray-200 hover:text-purple-400 hover:bg-white/5"
-                  }`}
+                className={`block px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
+                  isActive("/")
+                    ? "text-emerald-400 font-bold bg-white/10"
+                    : "text-gray-200 hover:text-emerald-400 hover:bg-white/5"
+                }`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 Home
@@ -108,10 +129,11 @@ export default function Header() {
 
               <Link
                 href="/blogs/create"
-                className={`block px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${isActive("/blogs/create")
-                    ? "text-purple-400 font-bold bg-white/10"
-                    : "text-gray-200 hover:text-purple-400 hover:bg-white/5"
-                  }`}
+                className={`block px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
+                  isActive("/blogs/create")
+                    ? "text-emerald-400 font-bold bg-white/10"
+                    : "text-gray-200 hover:text-emerald-400 hover:bg-white/5"
+                }`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 Create Blog
@@ -119,10 +141,11 @@ export default function Header() {
 
               <Link
                 href="/blogs/my-blogs"
-                className={`block px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${isActive("/blogs/my-blogs")
-                    ? "text-purple-400 font-bold bg-white/10"
-                    : "text-gray-200 hover:text-purple-400 hover:bg-white/5"
-                  }`}
+                className={`block px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
+                  isActive("/blogs/my-blogs")
+                    ? "text-emerald-400 font-bold bg-white/10"
+                    : "text-gray-200 hover:text-emerald-400 hover:bg-white/5"
+                }`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 My Blogs
@@ -131,10 +154,11 @@ export default function Header() {
               <div className="px-3 py-2">
                 <Link
                   href="/contact"
-                  className="block w-full bg-purple-700/30 backdrop-blur-md border border-purple-500/50 hover:bg-purple-700/50 hover:border-purple-700 text-white px-4 py-2 rounded-full transition-all duration-300 font-medium text-center text-sm"
+                  className="block w-full bg-emerald-700/30 backdrop-blur-md border border-emerald-500/50 hover:border-emerald-500 focus:bg-emerald-700/40 hover:bg-emerald-700/40 text-white px-4 py-2 rounded-full transition-all duration-300 font-medium text-center text-sm"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Login
+                  <div className="absolute inset-x-0  h-px -bottom-px bg-gradient-to-r w-3/4 mx-auto from-transparent via-emerald-500 to-transparent" />
                 </Link>
               </div>
             </div>
