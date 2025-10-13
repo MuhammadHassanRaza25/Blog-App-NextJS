@@ -73,7 +73,7 @@ export default function Header() {
             {/* Login Button */}
             <div className="hidden md:block">
               <Link href="/login">
-                <button className="bg-emerald-700/30 backdrop-blur-md border border-emerald-500/50 hover:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 hover:bg-emerald-700/40 text-white px-6 py-2 rounded-full transition-all duration-300 font-medium text-sm cursor-pointer">
+                <button className="bg-emerald-700/30 backdrop-blur-md border border-emerald-500/50 hover:border-emerald-500 focus:outline-none focus:bg-emerald-700/40 hover:bg-emerald-700/40 text-white px-6 py-2 rounded-full transition-all duration-300 font-medium text-sm cursor-pointer">
                   Login
                   <div className="absolute inset-x-0  h-px -bottom-px bg-gradient-to-r w-3/4 mx-auto from-transparent via-emerald-500 to-transparent" />
                 </button>

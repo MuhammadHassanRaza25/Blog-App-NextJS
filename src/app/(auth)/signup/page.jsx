@@ -18,7 +18,7 @@ export default function Signup() {
         <div className="w-full max-w-md bg-white/10 backdrop-blur-md p-8 py-5 rounded-xl border border-white/20 shadow-md">
           <h2 className="text-2xl font-bold text-white text-center mb-8 drop-shadow-md">
             Create{" "}
-            <span className="bg-gradient-to-r from-purple-700 to-purple-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-emerald-600 to-emerald-400 bg-clip-text text-transparent">
               Account
             </span>{" "}
           </h2>
@@ -34,7 +34,7 @@ export default function Signup() {
                 id="username"
                 placeholder="your name"
                 required
-                className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/30 text-white placeholder-gray-400 focus:outline-none focus:border-purple-500/50"
+                className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/30 text-white placeholder-gray-400 focus:outline-none focus:border-emerald-500/50"
               />
             </div>
 
@@ -48,7 +48,7 @@ export default function Signup() {
                 id="email"
                 placeholder="you@example.com"
                 required
-                className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/30 text-white placeholder-gray-400 focus:outline-none focus:border-purple-500/50"
+                className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/30 text-white placeholder-gray-400 focus:outline-none focus:border-emerald-500/50"
               />
             </div>
 
@@ -62,7 +62,7 @@ export default function Signup() {
                 id="password"
                 placeholder="••••••••"
                 required
-                className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/30 text-white placeholder-gray-400 focus:outline-none focus:border-purple-500/50"
+                className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/30 text-white placeholder-gray-400 focus:outline-none focus:border-emerald-500/50"
               />
             </div>
 
@@ -75,14 +75,14 @@ export default function Signup() {
                 type="file"
                 id="profilePic"
                 accept="image/*"
-                className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/30 text-white file:text-white file:bg-transparent file:border-0 file:p-0 placeholder-gray-400 focus:outline-none focus:border-purple-500/50"
+                className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/30 text-white file:text-white file:bg-transparent file:border-0 file:p-0 placeholder-gray-400 focus:outline-none focus:border-emerald-500/50"
               />
             </div>
 
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full mt-2 bg-purple-700/30 border border-purple-500/50 hover:bg-purple-700/50 hover:border-purple-700 text-white px-6 py-2 rounded-lg transition-all duration-300 font-medium cursor-pointer"
+              className="w-full mt-2 border border-emerald-500 bg-emerald-700/40 focus:outline-none focus:bg-emerald-400/10 hover:bg-emerald-400/10 text-white px-6 py-2 rounded-lg transition-all duration-300 font-medium cursor-pointer"
             >
               Sign Up
             </button>
@@ -90,7 +90,7 @@ export default function Signup() {
 
           <p className="mt-6 text-sm text-center text-gray-400">
             Already have an account?{" "}
-            <Link href="/login" className="text-purple-400 hover:underline">
+            <Link href="/login" className="text-emerald-400 hover:underline">
               Login
             </Link>
           </p>

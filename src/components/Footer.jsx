@@ -8,7 +8,7 @@ export default function Footer() {
             <footer className="bg-black/30 border-t border-white/10 text-gray-300 text-sm py-6 backdrop-blur-md">
                 <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
                     <p className="text-center">
-                        © {new Date().getFullYear()} GlassyBlog. Built by <span className="text-purple-400 font-medium">Muhammad Hassan Raza</span>.
+                        © {new Date().getFullYear()} GlassyBlog. Built by <span className="text-emerald-400 font-medium">Muhammad Hassan Raza</span>.
                     </p>
                      <div className="flex space-x-4 items-center">
                     <a

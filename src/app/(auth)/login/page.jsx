@@ -16,7 +16,7 @@ export default function Login() {
         <div className="w-full max-w-md bg-white/10 backdrop-blur-md p-8 py-8 rounded-xl border border-white/20 shadow-md">
           <h2 className="text-2xl font-bold text-white text-center mb-8 drop-shadow-md">
             Login to{" "}
-            <span className="bg-gradient-to-r from-purple-700 to-purple-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-emerald-600 to-emerald-400 bg-clip-text text-transparent">
               GlassyBlog
             </span>
           </h2>
@@ -34,7 +34,7 @@ export default function Login() {
                 id="email"
                 placeholder="you@example.com"
                 required
-                className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/30 text-white placeholder-gray-400 focus:outline-none focus:border-purple-500/50"
+                className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/30 text-white placeholder-gray-400 focus:outline-none focus:border-emerald-500/50"
               />
             </div>
 
@@ -50,13 +50,13 @@ export default function Login() {
                 id="pass"
                 placeholder="••••••••"
                 required
-                className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/30 text-white placeholder-gray-400 focus:outline-none focus:border-purple-500/50"
+                className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/30 text-white placeholder-gray-400 focus:outline-none focus:border-emerald-500/50"
               />
             </div>
 
             <button
               type="submit"
-              className="w-full mt-2 bg-purple-700/30 border border-purple-500/50 hover:bg-purple-700/50 hover:border-purple-700 text-white px-6 py-2 rounded-lg transition-all duration-300 font-medium cursor-pointer"
+              className="w-full mt-2 border border-emerald-500 bg-emerald-700/40 focus:outline-none focus:bg-emerald-400/10 hover:bg-emerald-400/10 text-white px-6 py-2 rounded-lg transition-all duration-300 font-medium cursor-pointer"
             >
               Login
             </button>
@@ -64,7 +64,7 @@ export default function Login() {
 
           <p className="mt-6 text-sm text-center text-gray-400">
             Don't have an account?{" "}
-            <Link href="/signup" className="text-purple-400 hover:underline">
+            <Link href="/signup" className="text-emerald-400 hover:underline">
               Signup
             </Link>
           </p>

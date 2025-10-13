@@ -66,7 +66,7 @@ export default function CreateBlog() {
             />
             <button
               type="submit"
-              className="w-full px-4 py-2 font-semibold backdrop-blur-sm border bg-emerald-400/10 focus:outline-none focus:ring-1 focus:ring-emerald-500 hover:bg-emerald-700/40 border-emerald-500/50 hover:border-emerald-500 text-white mx-auto text-center rounded-full relative transition-all duration-300 cursor-pointer"
+              className="w-full px-4 py-2 font-semibold backdrop-blur-sm border border-emerald-500 bg-emerald-700/40 focus:outline-none focus:bg-emerald-400/10 hover:bg-emerald-400/10 text-white mx-auto text-center rounded-full relative transition-all duration-300 cursor-pointer"
               value={"Add Blog"}
             >
               Publish Your Blog

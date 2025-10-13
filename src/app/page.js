@@ -12,14 +12,14 @@ export default async function Home() {
       <Hero />
 
       <div className="flex flex-col items-center justify-center overflow-hidden rounded-md pt-18">
-        <h1 className="font-semibold text-center lg:text-5xl md:text-2xl text-xl text-white pb-4">
+        <h1 className="font-semibold text-center lg:text-4xl md:text-2xl text-xl text-white pb-4">
           Insights & Stories
         </h1>
 
         <div className="w-[40rem] h-40 relative">
           {/* Gradients */}
-          <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-emerald-500 to-transparent h-[2px] w-3/4 blur-sm" />
-          <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-emerald-500 to-transparent h-px w-3/4" />
+          <div className="absolute inset-x-16 top-0 bg-gradient-to-r from-transparent via-emerald-500 to-transparent h-[2px] w-3/4 blur-sm" />
+          <div className="absolute inset-x-16 top-0 bg-gradient-to-r from-transparent via-emerald-500 to-transparent h-px w-3/4" />
           <div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-emerald-500 to-transparent h-[5px] w-1/4 blur-sm" />
           <div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-emerald-500 to-transparent h-px w-1/4" />
 
