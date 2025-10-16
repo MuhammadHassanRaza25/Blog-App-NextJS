@@ -18,20 +18,42 @@ export default function CreateBlog() {
           <form
             ref={formRef}
             action={async (formData) => {
+              // const imageFile = formData.get("image");
+
+              // // Image upload
+              // const fData = new FormData();
+              // fData.append("image", imageFile);
+
+              // const uploadRes = await fetch("/api/upload", {
+              //   method: "POST",
+              //   body: fData,
+              // });
+
+              // if (!uploadRes.ok) {
+              //   console.error("Image upload fail ho gaya");
+              //   return;
+              // }
+              // const { imageUrl } = await uploadRes.json();
+
               let obj = {
+                // image: imageUrl,
                 title: formData.get("title"),
                 description: formData.get("description"),
                 author: formData.get("author"),
               };
-              addBlog(obj);
+              try {
+                await addBlog(obj); 
+                formRef.current?.reset();
+              } catch (err) {
+                console.error("Erro in adding blog", err);
+              }
+              // addBlog(obj);
               // formRef.current?.reset();
             }}
             className="w-full lg:w-1/2 p-8 flex flex-col gap-6"
           >
             {/* Background effect behind the form */}
-            <div
-              className="absolute inset-0 bg-gradient-to-br from-emerald-900/30 via-gray-900/30 to-teal-900/30 -z-10"
-            >
+            <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/30 via-gray-900/30 to-teal-900/30 -z-10">
               <div className="absolute inset-0">
                 <div className="absolute top-20 left-20 w-72 h-72 bg-gradient-to-r from-emerald-400/20 to-teal-400/20 rounded-full blur-3xl animate-pulse"></div>
                 <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-teal-400/20 to-cyan-400/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
@@ -65,6 +87,7 @@ export default function CreateBlog() {
             ></textarea>
             <input
               type="file"
+              name="image"
               accept="image/*"
               className="w-full text-sm px-4 py-2 rounded-full bg-white/10 border border-white/30 text-white/70 file:text-white/70 file:bg-transparent file:border-0 file:p-0 placeholder-gray-400 focus:outline-none focus:border-emerald-500/50"
             />

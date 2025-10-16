@@ -11,7 +11,7 @@ export async function addBlog(obj){
       body: JSON.stringify(obj)    
     })
     
-    revalidatePath('/blogs');
+    revalidatePath('/');
   }
   catch(err){
     console.log("error==>", err);

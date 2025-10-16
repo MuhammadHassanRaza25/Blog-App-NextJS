@@ -3,7 +3,7 @@ import { IoShareSocialSharp } from "react-icons/io5";
 import { FaArrowLeft } from "react-icons/fa6";
 import { FaBookReader } from "react-icons/fa";
 
-export default function BlogDetailCard({ blog }) {
+export default function BlogDetailCard({ data }) {
   const {
     _id: id,
     image,
@@ -12,7 +12,7 @@ export default function BlogDetailCard({ blog }) {
     author = "Unknown Author",
     authorAvatar,
     createdAt,
-  } = blog || {};
+  } = data
 
   const dateStr = createdAt
     ? new Date(createdAt).toLocaleDateString("en-GB", {
