@@ -56,7 +56,7 @@ export default function Login() {
 
             <button
               type="submit"
-              className="w-full mt-2 border border-emerald-500 bg-emerald-700/40 focus:outline-none focus:bg-emerald-400/10 hover:bg-emerald-400/10 text-white px-6 py-2 rounded-lg transition-all duration-300 font-medium cursor-pointer"
+              className="w-full mt-2 px-6 py-2 font-medium text-white bg-emerald-700/40 border border-emerald-500 rounded-lg transition-all duration-300 hover:bg-emerald-500/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 active:scale-[0.98] cursor-pointer"
             >
               Login
             </button>

@@ -13,7 +13,7 @@ export default async function Home() {
       <Hero />
 
       {/* Blog Posts Section */}
-      <div className="flex flex-col items-center justify-center overflow-hidden rounded-md pt-18">
+       <div className="flex flex-col items-center justify-center overflow-hidden rounded-md pt-18">
         <h1 className="font-semibold text-center lg:text-4xl md:text-2xl text-xl text-white pb-4">
           Insights & Stories
         </h1>
@@ -29,6 +29,7 @@ export default async function Home() {
           <div className="absolute inset-0 w-full h-full bg-black [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"></div>
         </div>
       </div>
+
       <div className="mt-10 mb-18 flex flex-wrap gap-5 justify-center max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {res.data?.map((blogs) => (
           <BlogCard key={blogs._id} data={blogs} />

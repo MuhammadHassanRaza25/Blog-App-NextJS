@@ -20,7 +20,7 @@ export default function Header() {
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center">
-              <h1 className="font-semibold text-2xl bg-gradient-to-r from-emerald-600 to-emerald-400 bg-clip-text text-transparent">
+              <h1 className="font-bold text-2xl bg-gradient-to-r from-emerald-600 to-emerald-400 bg-clip-text text-transparent">
                 GlassyBlog
               </h1>
             </Link>
@@ -73,10 +73,13 @@ export default function Header() {
             {/* Login Button */}
             <div className="hidden md:block">
               <Link href="/login">
-                <button className="bg-emerald-700/30 backdrop-blur-md border border-emerald-500/50 hover:border-emerald-500 focus:outline-none focus:bg-emerald-700/40 hover:bg-emerald-700/40 text-white px-6 py-2 rounded-full transition-all duration-300 font-medium text-sm cursor-pointer">
-                  Login
-                  <div className="absolute inset-x-0  h-px -bottom-px bg-gradient-to-r w-3/4 mx-auto from-transparent via-emerald-500 to-transparent" />
-                </button>
+                <div className="group relative w-fit mx-auto">
+                  <button className="relative flex items-center px-6 py-2 text-sm font-medium text-white bg-emerald-700/30 border border-emerald-500/50 rounded-full backdrop-blur-md transition-all duration-300 hover:bg-emerald-700/40 hover:border-emerald-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 cursor-pointer">
+                    Login
+                    {/* Underline animation */}
+                    <span className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-gradient-to-r from-transparent via-emerald-400 to-transparent transition-all duration-300 group-hover:w-3/4" />
+                  </button>
+                </div>
               </Link>
             </div>
 
@@ -153,12 +156,13 @@ export default function Header() {
 
               <div className="px-3 py-2">
                 <Link
-                  href="/contact"
-                  className="block w-full bg-emerald-700/30 backdrop-blur-md border border-emerald-500/50 hover:border-emerald-500 focus:bg-emerald-700/40 hover:bg-emerald-700/40 text-white px-4 py-2 rounded-full transition-all duration-300 font-medium text-center text-sm"
+                  href="/login"
                   onClick={() => setIsMenuOpen(false)}
+                  className="group relative block w-full text-center text-sm font-medium text-white bg-emerald-700/30 backdrop-blur-md border border-emerald-500/50 rounded-full px-4 py-2 transition-all duration-300 hover:bg-emerald-700/40 hover:border-emerald-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
                 >
                   Login
-                  <div className="absolute inset-x-0  h-px -bottom-px bg-gradient-to-r w-3/4 mx-auto from-transparent via-emerald-500 to-transparent" />
+                  {/* Underline on hover */}
+                  <span className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-gradient-to-r from-transparent via-emerald-400 to-transparent transition-all duration-300 group-hover:w-3/4" />
                 </Link>
               </div>
             </div>

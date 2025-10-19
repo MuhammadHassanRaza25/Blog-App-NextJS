@@ -1,24 +1,34 @@
+import Image from "next/image";
 import Link from "next/link";
 
-export default function BlogCard({data}) {
-
-  let { _id: id, image, title, description, author, authorAvatar, createdAt  } = data;
+export default function BlogCard({ data }) {
+  let {
+    _id: id,
+    image,
+    title,
+    description,
+    author,
+    authorAvatar,
+    createdAt,
+  } = data;
 
   return (
     <>
       <Link href={`/blogs/${id}`}>
         <div
           key={id}
-          className="w-80 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl duration-300 cursor-pointer group flex flex-col justify-between"
+          className="w-80 bg-white/5 backdrop-blur-md border border-white/20 rounded-2xl duration-300 cursor-pointer group flex flex-col justify-between"
         >
           {/* Image */}
           <div className="overflow-hidden rounded-t-2xl">
-            <img
+            <Image
               src={
                 image ||
                 "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80"
               }
-              alt="Blog Cover"
+              width={800}
+              height={192}
+              alt="Blog Image"
               className="object-cover w-full h-48 group-hover:scale-105 transition-transform duration-300"
             />
           </div>
@@ -33,8 +43,7 @@ export default function BlogCard({data}) {
             {/* Description */}
             <p className="text-gray-300 text-sm mb-6 line-clamp-2">
               {(
-                description ||
-                "No description provided for this blog post."
+                description || "No description provided for this blog post."
               ).slice(0, 110)}
             </p>
 

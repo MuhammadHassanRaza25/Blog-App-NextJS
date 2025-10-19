@@ -42,7 +42,7 @@ export default function CreateBlog() {
                 author: formData.get("author"),
               };
               try {
-                await addBlog(obj); 
+                await addBlog(obj);
                 formRef.current?.reset();
               } catch (err) {
                 console.error("Erro in adding blog", err);
@@ -100,11 +100,11 @@ export default function CreateBlog() {
             />
             <button
               type="submit"
-              className="w-full px-4 py-2 font-semibold backdrop-blur-sm border border-emerald-500 bg-emerald-700/40 focus:outline-none focus:bg-emerald-400/10 hover:bg-emerald-400/10 text-white mx-auto text-center rounded-full relative transition-all duration-300 cursor-pointer"
-              value={"Add Blog"}
+              className="group relative w-full px-4 py-2 font-semibold text-white bg-emerald-700/40 border border-emerald-500 rounded-full backdrop-blur-sm transition-all duration-300 hover:bg-emerald-400/10 hover:border-emerald-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 active:scale-[0.98] cursor-pointer"
             >
-              Publish Your Blog
-              <div className="absolute inset-x-0  h-px -bottom-px bg-gradient-to-r w-3/4 mx-auto from-transparent via-emerald-500 to-transparent" />
+              Publish Blog
+              {/* Underline on Hover */}
+              <span className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-gradient-to-r from-transparent via-emerald-400 to-transparent transition-all duration-300 group-hover:w-3/4" />
             </button>
           </form>
 

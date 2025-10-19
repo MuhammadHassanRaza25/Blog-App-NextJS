@@ -2,6 +2,7 @@ import Link from "next/link";
 import { IoShareSocialSharp } from "react-icons/io5";
 import { FaArrowLeft } from "react-icons/fa6";
 import { FaBookReader } from "react-icons/fa";
+import Image from "next/image";
 
 export default function BlogDetailCard({ data }) {
   const {
@@ -12,7 +13,7 @@ export default function BlogDetailCard({ data }) {
     author = "Unknown Author",
     authorAvatar,
     createdAt,
-  } = data
+  } = data;
 
   const dateStr = createdAt
     ? new Date(createdAt).toLocaleDateString("en-GB", {
@@ -25,13 +26,14 @@ export default function BlogDetailCard({ data }) {
   return (
     <div className="max-w-6xl lg:h-[450px] h-auto mx-auto bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden shadow-2xl mt-12 mb-12 text-white flex flex-col md:flex-row">
       {/* Left Side: Image */}
-      <div className="md:w-1/2 w-full h-56 md:h-auto">
-        <img
+      <div className="relative md:w-1/2 w-full h-56 md:h-auto">
+        <Image
           src={
             image ||
             "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1400&q=80"
           }
-          alt={title || "Blog Cover"}
+          fill
+          alt={"Blog Image"}
           className="w-full h-full"
         />
       </div>
@@ -47,7 +49,7 @@ export default function BlogDetailCard({ data }) {
             <FaArrowLeft /> Back to Blogs
           </Link>
           <span className="bg-emerald-800/30 text-emerald-300 text-sm px-3 py-1 rounded-full">
-            <FaBookReader className="text-emerald-500"/>
+            <FaBookReader className="text-emerald-500" />
           </span>
         </div>
 
@@ -58,12 +60,15 @@ export default function BlogDetailCard({ data }) {
 
         {/* Author Info */}
         <div className="flex items-center gap-3 mb-6">
-          <img
+          <Image
             src={
               authorAvatar || "https://randomuser.me/api/portraits/men/75.jpg"
             }
-            alt={author}
+            width={40}
+            height={40}
+            alt="Blog Author"
             className="w-10 h-10 rounded-full border-2 border-emerald-500 object-cover"
+            unoptimized
           />
           <div>
             <p className="text-sm font-medium">{author}</p>

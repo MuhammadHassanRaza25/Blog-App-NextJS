@@ -27,9 +27,7 @@ export default function EditBlog() {
             className="w-full lg:w-1/2 p-8 flex flex-col gap-6"
           >
             {/* Background effect behind the form */}
-            <div
-              className="absolute inset-0 bg-gradient-to-br from-emerald-900/30 via-gray-900/30 to-teal-900/30 -z-10"
-            >
+            <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/30 via-gray-900/30 to-teal-900/30 -z-10">
               <div className="absolute inset-0">
                 <div className="absolute top-20 left-20 w-72 h-72 bg-gradient-to-r from-emerald-400/20 to-teal-400/20 rounded-full blur-3xl animate-pulse"></div>
                 <div className="absolute bottom-20 right-20 w-96 h-96 bg-gradient-to-r from-teal-400/20 to-cyan-400/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
@@ -38,11 +36,10 @@ export default function EditBlog() {
               <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
             </div>
             <div className="text-center">
-              <h2 className="text-xl font-bold text-white">
-                Edit This Blog
-              </h2>
+              <h2 className="text-xl font-bold text-white">Edit This Blog</h2>
               <p className="text-white/70 text-sm mt-2">
-                Need to change something? Use the form below to update your blog post.
+                Need to change something? Use the form below to update your blog
+                post.
               </p>
             </div>
 
@@ -74,11 +71,11 @@ export default function EditBlog() {
             />
             <button
               type="submit"
-              className="w-full px-4 py-2 font-semibold backdrop-blur-sm border border-emerald-500 bg-emerald-700/40 focus:outline-none focus:bg-emerald-400/10 hover:bg-emerald-400/10 text-white mx-auto text-center rounded-full relative transition-all duration-300 cursor-pointer"
-              value={"Add Blog"}
+              className="group relative w-full px-4 py-2 font-semibold text-white bg-emerald-700/40 border border-emerald-500 rounded-full backdrop-blur-sm transition-all duration-300 hover:bg-emerald-400/10 hover:border-emerald-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 active:scale-[0.98] cursor-pointer"
             >
-              Publish Your Blog
-              <div className="absolute inset-x-0  h-px -bottom-px bg-gradient-to-r w-3/4 mx-auto from-transparent via-emerald-500 to-transparent" />
+              Edit Blog
+              {/* Underline on Hover */}
+              <span className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-gradient-to-r from-transparent via-emerald-400 to-transparent transition-all duration-300 group-hover:w-3/4" />
             </button>
           </form>
 
