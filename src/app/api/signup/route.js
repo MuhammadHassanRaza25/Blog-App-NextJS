@@ -49,7 +49,7 @@ export async function POST(request) {
   // Add user in DB
   const addUser = await new UserModel({ ...value });
   await addUser.save();
-  // console.log("User Added Successfully ===>", addUser);
+  console.log("User Added Successfully ===>", addUser);
 
   return Response.json({
     data: addUser,

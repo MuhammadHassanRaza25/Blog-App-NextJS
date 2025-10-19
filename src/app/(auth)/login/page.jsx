@@ -1,7 +1,13 @@
+"use client";
+
+import { loginUser } from "@/app/actions/users";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { useRef } from "react";
 
 export default function Login() {
+  const loginRef = useRef(null);
+
   return (
     <>
       <div className="relative min-h-screen flex items-center justify-center px-4">
@@ -21,7 +27,23 @@ export default function Login() {
             </span>
           </h2>
 
-          <form className="space-y-5">
+          <form
+            ref={loginRef}
+            action={async (data) => {
+              let userDetails = {
+                email: data.get("email"),
+                password: data.get("password"),
+              };
+              try {
+                await loginUser(userDetails);
+                // console.log("FORM DATA ====>", userDetails);
+                loginRef.current?.reset();
+              } catch (err) {
+                console.error("Erro in adding blog", err);
+              }
+            }}
+            className="space-y-5"
+          >
             <div>
               <label
                 htmlFor="email"
@@ -31,6 +53,7 @@ export default function Login() {
               </label>
               <input
                 type="email"
+                name="email"
                 id="email"
                 placeholder="you@example.com"
                 required
@@ -47,6 +70,7 @@ export default function Login() {
               </label>
               <input
                 type="password"
+                name="password"
                 id="pass"
                 placeholder="••••••••"
                 required
