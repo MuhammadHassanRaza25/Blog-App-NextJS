@@ -14,7 +14,7 @@ export default function BlogCard({ data }) {
 
   return (
     <>
-      <Link href={`/blogs/${id}`}>
+      <Link href={`/blog/${id}`}>
         <div
           key={id}
           className="w-80 bg-white/5 backdrop-blur-md border border-white/20 rounded-2xl duration-300 cursor-pointer group flex flex-col justify-between"
@@ -76,7 +76,7 @@ export default function BlogCard({ data }) {
               </div>
 
               {/* Read More Button */}
-              <Link href={`/blogs/${id}`}>
+              <Link href={`/blog/${id}`}>
                 <button className="flex gap-3 items-center px-4 py-1.5 text-xs font-semibold backdrop-blur-sm border bg-emerald-700/30 focus:outline-none focus:bg-emerald-700/40 hover:bg-emerald-700/40 border-emerald-500/50 hover:border-emerald-500 text-white rounded-full transition-all duration-300 cursor-pointer">
                   Read More
                 </button>

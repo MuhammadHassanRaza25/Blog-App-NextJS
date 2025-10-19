@@ -42,29 +42,29 @@ export default function Header() {
               </Link>
 
               <Link
-                href="/blogs/create"
+                href="/blog/create"
                 className={`relative px-3 py-2 text-sm font-medium transition-all duration-300 ${
-                  isActive("/blogs/create")
+                  isActive("/blog/create")
                     ? "text-emerald-400 font-bold"
                     : "text-gray-200 hover:text-emerald-400"
                 }`}
               >
                 Create Blog
-                {isActive("/blogs/create") && (
+                {isActive("/blog/create") && (
                   <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-emerald-400 to-emerald-800 rounded-full" />
                 )}
               </Link>
 
               <Link
-                href="/blogs/my-blogs"
+                href="/blog/my-blogs"
                 className={`relative px-3 py-2 text-sm font-medium transition-all duration-300 ${
-                  isActive("/blogs/my-blogs")
+                  isActive("/blog/my-blogs")
                     ? "text-emerald-400 font-bold"
                     : "text-gray-200 hover:text-emerald-400"
                 }`}
               >
                 My Blogs
-                {isActive("/blogs/my-blogs") && (
+                {isActive("/blog/my-blogs") && (
                   <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-emerald-400 to-emerald-800 rounded-full" />
                 )}
               </Link>
@@ -131,9 +131,9 @@ export default function Header() {
               </Link>
 
               <Link
-                href="/blogs/create"
+                href="/blog/create"
                 className={`block px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
-                  isActive("/blogs/create")
+                  isActive("/blog/create")
                     ? "text-emerald-400 font-bold bg-white/10"
                     : "text-gray-200 hover:text-emerald-400 hover:bg-white/5"
                 }`}
@@ -143,9 +143,9 @@ export default function Header() {
               </Link>
 
               <Link
-                href="/blogs/my-blogs"
+                href="/blog/my-blogs"
                 className={`block px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
-                  isActive("/blogs/my-blogs")
+                  isActive("/blog/my-blogs")
                     ? "text-emerald-400 font-bold bg-white/10"
                     : "text-gray-200 hover:text-emerald-400 hover:bg-white/5"
                 }`}

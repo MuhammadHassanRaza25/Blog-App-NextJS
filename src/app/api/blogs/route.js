@@ -1,9 +1,9 @@
-import BlogModal from "@/app/lib/modals/BlogModal";
 import { ConnectDB } from "../../lib/dbConnect"
+import BlogModel from "@/app/lib/models/BlogModel";
 
 export async function GET(request){
    await ConnectDB();
-   const blogs = await BlogModal.find()
+   const blogs = await BlogModel.find()
    console.log("Blogs From MongoDB ===>", blogs);
    
    return Response.json({
@@ -18,7 +18,7 @@ export async function POST(request){
   console.log('checking ===>', blogs);
   
 
-  const addBlog = await new BlogModal({...blogs}) //pehle modal main data dia.
+  const addBlog = await new BlogModel({...blogs}) //pehle modal main data dia.
   await addBlog.save() //data dene ke baad DB main save kardia.
 
   console.log("Blog Added Successfully ===>", addBlog);

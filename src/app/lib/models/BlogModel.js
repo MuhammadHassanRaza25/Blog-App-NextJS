@@ -11,6 +11,6 @@ const BlogSchema = new mongoose.Schema(
   }
 );
 
-const BlogModal = mongoose.models.Blogs || mongoose.model("Blogs", BlogSchema); // hamne pehle models main check kia ke Blogs ka model hai to sahi hai, nhi hai to create kardo.
+const BlogModel = mongoose.models.Blogs || mongoose.model("Blogs", BlogSchema); // hamne pehle models main check kia ke Blogs ka model hai to sahi hai, nhi hai to create kardo.
 
-export default BlogModal;
+export default BlogModel;

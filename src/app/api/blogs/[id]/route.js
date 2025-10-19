@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import BlogModal from "@/app/lib/modals/BlogModal"
+import BlogModel from "@/app/lib/models/BlogModel";
 
 export async function GET(request, {params}){
     
@@ -15,7 +15,7 @@ export async function GET(request, {params}){
     }
 
     try{
-        let singleBlog = await BlogModal.findById(id)
+        let singleBlog = await BlogModel.findById(id)
 
         // ye jab work karega jab url main valid mongodb ki id ho:24-character hexadecimal string, or uska blog exist nhi karta ho.
         if (!singleBlog) { 
