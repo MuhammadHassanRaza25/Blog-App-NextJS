@@ -5,7 +5,9 @@ import { revalidatePath } from "next/cache";
 
 export async function addBlog(obj){
   try{
-    // const blog = obj
+    const blog = obj
+    console.log("blog====>", blog);
+    
     await fetch(`${process.env.BASE_URL}api/blogs`, {
       method: "POST",
       body: JSON.stringify(obj)    

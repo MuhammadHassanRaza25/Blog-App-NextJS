@@ -1,7 +1,13 @@
+"use client";
+
+import { signupUser } from "@/app/actions/users";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { useRef } from "react";
 
 export default function Signup() {
+  const signupRef = useRef(null);
+
   return (
     <>
       <div className="relative min-h-screen flex items-center justify-center px-4">
@@ -23,7 +29,25 @@ export default function Signup() {
             </span>{" "}
           </h2>
 
-          <form className="space-y-5">
+          <form
+            className="space-y-5"
+            ref={signupRef}
+            action={async (data) => {
+              let userDetails = {
+                username: data.get("username"),
+                email: data.get("email"),
+                password: data.get("password"),
+                // profilepic: data.get("profilepic")
+              };
+              try {
+                await signupUser(userDetails);
+                // console.log("FORM DATA ====>", userDetails);
+                signupRef.current?.reset();
+              } catch (err) {
+                console.error("Erro in adding blog", err);
+              }
+            }}
+          >
             {/* Username */}
             <div>
               <label
@@ -34,6 +58,7 @@ export default function Signup() {
               </label>
               <input
                 type="text"
+                name="username"
                 id="username"
                 placeholder="your name"
                 required
@@ -51,6 +76,7 @@ export default function Signup() {
               </label>
               <input
                 type="email"
+                name="email"
                 id="email"
                 placeholder="you@example.com"
                 required
@@ -68,6 +94,7 @@ export default function Signup() {
               </label>
               <input
                 type="password"
+                name="password"
                 id="password"
                 placeholder="••••••••"
                 required
@@ -85,6 +112,7 @@ export default function Signup() {
               </label>
               <input
                 type="file"
+                name="profilepic"
                 id="profilePic"
                 accept="image/*"
                 className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/30 text-white file:text-white file:bg-transparent file:border-0 file:p-0 placeholder-gray-400 focus:outline-none focus:border-emerald-500/50"

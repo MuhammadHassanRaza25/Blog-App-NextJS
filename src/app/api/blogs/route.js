@@ -15,14 +15,12 @@ export async function GET(request){
 export async function POST(request){
   await ConnectDB();
   const blogs = await request.json()
-  console.log('checking ===>', blogs);
-  
+  // console.log('checking ===>', blogs);
 
   const addBlog = await new BlogModel({...blogs}) //pehle modal main data dia.
   await addBlog.save() //data dene ke baad DB main save kardia.
 
-  console.log("Blog Added Successfully ===>", addBlog);
-  
+  // console.log("Blog Added Successfully ===>", addBlog);
 
   return Response.json({
    data: addBlog, 
