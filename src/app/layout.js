@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import QueryProvider from "@/components/QueryProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "GlassyBlog", 
+  title: "GlassyBlog",
   description: "GlassyBlog, crafted by Muhammad Hassan Raza, is a cutting-edge blogging platform that empowers users to effortlessly create, share, and explore high-quality content through a sophisticated glassmorphic interface designed for an exceptional user experience.",
 };
 
@@ -22,7 +23,9 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <QueryProvider>
+          {children}
+        </QueryProvider>
       </body>
     </html>
   );
