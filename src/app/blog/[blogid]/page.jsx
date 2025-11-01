@@ -12,7 +12,7 @@ export default async function BlogDetailPage({ params }) {
   let { blogid } = params;
   let blogData = null;
   try {
-    const res = await fetch(`${process.env.BASE_URL}/api/blogs/${blogid}`);
+    const res = await fetch(`${process.env.BASE_URL}/api/blogs/${blogid}`, { cache: "no-store" });
     const data = await res.json();
     blogData = data.data;
   } catch (err) {

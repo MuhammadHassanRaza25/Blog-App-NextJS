@@ -11,7 +11,7 @@ export default async function Home() {
   let resData = [];
 
   try {
-    const res = await fetch(`${process.env.BASE_URL}/api/blogs`);
+    const res = await fetch(`${process.env.BASE_URL}/api/blogs`, { cache: "no-store" });
 
     // Check if response is JSON
     const text = await res.text();
