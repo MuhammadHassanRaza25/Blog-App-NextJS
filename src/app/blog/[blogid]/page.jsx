@@ -5,7 +5,7 @@ import Header from "@/components/Header";
 export default async function BlogDetailPage({ params }) {
   
   let { blogid } = params;
-  let res = await fetch(`http://localhost:3000/api/blogs/${blogid}`);
+  let res = await fetch(`${process.env.BASE_URL}/api/blogs/${blogid}`);
   let data = await res.json();
   let blogData = data.data
   console.log("Blog Data ====>",blogData);
