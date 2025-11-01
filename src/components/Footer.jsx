@@ -5,8 +5,8 @@ export default function Footer() {
 
     return (
         <>
-            <footer className="bg-black/30 border-t border-white/10 text-gray-300 text-sm py-6 backdrop-blur-md">
-                <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <footer className="bg-black/30 border-t border-white/30 text-gray-300 text-sm py-6 backdrop-blur-md">
+                <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4">
                     <p className="text-center">
                         © {new Date().getFullYear()} GlassyBlog. Built by <span className="text-emerald-400 font-medium">Muhammad Hassan Raza</span>.
                     </p>
@@ -29,15 +29,15 @@ export default function Footer() {
                     >
                         <FaLinkedin className="w-4 h-4" />
                     </a>
-                    <a
+                    {/* <a
                         href="#"
-                        // target="_blank"
+                        target="_blank"
                         title="Portfolio"
                         rel="noopener noreferrer"
                         className="flex items-center gap-1 hover:text-emerald-400 transition"
                     >
                         <FaGlobe className="w-4 h-4" />
-                    </a>
+                    </a> */}
                 </div>
                 </div>
             </footer>

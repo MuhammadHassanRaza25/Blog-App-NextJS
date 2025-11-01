@@ -24,7 +24,7 @@ export default function BlogDetailCard({ data }) {
     : "Date not available";
 
   return (
-    <div className="max-w-6xl lg:h-[450px] h-auto mx-auto bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden shadow-2xl mt-12 mb-12 text-white flex flex-col md:flex-row">
+    <div className="max-w-6xl lg:h-[400px] h-auto mx-auto bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden shadow-2xl mt-12 mb-12 text-white flex flex-col md:flex-row">
       {/* Left Side: Image */}
       <div className="relative md:w-1/2 w-full h-56 md:h-auto">
         <Image

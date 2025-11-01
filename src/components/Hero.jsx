@@ -15,7 +15,7 @@ export default function Hero() {
             "[background-image:linear-gradient(to_right,#262626_1px,transparent_1px),linear-gradient(to_bottom,#262626_1px,transparent_1px)]"
           )}
         />
-
+        
         {/* Hero Content Div */}
         <div className="flex flex-col gap-5 items-center justify-center max-w-7xl mx-auto px-4 pt-20 pb-20 sm:px-6 lg:px-8 relative z-10">
             <div className="inline-flex gap-2 mt-1 items-center bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 shadow-sm">
