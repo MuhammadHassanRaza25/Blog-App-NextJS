@@ -5,8 +5,26 @@ import BlogCard from "./components/BlogCard";
 import { MotionUp } from "@/components/ui/motion-up";
 
 export default async function Home() {
-  let res = await fetch(`${process.env.BASE_URL}/api/blogs`);
-  res = await res.json();
+  // let res = await fetch(`${process.env.BASE_URL}/api/blogs`);
+  // res = await res.json();
+
+  let resData = [];
+
+  try {
+    const res = await fetch(`${process.env.BASE_URL}/api/blogs`);
+
+    // Check if response is JSON
+    const text = await res.text();
+    try {
+      resData = JSON.parse(text);
+    } catch (err) {
+      console.error("Failed to parse JSON:", err, text);
+      resData = { data: [] };
+    }
+  } catch (err) {
+    console.error("Error fetching blogs:", err);
+    resData = { data: [] };
+  }
 
   return (
     <>
@@ -34,11 +52,15 @@ export default async function Home() {
       </MotionUp>
 
       <div className="mt-10 mb-18 flex flex-wrap gap-5 justify-center max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {res.data?.map((blogs, index) => (
-          <MotionUp key={blogs._id} delay={index * 0.1}>
-            <BlogCard data={blogs} />
-          </MotionUp>
-        ))}
+         {resData.data && resData.data.length > 0 ? (
+          resData.data.map((blog, index) => (
+            <MotionUp key={blog._id} delay={index * 0.1}>
+              <BlogCard data={blog} />
+            </MotionUp>
+          ))
+        ) : (
+          <p className="text-gray-400 text-center mt-10">No blogs available.</p>
+        )}
       </div>
 
       <Footer />
