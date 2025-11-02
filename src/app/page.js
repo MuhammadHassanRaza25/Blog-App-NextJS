@@ -5,8 +5,6 @@ import BlogCard from "./components/BlogCard";
 import { MotionUp } from "@/components/ui/motion-up";
 
 export default async function Home() {
-  // let res = await fetch(`${process.env.BASE_URL}/api/blogs`);
-  // res = await res.json();
 
   let resData = [];
 

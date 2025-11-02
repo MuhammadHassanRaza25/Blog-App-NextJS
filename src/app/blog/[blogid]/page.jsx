@@ -3,11 +3,6 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 
 export default async function BlogDetailPage({ params }) {
-  // let { blogid } = params;
-  // let res = await fetch(`${process.env.BASE_URL}/api/blogs/${blogid}`);
-  // let data = await res.json();
-  // let blogData = data.data
-  // console.log("Blog Data ====>",blogData);
 
   let { blogid } = params;
   let blogData = null;
