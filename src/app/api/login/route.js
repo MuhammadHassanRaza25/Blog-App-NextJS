@@ -3,6 +3,7 @@ import UserModel from "@/app/lib/models/UserModel";
 import bcrypt from "bcrypt";
 import Joi from "joi";
 import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
 
 const loginSchema = Joi.object({
   email: Joi.string().email().required(),
@@ -51,14 +52,36 @@ export async function POST(request) {
     });
   }
 
-  // Generating Token
-  var token = jwt.sign(user, process.env.AUTH_SECRET);
+  // Generate Token (short-lived)
+  const accessToken = jwt.sign(user, process.env.AUTH_SECRET, { expiresIn: "15m" });
+
+  // Refresh Token (long-lived)
+  const refreshToken = jwt.sign(user, process.env.REFRESH_SECRET, { expiresIn: "15d" });
+
+  // Set both tokens in cookies
+  const cookieStore = await cookies()
+  
+  cookieStore.set("accessToken", accessToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    path: "/",
+    sameSite: "strict",
+    maxAge: 15 * 60, // 15 minutes
+  });
+
+  cookieStore.set("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    path: "/",
+    sameSite: "strict",
+    maxAge: 15 * 24 * 60 * 60, // 15 days
+  });
+
   console.log("User Login Successfully!");
 
   return Response.json({
     data: {
       user,
-      token,
     },
     msg: "User Login Successfully",
   });

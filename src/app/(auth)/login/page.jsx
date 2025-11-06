@@ -1,12 +1,14 @@
 "use client";
 
 import { loginUser } from "@/app/actions/users";
+import { AuthContext } from "@/app/context/AuthContext";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 
 export default function Login() {
   const loginRef = useRef(null);
+  const { setUser } = useContext(AuthContext)
 
   return (
     <>
@@ -35,11 +37,19 @@ export default function Login() {
                 password: data.get("password"),
               };
               try {
-                await loginUser(userDetails);
+                const result = await loginUser(userDetails);
                 // console.log("FORM DATA ====>", userDetails);
+                if (!result.ok) {
+                  // message.error("Login failed");
+                  console.log("Login failed");
+                  return;
+                }
+                // message.success("Login successful!");
+                console.log("Login successful!");
+                setUser(result.user);
                 loginRef.current?.reset();
               } catch (err) {
-                console.error("Erro in adding blog", err);
+                console.error("Error in login", err);
               }
             }}
             className="space-y-5"
