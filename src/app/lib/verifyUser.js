@@ -2,8 +2,8 @@ import { cookies } from "next/headers";
 import jwt from "jsonwebtoken"
 
 export async function verifyUser() {
-  const accessToken = cookies().get("accessToken")?.value;
-  const refreshToken = cookies().get("refreshToken")?.value;
+  const accessToken = await cookies().get("accessToken")?.value;
+  const refreshToken = await cookies().get("refreshToken")?.value;
 
   // check access token 
   if (accessToken) {
