@@ -3,6 +3,7 @@
 import { addBlog } from "@/app/actions/blogs";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import Image from "next/image";
 import { useRef } from "react";
 
 export default function CreateBlog() {
@@ -110,9 +111,11 @@ export default function CreateBlog() {
 
           {/* right side image */}
           <div className="lg:block hidden w-full lg:w-1/2">
-            <img
-              src="https://images.pexels.com/photos/7046399/pexels-photo-7046399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              alt="Blog illustration"
+            <Image
+              width={500}
+              height={500}
+              src="/images/formimg2.jpeg"
+              alt="Blog Image"
               className="w-full h-full object-cover"
             />
           </div>
