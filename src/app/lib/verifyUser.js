@@ -2,8 +2,9 @@ import { cookies } from "next/headers";
 import jwt from "jsonwebtoken"
 
 export async function verifyUser() {
-  const accessToken = await cookies().get("accessToken")?.value;
-  const refreshToken = await cookies().get("refreshToken")?.value;
+  const cookieStore = cookies();
+  const accessToken = await cookieStore.get("accessToken")?.value;
+  const refreshToken = await cookieStore.get("refreshToken")?.value;
 
   // check access token 
   if (accessToken) {
@@ -11,7 +12,7 @@ export async function verifyUser() {
       const decoded = jwt.verify(accessToken, process.env.AUTH_SECRET);
       return { id: decoded.id };
     } catch (err) {
-      console.log("Access token expired or invalid");
+      console.log("Access token expired or invalid:", err.message);
     }
   }
 
@@ -26,7 +27,7 @@ export async function verifyUser() {
         process.env.AUTH_SECRET,
         { expiresIn: "15m" }
       );
-      cookies().set("accessToken", newAccessToken, {
+      cookieStore.set("accessToken", newAccessToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict",
@@ -42,7 +43,7 @@ export async function verifyUser() {
           process.env.REFRESH_SECRET,
           { expiresIn: "15d" }
         );
-        cookies().set("refreshToken", newRefreshToken, {
+        cookieStore.set("refreshToken", newRefreshToken, {
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
           sameSite: "strict",
@@ -53,9 +54,9 @@ export async function verifyUser() {
 
       return { id: decodedRefresh.id };
     } catch (err) {
-      console.log("Refresh token expired → clearing cookies");
-      cookies().set("accessToken", "", { expires: new Date(0), path: "/" });
-      cookies().set("refreshToken", "", { expires: new Date(0), path: "/" });
+      console.log("Refresh token expired → clearing cookies", err);
+      cookieStore.set("accessToken", "", { expires: new Date(0), path: "/" });
+      cookieStore.set("refreshToken", "", { expires: new Date(0), path: "/" });
       return null;
     }
   }

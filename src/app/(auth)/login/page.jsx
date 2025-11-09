@@ -2,16 +2,54 @@
 
 import { loginUser } from "@/app/actions/users";
 import { AuthContext } from "@/app/context/AuthContext";
+import ToastHandler from "@/components/ToastHandler";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { useContext, useRef } from "react";
+import { useContext, useRef, useState } from "react";
 
 export default function Login() {
   const loginRef = useRef(null);
-  const { setUser } = useContext(AuthContext)
+  const { setUser } = useContext(AuthContext);
+  const [successMsg, setSuccessMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setIsLoading] = useState(false);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setSuccessMsg("");
+    setErrorMsg("");
+    setIsLoading(true);
+
+    const formData = new FormData(loginRef.current);
+    const userDetails = {
+      email: formData.get("email"),
+      password: formData.get("password"),
+    };
+
+    try {
+      const result = await loginUser(userDetails);
+
+      if (!result.ok) {
+        setErrorMsg(result.msg || "Invalid Credentials");
+        setIsLoading(false);
+        return;
+      }
+
+      setSuccessMsg(result.msg || "Login successful!");
+      setUser(result.data?.user || {});
+      setIsLoading(false);
+      loginRef.current?.reset();
+    } catch (err) {
+      console.error("Login error:", err);
+      setErrorMsg("Something went wrong. Please try again.");
+      setIsLoading(false);
+    }
+  };
 
   return (
     <>
+      <ToastHandler successMessage={successMsg} errorMessage={errorMsg} />
+
       <div className="relative min-h-screen flex items-center justify-center px-4">
         <div
           className={cn(
@@ -29,31 +67,7 @@ export default function Login() {
             </span>
           </h2>
 
-          <form
-            ref={loginRef}
-            action={async (data) => {
-              let userDetails = {
-                email: data.get("email"),
-                password: data.get("password"),
-              };
-              try {
-                const result = await loginUser(userDetails);
-                // console.log("FORM DATA ====>", userDetails);
-                if (!result.ok) {
-                  // message.error("Login failed");
-                  console.log("Login failed");
-                  return;
-                }
-                // message.success("Login successful!");
-                console.log("Login successful!");
-                setUser(result.user);
-                loginRef.current?.reset();
-              } catch (err) {
-                console.error("Error in login", err);
-              }
-            }}
-            className="space-y-5"
-          >
+          <form ref={loginRef} onSubmit={handleLogin} className="space-y-5">
             <div>
               <label
                 htmlFor="email"
@@ -90,9 +104,9 @@ export default function Login() {
 
             <button
               type="submit"
-              className="w-full mt-2 px-6 py-2 font-medium text-white bg-emerald-700/40 border border-emerald-500 rounded-lg transition-all duration-300 hover:bg-emerald-500/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 active:scale-[0.98] cursor-pointer"
+              className="w-full flex justify-center mt-2 px-6 py-2 font-medium text-white bg-emerald-700/40 border border-emerald-500 rounded-lg transition-all duration-300 hover:bg-emerald-500/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 active:scale-[0.98] cursor-pointer"
             >
-              Login
+              {loading ? <div className="formLoader"></div> : "Login"}
             </button>
           </form>
 

@@ -23,7 +23,7 @@ export async function POST(request) {
         data: null,
         msg: error.message,
       },
-      { status: 404 }
+      { status: 400 }
     );
   }
 
@@ -38,7 +38,7 @@ export async function POST(request) {
         data: null,
         msg: "Invalid Email",
       },
-      { status: 403 }
+      { status: 404 }
     );
   }
 
@@ -46,21 +46,30 @@ export async function POST(request) {
   const matchPassword = await bcrypt.compare(value.password, user.password);
   if (!matchPassword) {
     console.log("Invalid Credentials");
-    return Response.json({
-      data: null,
-      msg: "Invalid Credentials",
-    });
+    return Response.json(
+      {
+        data: null,
+        msg: "Invalid Credentials",
+      },
+      { status: 401 }
+    );
   }
 
+  const payload = {
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+  };
+
   // Generate Token (short-lived)
-  const accessToken = jwt.sign(user, process.env.AUTH_SECRET, { expiresIn: "15m" });
+  const accessToken = jwt.sign(payload, process.env.AUTH_SECRET, { expiresIn: "15m" });
 
   // Refresh Token (long-lived)
-  const refreshToken = jwt.sign(user, process.env.REFRESH_SECRET, { expiresIn: "15d" });
+  const refreshToken = jwt.sign(payload, process.env.REFRESH_SECRET, { expiresIn: "15d" });
 
   // Set both tokens in cookies
-  const cookieStore = await cookies()
-  
+  const cookieStore = await cookies();
+
   cookieStore.set("accessToken", accessToken, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
@@ -81,7 +90,7 @@ export async function POST(request) {
 
   return Response.json({
     data: {
-      user,
+      user: payload,
     },
     msg: "User Login Successfully",
   });

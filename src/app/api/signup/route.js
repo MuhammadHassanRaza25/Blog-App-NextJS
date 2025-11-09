@@ -53,6 +53,6 @@ export async function POST(request) {
 
   return Response.json({
     data: addUser,
-    msg: "User Added Successfully",
+    msg: "User Registered Successfully",
   });
 }

@@ -1,15 +1,52 @@
 "use client";
 
 import { signupUser } from "@/app/actions/users";
+import ToastHandler from "@/components/ToastHandler";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 export default function Signup() {
   const signupRef = useRef(null);
+  const [successMsg, setSuccessMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setIsLoading] = useState(false);
+
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    setSuccessMsg("");
+    setErrorMsg("");
+    setIsLoading(true);
+
+    const data = new FormData(signupRef.current);
+    let userDetails = {
+      username: data.get("username"),
+      email: data.get("email"),
+      password: data.get("password"),
+      // profilepic: data.get("profilepic")
+    };
+    try {
+      const result = await signupUser(userDetails);
+      if (!result.ok) {
+        setErrorMsg(result.msg);
+        setIsLoading(false);
+        return;
+      }
+      setSuccessMsg(result.msg || "Signup successful!");
+      setIsLoading(false);
+      // console.log("FORM DATA ====>", userDetails);
+      signupRef.current?.reset();
+    } catch (err) {
+      console.error("Signup error:", err);
+      setErrorMsg("Something went wrong. Please try again.");
+      setIsLoading(false);
+    }
+  };
 
   return (
     <>
+      <ToastHandler successMessage={successMsg} errorMessage={errorMsg} />
+
       <div className="relative min-h-screen flex items-center justify-center px-4">
         {/* Background Grid */}
         <div
@@ -29,25 +66,7 @@ export default function Signup() {
             </span>{" "}
           </h2>
 
-          <form
-            className="space-y-5"
-            ref={signupRef}
-            action={async (data) => {
-              let userDetails = {
-                username: data.get("username"),
-                email: data.get("email"),
-                password: data.get("password"),
-                // profilepic: data.get("profilepic")
-              };
-              try {
-                await signupUser(userDetails);
-                // console.log("FORM DATA ====>", userDetails);
-                signupRef.current?.reset();
-              } catch (err) {
-                console.error("Erro in adding blog", err);
-              }
-            }}
-          >
+          <form className="space-y-5" ref={signupRef} onSubmit={handleSignup}>
             {/* Username */}
             <div>
               <label
@@ -122,9 +141,9 @@ export default function Signup() {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full mt-2 px-6 py-2 font-medium text-white bg-emerald-700/40 border border-emerald-500 rounded-lg transition-all duration-300 hover:bg-emerald-500/20 hover:border-emerald-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 active:scale-[0.98] cursor-pointer"
+              className="w-full flex justify-center mt-2 px-6 py-2 font-medium text-white bg-emerald-700/40 border border-emerald-500 rounded-lg transition-all duration-300 hover:bg-emerald-500/20 hover:border-emerald-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 active:scale-[0.98] cursor-pointer"
             >
-              Sign Up
+              {loading ? <div className="formLoader"></div> : "Sign Up"}
             </button>
           </form>
 
