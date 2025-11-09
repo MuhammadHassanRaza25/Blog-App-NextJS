@@ -30,7 +30,7 @@ export default function Login() {
       const result = await loginUser(userDetails);
 
       if (!result.ok) {
-        setErrorMsg(result.msg || "Invalid Credentials");
+        setErrorMsg("Invalid Credentials");
         setIsLoading(false);
         return;
       }
