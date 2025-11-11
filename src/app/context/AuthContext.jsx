@@ -3,13 +3,15 @@ import { createContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext();
 
-export function AuthContextProvider({ children }) { 
+export function AuthContextProvider({ children }) {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch(`${process.env.BASE_URL}/api/user`, { credentials: "include" }); 
+        const res = await fetch(`${process.env.BASE_URL}/api/user`, {
+          credentials: "include",
+        });
         const data = await res.json();
         if (res.ok) setUser(data.user);
       } catch {
@@ -25,4 +27,4 @@ export function AuthContextProvider({ children }) {
   );
 }
 
-export default AuthContextProvider; 
+export default AuthContextProvider;
