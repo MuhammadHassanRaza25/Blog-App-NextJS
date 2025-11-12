@@ -13,7 +13,7 @@ export default function CreateBlog() {
     <>
       <Header />
 
-      <div className="max-w-7xl mx-auto px-4 pt-12 pb-12 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-12">
         <div className="flex flex-col lg:flex-row bg-white/10 backdrop-blur-md border border-white/20 rounded-xl shadow-lg overflow-hidden">
           {/* create blog form */}
           <form
@@ -67,7 +67,7 @@ export default function CreateBlog() {
                 Create a New Blog
               </h2>
               <p className="text-white/70 text-sm mt-2">
-                Share your thoughts with the world. Fill out the form below to
+                Share your thoughts with world. Fill out the form below to
                 publish your blog.
               </p>
             </div>

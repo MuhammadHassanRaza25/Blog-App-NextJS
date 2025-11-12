@@ -12,7 +12,7 @@ export default function EditBlog() {
     <>
       <Header />
 
-      <div className="max-w-7xl mx-auto px-4 pt-12 pb-12 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-12">
         <div className="flex flex-col lg:flex-row bg-white/10 backdrop-blur-md border border-white/20 rounded-xl shadow-lg overflow-hidden">
           {/* edit blog form */}
           <form
