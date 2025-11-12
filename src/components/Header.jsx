@@ -1,8 +1,10 @@
 "use client";
 
+import { AuthContext } from "@/app/context/AuthContext";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import toast from "react-hot-toast";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,6 +13,15 @@ export default function Header() {
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const { user } = useContext(AuthContext);
+
+  let handleShowToast = () => {
+    toast.error("Please login to create a blog");
+  };
+  let handleShowToast2 = () => {
+    toast.error("Please login to see your blogs");
   };
 
   return (
@@ -41,46 +52,90 @@ export default function Header() {
                 )}
               </Link>
 
-              <Link
-                href="/blog/create"
-                className={`relative px-3 py-2 text-sm font-medium transition-all duration-300 ${
-                  isActive("/blog/create")
-                    ? "text-emerald-400 font-bold"
-                    : "text-gray-200 hover:text-emerald-400"
-                }`}
-              >
-                Create Blog
-                {isActive("/blog/create") && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-emerald-400 to-emerald-800 rounded-full" />
-                )}
-              </Link>
+              {user ? (
+                <Link
+                  href="/blog/create"
+                  className={`relative px-3 py-2 text-sm font-medium transition-all duration-300 ${
+                    isActive("/blog/create")
+                      ? "text-emerald-400 font-bold"
+                      : "text-gray-200 hover:text-emerald-400"
+                  }`}
+                >
+                  Create Blog
+                  {isActive("/blog/create") && (
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-emerald-400 to-emerald-800 rounded-full" />
+                  )}
+                </Link>
+              ) : (
+                <button
+                  onClick={handleShowToast}
+                  className={`relative px-3 py-2 text-sm font-medium transition-all duration-300 ${
+                    isActive("/blog/create")
+                      ? "text-emerald-400 font-bold"
+                      : "text-gray-200 hover:text-emerald-400"
+                  }`}
+                >
+                  Create Blog
+                  {isActive("/blog/create") && (
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-emerald-400 to-emerald-800 rounded-full" />
+                  )}
+                </button>
+              )}
 
-              <Link
-                href="/blog/my-blogs"
-                className={`relative px-3 py-2 text-sm font-medium transition-all duration-300 ${
-                  isActive("/blog/my-blogs")
-                    ? "text-emerald-400 font-bold"
-                    : "text-gray-200 hover:text-emerald-400"
-                }`}
-              >
-                My Blogs
-                {isActive("/blog/my-blogs") && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-emerald-400 to-emerald-800 rounded-full" />
-                )}
-              </Link>
+              {user ? (
+                <Link
+                  href="/blog/my-blogs"
+                  className={`relative px-3 py-2 text-sm font-medium transition-all duration-300 ${
+                    isActive("/blog/my-blogs")
+                      ? "text-emerald-400 font-bold"
+                      : "text-gray-200 hover:text-emerald-400"
+                  }`}
+                >
+                  My Blogs
+                  {isActive("/blog/my-blogs") && (
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-emerald-400 to-emerald-800 rounded-full" />
+                  )}
+                </Link>
+              ) : (
+                <button
+                  onClick={handleShowToast2}
+                  className={`relative px-3 py-2 text-sm font-medium transition-all duration-300 ${
+                    isActive("/blog/my-blogs")
+                      ? "text-emerald-400 font-bold"
+                      : "text-gray-200 hover:text-emerald-400"
+                  }`}
+                >
+                  My Blogs
+                  {isActive("/blog/my-blogs") && (
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-emerald-400 to-emerald-800 rounded-full" />
+                  )}
+                </button>
+              )}
             </nav>
 
             {/* Login Button */}
             <div className="hidden md:block">
-              <Link href="/login">
-                <div className="group relative w-fit mx-auto">
-                  <button className="relative flex items-center px-6 py-2 text-sm font-medium text-white bg-emerald-700/30 border border-emerald-500/50 rounded-full backdrop-blur-md transition-all duration-300 hover:bg-emerald-700/40 hover:border-emerald-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 cursor-pointer">
-                    Login
-                    {/* Underline animation */}
-                    <span className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-gradient-to-r from-transparent via-emerald-400 to-transparent transition-all duration-300 group-hover:w-3/4" />
-                  </button>
-                </div>
-              </Link>
+              {user ? (
+                <Link href="/login">
+                  <div className="group relative w-fit mx-auto">
+                    <button className="relative flex items-center px-6 py-2 text-sm font-medium text-white bg-emerald-700/30 border border-emerald-500/50 rounded-full backdrop-blur-md transition-all duration-300 hover:bg-emerald-700/40 hover:border-emerald-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 cursor-pointer">
+                      Logout
+                      {/* Underline animation */}
+                      <span className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-gradient-to-r from-transparent via-emerald-400 to-transparent transition-all duration-300 group-hover:w-3/4" />
+                    </button>
+                  </div>
+                </Link>
+              ) : (
+                <Link href="/login">
+                  <div className="group relative w-fit mx-auto">
+                    <button className="relative flex items-center px-6 py-2 text-sm font-medium text-white bg-emerald-700/30 border border-emerald-500/50 rounded-full backdrop-blur-md transition-all duration-300 hover:bg-emerald-700/40 hover:border-emerald-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 cursor-pointer">
+                      Login
+                      {/* Underline animation */}
+                      <span className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-gradient-to-r from-transparent via-emerald-400 to-transparent transition-all duration-300 group-hover:w-3/4" />
+                    </button>
+                  </div>
+                </Link>
+              )}
             </div>
 
             {/* Mobile Menu Button */}
@@ -130,40 +185,78 @@ export default function Header() {
                 Home
               </Link>
 
-              <Link
-                href="/blog/create"
-                className={`block px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
-                  isActive("/blog/create")
-                    ? "text-emerald-400 font-bold bg-white/10"
-                    : "text-gray-200 hover:text-emerald-400 hover:bg-white/5"
-                }`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Create Blog
-              </Link>
+              {user ? (
+                <Link
+                  href="/blog/create"
+                  className={`block px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
+                    isActive("/blog/create")
+                      ? "text-emerald-400 font-bold bg-white/10"
+                      : "text-gray-200 hover:text-emerald-400 hover:bg-white/5"
+                  }`}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Create Blog
+                </Link>
+              ) : (
+                <button
+                  onClick={handleShowToast}
+                  className={`block px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
+                    isActive("/blog/create")
+                      ? "text-emerald-400 font-bold bg-white/10"
+                      : "text-gray-200 hover:text-emerald-400 hover:bg-white/5"
+                  }`}
+                >
+                  Create Blog
+                </button>
+              )}
 
-              <Link
-                href="/blog/my-blogs"
-                className={`block px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
-                  isActive("/blog/my-blogs")
-                    ? "text-emerald-400 font-bold bg-white/10"
-                    : "text-gray-200 hover:text-emerald-400 hover:bg-white/5"
-                }`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                My Blogs
-              </Link>
+              {user ? (
+                <Link
+                  href="/blog/my-blogs"
+                  className={`block px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
+                    isActive("/blog/my-blogs")
+                      ? "text-emerald-400 font-bold bg-white/10"
+                      : "text-gray-200 hover:text-emerald-400 hover:bg-white/5"
+                  }`}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  My Blogs
+                </Link>
+              ) : (
+                <button
+                  onClick={handleShowToast2}
+                  className={`block px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
+                    isActive("/blog/my-blogs")
+                      ? "text-emerald-400 font-bold bg-white/10"
+                      : "text-gray-200 hover:text-emerald-400 hover:bg-white/5"
+                  }`}
+                >
+                  My Blogs
+                </button>
+              )}
 
               <div className="px-3 py-2">
-                <Link
-                  href="/login"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="group relative block w-full text-center text-sm font-medium text-white bg-emerald-700/30 backdrop-blur-md border border-emerald-500/50 rounded-full px-4 py-2 transition-all duration-300 hover:bg-emerald-700/40 hover:border-emerald-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
-                >
-                  Login
-                  {/* Underline on hover */}
-                  <span className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-gradient-to-r from-transparent via-emerald-400 to-transparent transition-all duration-300 group-hover:w-3/4" />
-                </Link>
+                {user ? (
+                  <Link
+                    href="/login"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="group relative block w-full text-center text-sm font-medium text-white bg-emerald-700/30 backdrop-blur-md border border-emerald-500/50 rounded-full px-4 py-2 transition-all duration-300 hover:bg-emerald-700/40 hover:border-emerald-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
+                  >
+                    Logout
+                    {/* Underline on hover */}
+                    <span className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-gradient-to-r from-transparent via-emerald-400 to-transparent transition-all duration-300 group-hover:w-3/4" />
+                  </Link>
+                ) : (
+                  <Link
+                    href="/login"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="group relative block w-full text-center text-sm font-medium text-white bg-emerald-700/30 backdrop-blur-md border border-emerald-500/50 rounded-full px-4 py-2 transition-all duration-300 hover:bg-emerald-700/40 hover:border-emerald-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
+                  >
+                    Login
+                    {/* Underline on hover */}
+                    <span className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-gradient-to-r from-transparent via-emerald-400 to-transparent transition-all duration-300 group-hover:w-3/4" />
+                  </Link>
+                )}
               </div>
             </div>
           </div>
