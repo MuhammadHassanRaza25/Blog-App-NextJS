@@ -79,21 +79,35 @@ export async function POST(request) {
     });
 
     // Set cookies through Response
-    response.cookies.set("accessToken", accessToken, {
+    const cookieOptions = {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       path: "/",
       sameSite: "lax",
       maxAge: 15 * 60, // 15 minutes
-    });
-
+    };
+    
+    response.cookies.set("accessToken", accessToken, cookieOptions);
     response.cookies.set("refreshToken", refreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      path: "/",
-      sameSite: "lax",
+      ...cookieOptions,
       maxAge: 15 * 24 * 60 * 60, // 15 days
     });
+
+    console.log("Login ==> Cookies set successfully");
+    console.log("Login ==> Cookie options:", { 
+      httpOnly: cookieOptions.httpOnly, 
+      secure: cookieOptions.secure, 
+      sameSite: cookieOptions.sameSite,
+      path: cookieOptions.path,
+      NODE_ENV: process.env.NODE_ENV 
+    });
+    
+    // Verifying cookies are actually set on response
+    const setCookieHeaders = response.headers.get("set-cookie");
+    console.log("Login - Checking Set-Cookie headers ==>", setCookieHeaders ? "Present" : "Missing");
+    if (setCookieHeaders) {
+      console.log("Login - Set-Cookie preview:", setCookieHeaders.substring(0, 200));
+    }
 
     console.log("User Login Successfully!");
     return response;

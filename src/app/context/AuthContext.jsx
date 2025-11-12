@@ -9,7 +9,7 @@ export function AuthContextProvider({ children }) {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch(`${process.env.BASE_URL}/api/user`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/user`, {
           credentials: "include",
         });
         const data = await res.json();

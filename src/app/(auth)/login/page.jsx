@@ -1,14 +1,15 @@
 "use client";
 
-import { loginUser } from "@/app/actions/users";
 import { AuthContext } from "@/app/context/AuthContext";
 import ToastHandler from "@/components/ToastHandler";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useContext, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const loginRef = useRef(null);
+  const router = useRouter();
   const { setUser } = useContext(AuthContext);
   const [successMsg, setSuccessMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -27,18 +28,34 @@ export default function Login() {
     };
 
     try {
-      const result = await loginUser(userDetails);
+      // Make the request directly from the client so cookies are handled by the browser
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+      const res = await fetch(`${baseUrl}/api/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userDetails),
+        credentials: "include", 
+      });
 
-      if (!result.ok) {
-        setErrorMsg("Invalid Credentials");
+      const data = await res.json();
+
+      if (!res.ok) {
+        setErrorMsg(data.msg || "Invalid Credentials");
         setIsLoading(false);
         return;
       }
 
-      setSuccessMsg(result.msg || "Login successful!");
-      setUser(result.data?.user || {});
+      setSuccessMsg(data.msg || "Login successful!");
+      setUser(data.data?.user || {});
       setIsLoading(false);
       loginRef.current?.reset();
+      
+      // Redirect to home page after successful login
+      setTimeout(() => {
+        router.push("/");
+      }, 1000);
     } catch (err) {
       console.error("Login error:", err);
       setErrorMsg("Something went wrong. Please try again.");
