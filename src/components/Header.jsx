@@ -18,11 +18,8 @@ export default function Header() {
 
   const { user, setUser } = useContext(AuthContext);
 
-  let handleShowToast = () => {
-    toast.error("Please login to create a blog");
-  };
-  let handleShowToast2 = () => {
-    toast.error("Please login to see your blogs");
+  let handleShowToast = (message) => {
+    toast.error(message);
   };
 
   const handleLogout = async () => {
@@ -39,6 +36,7 @@ export default function Header() {
       }
     } catch (error) {
       toast.error("Logout failed please try again!");
+      console.error("Logout error:", error);
     }
   };
 
@@ -58,7 +56,7 @@ export default function Header() {
             <nav className="hidden md:flex space-x-8">
               <Link
                 href="/"
-                className={`relative px-3 py-2 text-sm font-medium transition-all duration-300 ${
+                className={`relative px-3 py-2 cursor-pointer text-sm font-medium transition-all duration-300 ${
                   isActive("/")
                     ? "text-emerald-400 font-bold"
                     : "text-gray-200 hover:text-emerald-400"
@@ -73,7 +71,7 @@ export default function Header() {
               {user ? (
                 <Link
                   href="/blog/create"
-                  className={`relative px-3 py-2 text-sm font-medium transition-all duration-300 ${
+                  className={`relative px-3 py-2 cursor-pointer text-sm font-medium transition-all duration-300 ${
                     isActive("/blog/create")
                       ? "text-emerald-400 font-bold"
                       : "text-gray-200 hover:text-emerald-400"
@@ -86,8 +84,8 @@ export default function Header() {
                 </Link>
               ) : (
                 <button
-                  onClick={handleShowToast}
-                  className={`relative px-3 py-2 text-sm font-medium transition-all duration-300 ${
+                  onClick={()=> handleShowToast("Please login to create a blog")}
+                  className={`relative px-3 py-2 cursor-pointer text-sm font-medium transition-all duration-300 ${
                     isActive("/blog/create")
                       ? "text-emerald-400 font-bold"
                       : "text-gray-200 hover:text-emerald-400"
@@ -103,7 +101,7 @@ export default function Header() {
               {user ? (
                 <Link
                   href="/blog/my-blogs"
-                  className={`relative px-3 py-2 text-sm font-medium transition-all duration-300 ${
+                  className={`relative px-3 py-2 cursor-pointer text-sm font-medium transition-all duration-300 ${
                     isActive("/blog/my-blogs")
                       ? "text-emerald-400 font-bold"
                       : "text-gray-200 hover:text-emerald-400"
@@ -116,8 +114,8 @@ export default function Header() {
                 </Link>
               ) : (
                 <button
-                  onClick={handleShowToast2}
-                  className={`relative px-3 py-2 text-sm font-medium transition-all duration-300 ${
+                  onClick={()=> handleShowToast("Please login to see your blogs")}
+                  className={`relative px-3 py-2 cursor-pointer text-sm font-medium transition-all duration-300 ${
                     isActive("/blog/my-blogs")
                       ? "text-emerald-400 font-bold"
                       : "text-gray-200 hover:text-emerald-400"
@@ -134,7 +132,7 @@ export default function Header() {
             {/* Login Button */}
             <div className="hidden md:block">
               {user ? (
-                <div className="group relative w-fit mx-auto">
+                <div className="group relative w-fit mx-auto cursor-pointer">
                   <button
                     onClick={handleLogout}
                     className="relative flex items-center px-6 py-2 text-sm font-medium text-white bg-emerald-700/30 border border-emerald-500/50 rounded-full backdrop-blur-md transition-all duration-300 hover:bg-emerald-700/40 hover:border-emerald-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 cursor-pointer"
@@ -146,7 +144,7 @@ export default function Header() {
                 </div>
               ) : (
                 <Link href="/login">
-                  <div className="group relative w-fit mx-auto">
+                  <div className="group relative w-fit mx-auto cursor-pointer">
                     <button className="relative flex items-center px-6 py-2 text-sm font-medium text-white bg-emerald-700/30 border border-emerald-500/50 rounded-full backdrop-blur-md transition-all duration-300 hover:bg-emerald-700/40 hover:border-emerald-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 cursor-pointer">
                       Login
                       {/* Underline animation */}
@@ -194,7 +192,7 @@ export default function Header() {
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               <Link
                 href="/"
-                className={`block px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
+                className={`block px-3 py-2 cursor-pointer text-sm font-medium rounded-lg transition-all duration-300 ${
                   isActive("/")
                     ? "text-emerald-400 font-bold bg-white/10"
                     : "text-gray-200 hover:text-emerald-400 hover:bg-white/5"
@@ -207,7 +205,7 @@ export default function Header() {
               {user ? (
                 <Link
                   href="/blog/create"
-                  className={`block px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
+                  className={`block px-3 py-2 cursor-pointer text-sm font-medium rounded-lg transition-all duration-300 ${
                     isActive("/blog/create")
                       ? "text-emerald-400 font-bold bg-white/10"
                       : "text-gray-200 hover:text-emerald-400 hover:bg-white/5"
@@ -218,8 +216,8 @@ export default function Header() {
                 </Link>
               ) : (
                 <button
-                  onClick={handleShowToast}
-                  className={`block px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
+                  onClick={()=> handleShowToast("Please login to create a blog")}
+                  className={`block px-3 py-2 cursor-pointer text-sm font-medium rounded-lg transition-all duration-300 ${
                     isActive("/blog/create")
                       ? "text-emerald-400 font-bold bg-white/10"
                       : "text-gray-200 hover:text-emerald-400 hover:bg-white/5"
@@ -232,7 +230,7 @@ export default function Header() {
               {user ? (
                 <Link
                   href="/blog/my-blogs"
-                  className={`block px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
+                  className={`block px-3 py-2 text-sm cursor-pointer font-medium rounded-lg transition-all duration-300 ${
                     isActive("/blog/my-blogs")
                       ? "text-emerald-400 font-bold bg-white/10"
                       : "text-gray-200 hover:text-emerald-400 hover:bg-white/5"
@@ -243,8 +241,8 @@ export default function Header() {
                 </Link>
               ) : (
                 <button
-                  onClick={handleShowToast2}
-                  className={`block px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
+                  onClick={()=> handleShowToast("Please login to see your blogs")}
+                  className={`block px-3 py-2 cursor-pointer text-sm font-medium rounded-lg transition-all duration-300 ${
                     isActive("/blog/my-blogs")
                       ? "text-emerald-400 font-bold bg-white/10"
                       : "text-gray-200 hover:text-emerald-400 hover:bg-white/5"
@@ -258,7 +256,7 @@ export default function Header() {
                 {user ? (
                   <button
                     onClick={handleLogout}
-                    className="group relative block w-full text-center text-sm font-medium text-white bg-emerald-700/30 backdrop-blur-md border border-emerald-500/50 rounded-full px-4 py-2 transition-all duration-300 hover:bg-emerald-700/40 hover:border-emerald-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
+                    className="group relative block w-full text-center text-sm font-medium text-white bg-emerald-700/30 backdrop-blur-md border border-emerald-500/50 rounded-full px-4 py-2 transition-all duration-300 hover:bg-emerald-700/40 hover:border-emerald-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 cursor-pointer"
                   >
                     Logout
                     {/* Underline on hover */}
@@ -268,7 +266,7 @@ export default function Header() {
                   <Link
                     href="/login"
                     onClick={() => setIsMenuOpen(false)}
-                    className="group relative block w-full text-center text-sm font-medium text-white bg-emerald-700/30 backdrop-blur-md border border-emerald-500/50 rounded-full px-4 py-2 transition-all duration-300 hover:bg-emerald-700/40 hover:border-emerald-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
+                    className="group relative block w-full text-center text-sm font-medium text-white bg-emerald-700/30 backdrop-blur-md border border-emerald-500/50 rounded-full px-4 py-2 transition-all duration-300 hover:bg-emerald-700/40 hover:border-emerald-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 cursor-pointer"
                   >
                     Login
                     {/* Underline on hover */}
