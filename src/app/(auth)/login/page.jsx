@@ -47,7 +47,7 @@ export default function Login() {
         return;
       }
 
-      setSuccessMsg(data.msg || "Login successful!");
+      setSuccessMsg("Login successfully");
       setUser(data.data?.user || {});
       setIsLoading(false);
       loginRef.current?.reset();

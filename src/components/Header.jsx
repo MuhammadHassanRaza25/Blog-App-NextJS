@@ -2,11 +2,12 @@
 
 import { AuthContext } from "@/app/context/AuthContext";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function Header() {
+  let router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
   const isActive = (path) => pathname === path;
@@ -15,13 +16,30 @@ export default function Header() {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const { user } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
 
   let handleShowToast = () => {
     toast.error("Please login to create a blog");
   };
   let handleShowToast2 = () => {
     toast.error("Please login to see your blogs");
+  };
+
+  const handleLogout = async () => {
+    try {
+      await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
+      toast.success("Logged out successfully");
+      setUser(null);
+
+      if (pathname !== "/") {
+        router.push("/");
+      }
+    } catch (error) {
+      toast.error("Logout failed please try again!");
+    }
   };
 
   return (
@@ -116,15 +134,16 @@ export default function Header() {
             {/* Login Button */}
             <div className="hidden md:block">
               {user ? (
-                <Link href="/login">
-                  <div className="group relative w-fit mx-auto">
-                    <button className="relative flex items-center px-6 py-2 text-sm font-medium text-white bg-emerald-700/30 border border-emerald-500/50 rounded-full backdrop-blur-md transition-all duration-300 hover:bg-emerald-700/40 hover:border-emerald-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 cursor-pointer">
-                      Logout
-                      {/* Underline animation */}
-                      <span className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-gradient-to-r from-transparent via-emerald-400 to-transparent transition-all duration-300 group-hover:w-3/4" />
-                    </button>
-                  </div>
-                </Link>
+                <div className="group relative w-fit mx-auto">
+                  <button
+                    onClick={handleLogout}
+                    className="relative flex items-center px-6 py-2 text-sm font-medium text-white bg-emerald-700/30 border border-emerald-500/50 rounded-full backdrop-blur-md transition-all duration-300 hover:bg-emerald-700/40 hover:border-emerald-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 cursor-pointer"
+                  >
+                    Logout
+                    {/* Underline animation */}
+                    <span className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-gradient-to-r from-transparent via-emerald-400 to-transparent transition-all duration-300 group-hover:w-3/4" />
+                  </button>
+                </div>
               ) : (
                 <Link href="/login">
                   <div className="group relative w-fit mx-auto">
@@ -237,15 +256,14 @@ export default function Header() {
 
               <div className="px-3 py-2">
                 {user ? (
-                  <Link
-                    href="/login"
-                    onClick={() => setIsMenuOpen(false)}
+                  <button
+                    onClick={handleLogout}
                     className="group relative block w-full text-center text-sm font-medium text-white bg-emerald-700/30 backdrop-blur-md border border-emerald-500/50 rounded-full px-4 py-2 transition-all duration-300 hover:bg-emerald-700/40 hover:border-emerald-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2"
                   >
                     Logout
                     {/* Underline on hover */}
                     <span className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-gradient-to-r from-transparent via-emerald-400 to-transparent transition-all duration-300 group-hover:w-3/4" />
-                  </Link>
+                  </button>
                 ) : (
                   <Link
                     href="/login"
