@@ -4,7 +4,7 @@ import Header from "@/components/Header";
 
 export default async function BlogDetailPage({ params }) {
 
-  let { blogid } = params;
+  let { blogid } = await params;
   let blogData = null;
   try {
     const res = await fetch(`${process.env.BASE_URL}/api/blogs/${blogid}`, { cache: "no-store" });

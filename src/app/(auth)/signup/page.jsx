@@ -1,6 +1,6 @@
 "use client";
 
-import { signupUser } from "@/app/actions/users";
+import { signupUser } from "@/app/actions/auth";
 import ToastHandler from "@/components/ToastHandler";
 import { cn } from "@/lib/utils";
 import Link from "next/link";

@@ -3,7 +3,7 @@ import BlogModel from "@/app/lib/models/BlogModel";
 
 export async function GET(request, {params}){
     
-    let { id } = params
+    let { id } = await params;
     // console.log("Blog ID is here ===>", id);
 
     // Checking blog id is valid or not
