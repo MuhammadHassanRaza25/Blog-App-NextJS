@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 export default function Header() {
   let router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const pathname = usePathname();
   const isActive = (path) => pathname === path;
 
@@ -84,7 +85,9 @@ export default function Header() {
                 </Link>
               ) : (
                 <button
-                  onClick={()=> handleShowToast("Please login to create a blog")}
+                  onClick={() =>
+                    handleShowToast("Please login to create a blog")
+                  }
                   className={`relative px-3 py-2 cursor-pointer text-sm font-medium transition-all duration-300 ${
                     isActive("/blog/create")
                       ? "text-emerald-400 font-bold"
@@ -114,7 +117,9 @@ export default function Header() {
                 </Link>
               ) : (
                 <button
-                  onClick={()=> handleShowToast("Please login to see your blogs")}
+                  onClick={() =>
+                    handleShowToast("Please login to see your blogs")
+                  }
                   className={`relative px-3 py-2 cursor-pointer text-sm font-medium transition-all duration-300 ${
                     isActive("/blog/my-blogs")
                       ? "text-emerald-400 font-bold"
@@ -132,16 +137,42 @@ export default function Header() {
             {/* Login Button */}
             <div className="hidden md:block">
               {user ? (
-                <div className="group relative w-fit mx-auto cursor-pointer">
+                <>
+                  {/* Avatar Button */}
                   <button
-                    onClick={handleLogout}
-                    className="relative flex items-center px-6 py-2 text-sm font-medium text-white bg-emerald-700/30 border border-emerald-500/50 rounded-full backdrop-blur-md transition-all duration-300 hover:bg-emerald-700/40 hover:border-emerald-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 cursor-pointer"
+                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                    className="w-10 h-w-10 rounded-full overflow-hidden border-2 border-emerald-500 focus:outline-none cursor-pointer"
                   >
-                    Logout
-                    {/* Underline animation */}
-                    <span className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-gradient-to-r from-transparent via-emerald-400 to-transparent transition-all duration-300 group-hover:w-3/4" />
+                    <img
+                      src={"/images/avatar.png"}
+                      alt="User Avatar"
+                      className="w-full h-full object-cover"
+                    />
                   </button>
-                </div>
+
+                  {/* Dropdown */}
+                  {isDropdownOpen && (
+                    <div className="absolute right-3 mt-2.5 w-52 bg-emerald-700/30 backdrop-blur-sm border border-emerald-500/50 rounded-lg shadow-lg z-50 overflow-hidden">
+                      {/* Name & Email */}
+                      <div className="px-4 py-3 border-b border-emerald-500/50">
+                        <p className="text-white font-semibold text-sm">
+                          {user.username}
+                        </p>
+                        <p className="text-emerald-300 text-sm">{user.email}</p>
+                      </div>
+
+                      {/* Logout Button */}
+                      <button
+                        onClick={handleLogout}
+                        className="group relative flex items-center justify-center gap-2 w-full px-4 py-2 font-semibold text-white bg-emerald-700/30 backdrop-blur-sm border-b border-emerald-500/50 rounded-b-lg transition-all duration-300 hover:bg-emerald-700/40 hover:border-emerald-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 cursor-pointer"
+                      >
+                        Logout
+                        {/* Underline on hover */}
+                        <span className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-gradient-to-r from-transparent via-emerald-400 to-transparent transition-all duration-300 group-hover:w-3/4" />
+                      </button>
+                    </div>
+                  )}
+                </>
               ) : (
                 <Link href="/login">
                   <div className="group relative w-fit mx-auto cursor-pointer">
@@ -216,7 +247,9 @@ export default function Header() {
                 </Link>
               ) : (
                 <button
-                  onClick={()=> handleShowToast("Please login to create a blog")}
+                  onClick={() =>
+                    handleShowToast("Please login to create a blog")
+                  }
                   className={`block px-3 py-2 cursor-pointer text-sm font-medium rounded-lg transition-all duration-300 ${
                     isActive("/blog/create")
                       ? "text-emerald-400 font-bold bg-white/10"
@@ -241,7 +274,9 @@ export default function Header() {
                 </Link>
               ) : (
                 <button
-                  onClick={()=> handleShowToast("Please login to see your blogs")}
+                  onClick={() =>
+                    handleShowToast("Please login to see your blogs")
+                  }
                   className={`block px-3 py-2 cursor-pointer text-sm font-medium rounded-lg transition-all duration-300 ${
                     isActive("/blog/my-blogs")
                       ? "text-emerald-400 font-bold bg-white/10"
