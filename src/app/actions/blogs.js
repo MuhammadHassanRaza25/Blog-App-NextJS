@@ -8,42 +8,17 @@ export async function addBlog(obj){
     const blog = obj
     console.log("blog====>", blog);
     
-    await fetch(`${process.env.BASE_URL}api/blogs`, {
+    let res = await fetch(`${process.env.BASE_URL}/api/blogs`, {
       method: "POST",
       body: JSON.stringify(obj)    
     })
     
-    revalidatePath('/');
+    const data = await res.json()
+    revalidatePath("/");
+
+    return{ok: res.ok, ...data};
   }
   catch(err){
     console.log("error==>", err);
   }
 }
-
-// export async function updateTodo(obj){
-//   try{
-//     await fetch(`${process.env.BASE_URL}api/todos`, {
-//       method: "PUT",
-//       body: JSON.stringify(obj)    
-//     });
-    
-//     revalidatePath('/todos');
-//   }
-//   catch(err){
-//     console.log("error==>", err);
-//   }
-// }
-
-// export async function deleteTodo(obj){
-//   try{
-//     await fetch(`${process.env.BASE_URL}api/todos`, {
-//       method: "DELETE",
-//       body: JSON.stringify(obj)    
-//     });
-    
-//     revalidatePath('/todos');
-//   }
-//   catch(err){
-//     console.log("error==>", err);
-//   }
-// }
