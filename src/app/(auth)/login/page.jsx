@@ -1,24 +1,20 @@
 "use client";
 
 import { AuthContext } from "@/app/context/AuthContext";
-import ToastHandler from "@/components/ToastHandler";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useContext, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function Login() {
   const loginRef = useRef(null);
   const router = useRouter();
   const { setUser } = useContext(AuthContext);
-  const [successMsg, setSuccessMsg] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
   const [loading, setIsLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setSuccessMsg("");
-    setErrorMsg("");
     setIsLoading(true);
 
     const formData = new FormData(loginRef.current);
@@ -42,12 +38,12 @@ export default function Login() {
       const data = await res.json();
 
       if (!res.ok) {
-        setErrorMsg(data.msg || "Invalid Credentials");
+        toast.error("Invalid Credentials");
         setIsLoading(false);
         return;
       }
 
-      setSuccessMsg("Login successfully");
+      toast.success("Login Successfully");
       setUser(data.data?.user || {});
       setIsLoading(false);
       loginRef.current?.reset();
@@ -55,18 +51,16 @@ export default function Login() {
       // Redirect to home page after successful login
       setTimeout(() => {
         router.push("/");
-      }, 1000);
+      }, 500);
     } catch (err) {
       console.error("Login error:", err);
-      setErrorMsg("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.");
       setIsLoading(false);
     }
   };
 
   return (
     <>
-      <ToastHandler successMessage={successMsg} errorMessage={errorMsg} />
-
       <div className="relative min-h-screen flex items-center justify-center px-4">
         <div
           className={cn(
@@ -121,6 +115,7 @@ export default function Login() {
 
             <button
               type="submit"
+              disabled={loading}
               className="w-full flex justify-center mt-2 px-6 py-2 font-medium text-white bg-emerald-700/40 border border-emerald-500 rounded-lg transition-all duration-300 hover:bg-emerald-500/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 active:scale-[0.98] cursor-pointer"
             >
               {loading ? <div className="formLoader"></div> : "Login"}

@@ -1,21 +1,19 @@
 "use client";
 
 import { signupUser } from "@/app/actions/auth";
-import ToastHandler from "@/components/ToastHandler";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
+import toast from "react-hot-toast";
 
 export default function Signup() {
   const signupRef = useRef(null);
-  const [successMsg, setSuccessMsg] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
+  const router = useRouter();
   const [loading, setIsLoading] = useState(false);
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    setSuccessMsg("");
-    setErrorMsg("");
     setIsLoading(true);
 
     const data = new FormData(signupRef.current);
@@ -28,25 +26,39 @@ export default function Signup() {
     try {
       const result = await signupUser(userDetails);
       if (!result.ok) {
-        setErrorMsg(result.msg);
+        const msg = result.msg;
+        if (msg.includes("username")) {
+          toast.error("Username must be at least 3 characters");
+        } else if (msg.includes("password")) {
+          toast.error(
+            "Password must be at 5-30 characters, letters, numbers and special characters"
+          );
+        } else if (msg.includes("exist")) {
+          toast.error("User exist with this email");
+        } else if (msg.includes("email")) {
+          toast.error("Please enter a valid email");
+        } else {
+          toast.error(msg);
+        }
         setIsLoading(false);
         return;
       }
-      setSuccessMsg(result.msg || "Signup successful!");
+      toast.success("Signup Successfully");
       setIsLoading(false);
       // console.log("FORM DATA ====>", userDetails);
       signupRef.current?.reset();
+      setTimeout(() => {
+        router.push("/login");
+      }, 500);
     } catch (err) {
       console.error("Signup error:", err);
-      setErrorMsg("Something went wrong. Please try again.");
+      toast.error("Something went wrong. Please try again.");
       setIsLoading(false);
     }
   };
 
   return (
     <>
-      <ToastHandler successMessage={successMsg} errorMessage={errorMsg} />
-
       <div className="relative min-h-screen flex items-center justify-center px-4">
         {/* Background Grid */}
         <div
@@ -141,6 +153,7 @@ export default function Signup() {
             {/* Submit Button */}
             <button
               type="submit"
+              disabled={loading}
               className="w-full flex justify-center mt-2 px-6 py-2 font-medium text-white bg-emerald-700/40 border border-emerald-500 rounded-lg transition-all duration-300 hover:bg-emerald-500/20 hover:border-emerald-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 active:scale-[0.98] cursor-pointer"
             >
               {loading ? <div className="formLoader"></div> : "Sign Up"}

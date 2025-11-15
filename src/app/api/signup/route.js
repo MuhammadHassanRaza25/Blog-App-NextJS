@@ -2,6 +2,7 @@ import { ConnectDB } from "@/app/lib/dbConnect";
 import UserModel from "@/app/lib/models/UserModel";
 import bcrypt from "bcrypt";
 import Joi from "joi";
+import { NextResponse } from "next/server";
 
 // Joi schema for data validation, make sure data keynames are same like this schema keynames //
 const signupSchema = Joi.object({
@@ -11,7 +12,9 @@ const signupSchema = Joi.object({
     .max(30)
     .required(),
   email: Joi.string().email().required(),
-  password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")).required(),
+  password: Joi.string()
+    .pattern(new RegExp("^[a-zA-Z0-9!@#$%^&*]{5,30}$"))
+    .required(),
 });
 
 export async function POST(request) {
@@ -19,21 +22,21 @@ export async function POST(request) {
   const newUserData = await request.json();
   const { error, value } = signupSchema.validate(newUserData); //ye check karega ke data exact signupSchema ki tarah hai ya nhi.
   // console.log("User Validated Data ===>", value);
-  
+
   if (error) {
     console.log("JOI ERROR ==>", error.message);
-    return Response.json(
+    return NextResponse.json(
       {
         data: null,
         msg: error.message,
       },
-      { status: 404 }
+      { status: 400 }
     );
   }
 
   const findUser = await UserModel.findOne({ email: value.email }); //same email ka user le ao.
   if (findUser) {
-    return Response.json(
+    return NextResponse.json(
       {
         data: null,
         msg: "User exist with this email",
@@ -51,7 +54,7 @@ export async function POST(request) {
   await addUser.save();
   console.log("User Registered Successfully ===>", addUser);
 
-  return Response.json({
+  return NextResponse.json({
     data: addUser,
     msg: "User Registered Successfully",
   });
