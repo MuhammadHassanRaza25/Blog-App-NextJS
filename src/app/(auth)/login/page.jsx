@@ -43,7 +43,7 @@ export default function Login() {
         return;
       }
 
-      toast.success("Login Successfully");
+      toast.success("Logged in successfully");
       setUser(data.data?.user || {});
       setIsLoading(false);
       loginRef.current?.reset();

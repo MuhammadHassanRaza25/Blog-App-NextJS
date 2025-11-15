@@ -31,7 +31,7 @@ export default function Signup() {
           toast.error("Username must be at least 3 characters");
         } else if (msg.includes("password")) {
           toast.error(
-            "Password must be at 5-30 characters, letters, numbers and special characters"
+            "Password must be at least 5-30 characters, letters, numbers and special characters"
           );
         } else if (msg.includes("exist")) {
           toast.error("User exist with this email");
@@ -43,7 +43,7 @@ export default function Signup() {
         setIsLoading(false);
         return;
       }
-      toast.success("Signup Successfully");
+      toast.success("Signed up successfully");
       setIsLoading(false);
       // console.log("FORM DATA ====>", userDetails);
       signupRef.current?.reset();
