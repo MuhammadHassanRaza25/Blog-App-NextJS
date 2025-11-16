@@ -76,11 +76,9 @@ export default function BlogCard({ data }) {
               </div>
 
               {/* Read More Button */}
-              <Link href={`/blog/${id}`}>
                 <button className="flex gap-3 items-center px-4 py-1.5 text-xs font-semibold backdrop-blur-sm border bg-emerald-700/30 focus:outline-none focus:bg-emerald-700/40 hover:bg-emerald-700/40 border-emerald-500/50 hover:border-emerald-500 text-white rounded-full transition-all duration-300 cursor-pointer">
                   Read More
                 </button>
-              </Link>
             </div>
           </div>
         </div>
