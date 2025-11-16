@@ -4,10 +4,13 @@ const BlogSchema = new mongoose.Schema(
   {
     title: { type: String, unique: true },
     description: String,
-    author: String,
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Users",
+    },
   },
   {
-    timestamps: true, 
+    timestamps: true,
   }
 );
 

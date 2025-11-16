@@ -10,8 +10,7 @@ export default function BlogDetailCard({ data }) {
     image,
     title,
     description,
-    author = "Unknown Author",
-    authorAvatar,
+    author,
     createdAt,
   } = data;
 
@@ -62,7 +61,7 @@ export default function BlogDetailCard({ data }) {
         <div className="flex items-center gap-3 mb-6">
           <Image
             src={
-              authorAvatar || "https://randomuser.me/api/portraits/men/75.jpg"
+              "https://randomuser.me/api/portraits/men/75.jpg"
             }
             width={40}
             height={40}
@@ -71,7 +70,7 @@ export default function BlogDetailCard({ data }) {
             unoptimized
           />
           <div>
-            <p className="text-sm font-medium">{author}</p>
+            <p className="text-sm font-medium">{author.username || "Unknown Author"}</p>
             <p className="text-xs text-gray-400">{dateStr}</p>
           </div>
         </div>
@@ -87,34 +86,11 @@ export default function BlogDetailCard({ data }) {
           ) : (
             <>
               <p>
-                This is a placeholder blog description. Replace this with actual
-                text from your CMS or database.
+                Blog description.
               </p>
               <p className="mt-3">
-                Lor Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-                nec odio. Praesent libero. Sed cursus ante dapibus diam. Lorem
-                ipsum dolor sit amet, consectetur adipiscing elit. Integer nec
-                odio. Praesent libero. Sed cursus ante dapibus diam. Lorem ipsum
-                dolor sit amet, consectetur adipiscing elit. Integer nec odio.
-                Praesent libero. Sed cursus ante dapibus diam. Lorem ipsum dolor
-                sit amet, consectetur adipiscing elit. Integer nec odio.
-                Praesent libero. Sed cursus ante dapibus diam. Lorem ipsum dolor
-                sit amet, consectetur adipiscing elit. Integer nec odio.
-                Praesent libero. Sed cursus ante dapibus diam. Lorem ipsum dolor
-                sit amet, consectetur adipiscing elit. Integer nec odio.
-                Praesent libero. Sed cursus ante dapibus diam. Lorem ipsum dolor
-                sit amet, consectetur adipiscing elit. Integer nec odio.
-                Praesent libero. Sed cursus ante dapibus diam. Lorem ipsum dolor
-                sit amet, consectetur adipiscing elit. Integer nec odio.
-                Praesent libero. Sed cursus ante dapibus diam. Lorem ipsum dolor
-                sit amet, consectetur adipiscing elit. Integer nec odio.
-                Praesent libero. Sed cursus ante dapibus diam. Lorem ipsum dolor
-                sit amet, consectetur adipiscing elit. Integer nec odio.
-                Praesent libero. Sed cursus ante dapibus diam. em ipsum dolor
-                sit amet, consectetur adipiscing elit. Integer nec odio.
-                Praesent libero. Sed cursus ante dapibus diam.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Integer nec odio. Praesent libero. 
               </p>
             </>
           )}

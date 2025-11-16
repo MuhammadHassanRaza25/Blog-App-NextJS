@@ -72,6 +72,20 @@ a:focus{
 ::-webkit-scrollbar-thumb:hover {
   background-color: #10b981; /* emerald-600 */
 }
+/* Scrollbar for textarea */
+.textarea-scrollbar::-webkit-scrollbar {
+  width: 5px; 
+}
+.textarea-scrollbar::-webkit-scrollbar-track {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 8px; 
+}
+.textarea-scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 8px; 
+  border: 2px solid transparent; 
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
 
 .loader {
   width: 50px;

@@ -1,24 +1,24 @@
 
-"use server"
+// "use server"
 
-import { revalidatePath } from "next/cache";
+// import { revalidatePath } from "next/cache";
 
-export async function addBlog(obj){
-  try{
-    const blog = obj
-    console.log("blog====>", blog);
+// export async function addBlog(obj){
+//   try{
+//     const blog = obj
+//     console.log("blog====>", blog);
     
-    let res = await fetch(`${process.env.BASE_URL}/api/blogs`, {
-      method: "POST",
-      body: JSON.stringify(obj)    
-    })
+//     let res = await fetch(`${process.env.BASE_URL}/api/blogs`, {
+//       method: "POST",
+//       body: JSON.stringify(obj)    
+//     })
     
-    const data = await res.json()
-    revalidatePath("/");
+//     const data = await res.json()
+//     revalidatePath("/");
 
-    return{ok: res.ok, ...data};
-  }
-  catch(err){
-    console.log("error==>", err);
-  }
-}
+//     return{ok: res.ok, ...data};
+//   }
+//   catch(err){
+//     console.log("error==>", err);
+//   }
+// }

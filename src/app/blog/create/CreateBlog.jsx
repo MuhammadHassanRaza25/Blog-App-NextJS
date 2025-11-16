@@ -1,6 +1,5 @@
 "use client";
 
-import { addBlog } from "@/app/actions/blogs";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Image from "next/image";
@@ -12,7 +11,7 @@ export default function CreateBlog() {
   const formRef = useRef(null);
   const [loading, setIsLoading] = useState(false);
   const router = useRouter();
-  
+
   const handleCreateBlog = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -22,12 +21,27 @@ export default function CreateBlog() {
       // image: imageUrl,
       title: formData.get("title"),
       description: formData.get("description"),
-      author: formData.get("author"),
     };
     try {
-      let result = await addBlog(obj);
-      if (!result.ok) {
-        toast.error("Error Please Try Again");
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+      let res = await fetch(`${baseUrl}/api/blogs`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(obj),
+        credentials: "include",
+      });
+      if (!res.ok) {
+        const result = await res.json();
+        const msg = result.msg;
+        if (msg.includes("title")) {
+          toast.error("title must be at least 3 characters");
+        } else if (msg.includes("description")) {
+          toast.error("description must be at least 10 characters");
+        } else {
+          toast.error(msg);
+        }
         setIsLoading(false);
         return;
       }
@@ -82,25 +96,20 @@ export default function CreateBlog() {
               placeholder="Enter Blog Title"
               required
             />
-            <textarea
-              className="w-full text-sm bg-white/10 border border-white/30 text-white placeholder-white/70 py-2 px-4 rounded-xl focus:outline-none focus:border-emerald-500 transition"
-              name="description"
-              placeholder="Enter Description"
-              required
-              rows={3}
-            ></textarea>
+            <div className="w-full rounded-xl bg-white/10 border border-white/30 overflow-hidden">
+              <textarea
+                className="w-full resize-none box-border text-sm text-white placeholder-white/70 py-2 px-4 focus:outline-none focus:border-emerald-500 transition textarea-scrollbar overflow-y-auto rounded-xl"
+                name="description"
+                placeholder="Enter Description"
+                required
+                rows={3}
+              ></textarea>
+            </div>
             <input
               type="file"
               name="image"
               accept="image/*"
               className="w-full text-sm px-4 py-2 rounded-full bg-white/10 border border-white/30 text-white/70 file:text-white/70 file:bg-transparent file:border-0 file:p-0 placeholder-gray-400 focus:outline-none focus:border-emerald-500/50"
-            />
-            <input
-              className="w-full text-sm bg-white/10 border border-white/30 text-white placeholder-white/70 py-2 px-4 rounded-full focus:outline-none focus:border-emerald-500 transition"
-              type="text"
-              name="author"
-              placeholder="Enter Author Name"
-              required
             />
             <button
               type="submit"

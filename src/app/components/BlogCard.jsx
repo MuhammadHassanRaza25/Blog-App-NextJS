@@ -8,7 +8,6 @@ export default function BlogCard({ data }) {
     title,
     description,
     author,
-    authorAvatar,
     createdAt,
   } = data;
 
@@ -51,17 +50,20 @@ export default function BlogCard({ data }) {
             <div className="flex items-end justify-between mt-auto">
               {/* Author */}
               <div className="flex items-center gap-3">
-                <img
+                <Image
                   src={
-                    authorAvatar ||
                     "https://randomuser.me/api/portraits/men/75.jpg"
                   }
-                  alt={author || "Author"}
+                  width={40}
+                  height={40}
+                  alt="Blog Author"
                   className="w-10 h-10 rounded-full border-2 border-emerald-400 object-cover shrink-0"
+                  unoptimized
                 />
                 <div className="overflow-hidden">
                   <p className="text-white font-medium text-sm truncate">
-                    {author || "Unknown Author"}
+                    {/* author.username */}
+                    {author.username || "Unknown Author"}
                   </p>
                   <p className="text-gray-400 text-xs">
                     {createdAt
