@@ -3,25 +3,23 @@ import Header from "../components/Header";
 import Footer from "@/components/Footer";
 import BlogCard from "./components/BlogCard";
 import { MotionUp } from "@/components/ui/motion-up";
+import BlogsPagination from "./components/BlogPagination";
 
-export default async function Home() {
+export default async function Home({ searchParams }) {
+  let resData = { data: [], totalPages: 0, page: 1 };
 
-  let resData = [];
+  const page = parseInt(searchParams?.page) || 1;
+  const limit = parseInt(searchParams?.limit) || 9;
 
   try {
-    const res = await fetch(`${process.env.BASE_URL}/api/blogs`, { cache: "no-store" });
-
-    // Check if response is JSON
-    const text = await res.text();
-    try {
-      resData = JSON.parse(text);
-    } catch (err) {
-      console.error("Failed to parse JSON:", err, text);
-      resData = { data: [] };
-    }
+    const res = await fetch(
+      `${process.env.BASE_URL}/api/blogs?page=${page}&limit=${limit}`,
+      { cache: "no-store" }
+    );
+    resData = await res.json();
   } catch (err) {
-    console.error("Error fetching blogs:", err);
-    resData = { data: [] };
+    console.log("Error fetching blogs:", err);
+    resData = { data: [], totalPages: 0, page, error: true };
   }
 
   return (
@@ -49,17 +47,34 @@ export default async function Home() {
         </div>
       </MotionUp>
 
-      <div className="mt-10 mb-18 flex flex-wrap gap-5 justify-center max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-         {resData.data && resData.data.length > 0 ? (
+      <div className="mt-10 mb-10 flex flex-wrap gap-5 justify-center max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        {resData.error ? (
+          <p className="text-red-400 text-center lg:text-base text-sm ml-5 mt-5 mb-14">
+            Failed to fetch blogs. Please try again later.
+          </p>
+        ) : resData.data && resData.data.length > 0 ? (
           resData.data.map((blog, index) => (
             <MotionUp key={blog._id} delay={index * 0.1}>
               <BlogCard data={blog} />
             </MotionUp>
           ))
         ) : (
-          <p className="text-gray-400 text-center mt-10">No blogs available.</p>
+          <p className="text-emerald-400 text-center ml-5 mt-10 mb-14">
+            No blogs available.
+          </p>
         )}
       </div>
+
+      {/* Pagination Component */}
+      {!resData.error && resData.data.length > 0 && (
+        <div className="flex justify-center mt-6 max-w-5xl mx-auto">
+          <BlogsPagination
+            page={resData.page}
+            limit={limit}
+            total={resData.total}
+          />
+        </div>
+      )}
 
       <Footer />
     </>

@@ -6,15 +6,35 @@ import mongoose from "mongoose";
 import Joi from "joi";
 
 export async function GET(request) {
-  await ConnectDB();
+  try {
+    await ConnectDB();
 
-  const blogs = await BlogModel.find().populate("author", "username").lean();
-  console.log("Blogs From MongoDB ===>", blogs);
+    const { searchParams } = new URL(request.url);
+    const page = Math.max(parseInt(searchParams.get("page")) || 1, 1);
+    const limit = Math.min(Math.max(parseInt(searchParams.get("limit")) || 9, 1), 100);
 
-  return Response.json({
-    data: blogs,
-    msg: "Blogs Fetched Successfully.",
-  });
+    const total = await BlogModel.countDocuments();
+    const blogs = await BlogModel.find()
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .lean();
+      console.log("Blogs From MongoDB ===>", blogs);
+
+    return NextResponse.json({
+      data: blogs,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit),
+      msg: "Blogs Fetched Successfully."
+    });
+  } catch (err) {
+    console.log("Error fetching blogs:", err);
+    return NextResponse.json(
+      { msg: "Failed to fetch blogs", error: err.message },
+      { status: 500 }
+    );
+  }
 }
 
 const blogSchema = Joi.object({

@@ -35,7 +35,9 @@ export default function CreateBlog() {
       if (!res.ok) {
         const result = await res.json();
         const msg = result.msg;
-        if (msg.includes("title")) {
+        if (msg.includes("less")) {
+          toast.error("title must be at less than 100 characters");
+        } else if (msg.includes("title")) {
           toast.error("title must be at least 3 characters");
         } else if (msg.includes("description")) {
           toast.error("description must be at least 10 characters");
@@ -45,6 +47,7 @@ export default function CreateBlog() {
         setIsLoading(false);
         return;
       }
+
       toast.success("Blog created successfully");
       setIsLoading(false);
       formRef.current?.reset();
