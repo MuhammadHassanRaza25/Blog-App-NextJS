@@ -1,0 +1,48 @@
+import { ConnectDB } from "@/app/lib/dbConnect";
+import BlogModel from "@/app/lib/models/BlogModel";
+import { verifyUser } from "@/app/lib/verifyUser";
+import { NextResponse } from "next/server";
+
+export async function GET(request) {
+  try {
+    await ConnectDB();
+
+    const { searchParams } = new URL(request.url);
+    const page = Math.max(parseInt(searchParams.get("page")) || 1, 1);
+    const limit = Math.min(
+      Math.max(parseInt(searchParams.get("limit")) || 9, 1),
+      100
+    );
+
+    const user = await verifyUser();
+    if (!user) {
+      return NextResponse.json(
+        { msg: "User not logged in or session expired" },
+        { status: 401 }
+      );
+    }
+
+    const total = await BlogModel.countDocuments({ author: user._id });
+    const blogs = await BlogModel.find({ author: user._id })
+      .populate("author", "username")
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .lean();
+    console.log("User blogs from mongoDB ===>", blogs);
+
+    return NextResponse.json({
+      data: blogs,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit),
+      msg: "User Blogs Fetched Successfully.",
+    });
+  } catch (err) {
+    console.log("Error fetching user blogs:", err);
+    return NextResponse.json(
+      { msg: "Failed to fetch user blogs", error: err.message },
+      { status: 500 }
+    );
+  }
+}

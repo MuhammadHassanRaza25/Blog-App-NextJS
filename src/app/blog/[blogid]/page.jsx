@@ -20,7 +20,7 @@ export default async function BlogDetailPage({ params }) {
       <Header />
       <div className="px-4 sm:px-6 lg:px-24">
         {blogData ? (
-          <BlogDetailCard data={blogData} />
+          <BlogDetailCard data={blogData} backUrl="/" />
         ) : (
           <p className="text-center text-gray-500 mt-10">Blog not found</p>
         )}

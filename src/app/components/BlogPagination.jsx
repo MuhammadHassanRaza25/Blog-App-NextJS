@@ -4,7 +4,7 @@ import { Pagination } from "antd";
 import { useRouter } from "next/navigation";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
-export default function BlogsPagination({ page, limit, total }) {
+export default function BlogsPagination({ page, limit, total, basePath = ""  }) {
   const router = useRouter();
 
   const pageBtnClass =
@@ -24,7 +24,7 @@ export default function BlogsPagination({ page, limit, total }) {
         pageSize={limit}
         showSizeChanger={false}
         onChange={(page, pageSize) =>
-          router.push(`/?page=${page}&limit=${pageSize}`)
+          router.push(`/${basePath}?page=${page}&limit=${pageSize}`)
         }
         itemRender={(pageNum, type, originalElement) => {
           if (type === "prev") {

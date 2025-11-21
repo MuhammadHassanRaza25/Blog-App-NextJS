@@ -104,15 +104,15 @@ export default function Header() {
 
               {user ? (
                 <Link
-                  href="/blog/my-blogs"
+                  href="/my-blogs"
                   className={`relative px-3 py-2 cursor-pointer text-sm font-medium transition-all duration-300 ${
-                    isActive("/blog/my-blogs")
+                    isActive("/my-blogs")
                       ? "text-emerald-400 font-bold"
                       : "text-gray-200 hover:text-emerald-400"
                   }`}
                 >
                   My Blogs
-                  {isActive("/blog/my-blogs") && (
+                  {isActive("/my-blogs") && (
                     <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-emerald-400 to-emerald-800 rounded-full" />
                   )}
                 </Link>
@@ -122,13 +122,13 @@ export default function Header() {
                     handleShowToast("Please login to see your blogs")
                   }
                   className={`relative px-3 py-2 cursor-pointer text-sm font-medium transition-all duration-300 ${
-                    isActive("/blog/my-blogs")
+                    isActive("/my-blogs")
                       ? "text-emerald-400 font-bold"
                       : "text-gray-200 hover:text-emerald-400"
                   }`}
                 >
                   My Blogs
-                  {isActive("/blog/my-blogs") && (
+                  {isActive("/my-blogs") && (
                     <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-emerald-400 to-emerald-800 rounded-full" />
                   )}
                 </button>
@@ -265,9 +265,9 @@ export default function Header() {
 
               {user ? (
                 <Link
-                  href="/blog/my-blogs"
+                  href="/my-blogs"
                   className={`block px-3 py-2 text-sm cursor-pointer font-medium rounded-lg transition-all duration-300 ${
-                    isActive("/blog/my-blogs")
+                    isActive("/my-blogs")
                       ? "text-emerald-400 font-bold bg-white/10"
                       : "text-gray-200 hover:text-emerald-400 hover:bg-white/5"
                   }`}
@@ -281,7 +281,7 @@ export default function Header() {
                     handleShowToast("Please login to see your blogs")
                   }
                   className={`block px-3 py-2 cursor-pointer text-sm font-medium rounded-lg transition-all duration-300 ${
-                    isActive("/blog/my-blogs")
+                    isActive("/my-blogs")
                       ? "text-emerald-400 font-bold bg-white/10"
                       : "text-gray-200 hover:text-emerald-400 hover:bg-white/5"
                   }`}

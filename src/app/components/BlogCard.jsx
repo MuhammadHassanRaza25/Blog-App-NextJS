@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default function BlogCard({ data }) {
+export default function BlogCard({ data, basePath = "blog" }) {
   let {
     _id: id,
     image,
@@ -13,7 +13,7 @@ export default function BlogCard({ data }) {
 
   return (
     <>
-      <Link href={`/blog/${id}`}>
+      <Link href={`/${basePath}/${id}`}>
         <div
           key={id}
           className="w-80 bg-white/5 backdrop-blur-md border border-white/20 rounded-2xl duration-300 cursor-pointer group flex flex-col justify-between"

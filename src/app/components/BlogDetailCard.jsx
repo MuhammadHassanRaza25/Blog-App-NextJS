@@ -4,7 +4,7 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { FaBookReader } from "react-icons/fa";
 import Image from "next/image";
 
-export default function BlogDetailCard({ data }) {
+export default function BlogDetailCard({ data, backUrl="/" }) {
   const {
     _id: id,
     image,
@@ -42,7 +42,7 @@ export default function BlogDetailCard({ data }) {
         {/* Back Link + ID */}
         <div className="flex items-center justify-between mb-4">
           <Link
-            href="/"
+            href={backUrl}
             className="flex items-center gap-2 text-emerald-400 hover:text-emerald-300 text-sm font-medium"
           >
             <FaArrowLeft /> Back to Blogs

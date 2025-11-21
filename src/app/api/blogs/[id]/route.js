@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
 import BlogModel from "@/app/lib/models/BlogModel";
+import { ConnectDB } from "@/app/lib/dbConnect";
 
 export async function GET(request, { params }) {
+  await ConnectDB()
   let { id } = await params;
   // console.log("Blog ID is here ===>", id);
 

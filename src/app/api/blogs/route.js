@@ -11,22 +11,26 @@ export async function GET(request) {
 
     const { searchParams } = new URL(request.url);
     const page = Math.max(parseInt(searchParams.get("page")) || 1, 1);
-    const limit = Math.min(Math.max(parseInt(searchParams.get("limit")) || 9, 1), 100);
+    const limit = Math.min(
+      Math.max(parseInt(searchParams.get("limit")) || 9, 1),
+      100
+    );
 
     const total = await BlogModel.countDocuments();
     const blogs = await BlogModel.find()
+      .populate("author", "username")
       .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
       .limit(limit)
       .lean();
-      console.log("Blogs From MongoDB ===>", blogs);
+    console.log("Blogs From MongoDB ===>", blogs);
 
     return NextResponse.json({
       data: blogs,
       total,
       page,
       totalPages: Math.ceil(total / limit),
-      msg: "Blogs Fetched Successfully."
+      msg: "Blogs Fetched Successfully.",
     });
   } catch (err) {
     console.log("Error fetching blogs:", err);
