@@ -15,13 +15,15 @@ export default function MyBlogs({ searchParams }) {
   });
   const page = parseInt(searchParams?.page) || 1;
   const limit = parseInt(searchParams?.limit) || 9;
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchBlogs = async () => {
+      setIsLoading(true);
       try {
         const res = await fetch(`/api/myblogs?page=${page}&limit=${limit}`, {
           credentials: "include",
-          cache: "no-cache"
+          cache: "no-cache",
         });
         const data = await res.json();
         setResData(data);
@@ -29,6 +31,7 @@ export default function MyBlogs({ searchParams }) {
         console.log("Error fetching blogs:", err);
         setResData({ data: [], totalPages: 0, page, error: true });
       }
+      setIsLoading(false);
     };
     fetchBlogs();
   }, [page, limit]);
@@ -57,20 +60,28 @@ export default function MyBlogs({ searchParams }) {
       </MotionUp>
 
       <div className="mt-10 mb-10 flex flex-wrap gap-5 justify-center max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {resData.error ? (
-          <p className="text-red-400 text-center lg:text-base text-sm mt-5 mb-14">
-            Failed to fetch user blogs. Please try again later.
-          </p>
-        ) : resData.data.length > 0 ? (
-          resData.data.map((blog, index) => (
-            <MotionUp key={blog._id} delay={index * 0.1}>
-              <BlogCard data={blog} basePath="my-blogs" />
-            </MotionUp>
-          ))
+        {isLoading ? (
+          <div className="h-40 mb-10 flex justify-center items-center">
+            <div className="loader"></div>
+          </div>
         ) : (
-          <p className="text-emerald-400 text-center mt-10 mb-14">
-            User blogs not available.
-          </p>
+          <>
+            {resData.error ? (
+              <p className="text-red-400 text-center lg:text-base text-sm mt-5 mb-14">
+                Failed to fetch user blogs. Please try again later.
+              </p>
+            ) : resData.data.length > 0 ? (
+              resData.data.map((blog, index) => (
+                <MotionUp key={blog._id} delay={index * 0.1}>
+                  <BlogCard data={blog} basePath="my-blogs" />
+                </MotionUp>
+              ))
+            ) : (
+              <p className="text-emerald-400 text-center mt-10 mb-14">
+                User blogs not available.
+              </p>
+            )}
+          </>
         )}
       </div>
 
