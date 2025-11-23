@@ -1,90 +1,92 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { FiEdit, FiTrash2 } from "react-icons/fi";
+import { usePathname } from "next/navigation";
 
 export default function BlogCard({ data, basePath = "blog" }) {
-  let {
-    _id: id,
-    image,
-    title,
-    description,
-    author,
-    createdAt,
-  } = data;
+  const pathname = usePathname();
+  const showButtons = pathname.startsWith("/my-blogs");
+
+  let { _id: id, image, title, description, author, createdAt } = data;
 
   return (
-    <>
-      <Link href={`/${basePath}/${id}`}>
-        <div
-          key={id}
-          className="w-80 bg-white/5 backdrop-blur-md border border-white/20 rounded-2xl duration-300 cursor-pointer group flex flex-col justify-between"
-        >
-          {/* Image */}
-          <div className="overflow-hidden rounded-t-2xl">
-            <Image
-              src={
-                image ||
-                "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80"
-              }
-              width={800}
-              height={192}
-              alt="Blog Image"
-              className="object-cover w-full h-48 group-hover:scale-105 transition-transform duration-300"
-            />
+    <Link href={`/${basePath}/${id}`}>
+      <div
+        key={id}
+        className="relative w-80 bg-white/5 backdrop-blur-md border border-white/20 rounded-2xl duration-300 cursor-pointer group flex flex-col justify-between"
+      >
+        {/* Edit/Delete Buttons */}
+        {showButtons && (
+          <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+            <button className="p-1.5 bg-emerald-700 hover:bg-emerald-600 text-white backdrop-blur-sm rounded-full cursor-pointer">
+              <FiEdit size={15} />
+            </button>
+            <button className="p-1.5 bg-red-800 hover:bg-red-700 text-white rounded-full cursor-pointer">
+              <FiTrash2 size={15} />
+            </button>
           </div>
+        )}
 
-          {/* Content */}
-          <div className="p-5 flex flex-col flex-grow justify-between">
-            {/* Title */}
-            <h2 className="text-white text-xl font-semibold mb-2 hover:text-emerald-400 transition-colors duration-300">
-              {title || "Untitled Blog"}
-            </h2>
+        {/* Image */}
+        <div className="overflow-hidden rounded-t-2xl">
+          <Image
+            src={
+              image ||
+              "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80"
+            }
+            width={800}
+            height={192}
+            alt="Blog Image"
+            className="object-cover w-full h-48 group-hover:scale-105 transition-transform duration-300"
+          />
+        </div>
 
-            {/* Description */}
-            <p className="text-gray-300 text-sm mb-6 line-clamp-2">
-              {(
-                description || "No description provided for this blog post."
-              ).slice(0, 110)}
-            </p>
+        {/* Content */}
+        <div className="p-5 flex flex-col flex-grow justify-between">
+          <h2 className="text-white text-xl font-semibold mb-2 hover:text-emerald-400 transition-colors duration-300">
+            {title || "Untitled Blog"}
+          </h2>
 
-            {/* Footer Section */}
-            <div className="flex items-end justify-between mt-auto">
-              {/* Author */}
-              <div className="flex items-center gap-3">
-                <Image
-                  src={
-                    "https://randomuser.me/api/portraits/men/75.jpg"
-                  }
-                  width={40}
-                  height={40}
-                  alt="Blog Author"
-                  className="w-10 h-10 rounded-full border-2 border-emerald-400 object-cover shrink-0"
-                  unoptimized
-                />
-                <div className="overflow-hidden">
-                  <p className="text-white font-medium text-sm truncate">
-                    {/* author.username */}
-                    {author.username || "Unknown Author"}
-                  </p>
-                  <p className="text-gray-400 text-xs">
-                    {createdAt
-                      ? new Date(createdAt).toLocaleDateString("en-US", {
-                          year: "numeric",
-                          month: "short",
-                          day: "numeric",
-                        })
-                      : "Oct 10, 2025"}
-                  </p>
-                </div>
+          <p className="text-gray-300 text-sm mb-6 line-clamp-2">
+            {(
+              description || "No description provided for this blog post."
+            ).slice(0, 110)}
+          </p>
+
+          <div className="flex items-end justify-between mt-auto">
+            <div className="flex items-center gap-3">
+              <Image
+                src={"https://randomuser.me/api/portraits/men/75.jpg"}
+                width={40}
+                height={40}
+                alt="Blog Author"
+                className="w-10 h-10 rounded-full border-2 border-emerald-400 object-cover shrink-0"
+                unoptimized
+              />
+              <div className="overflow-hidden">
+                <p className="text-white font-medium text-sm truncate">
+                  {author.username || "Unknown Author"}
+                </p>
+                <p className="text-gray-400 text-xs">
+                  {createdAt
+                    ? new Date(createdAt).toLocaleDateString("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      })
+                    : "Oct 10, 2025"}
+                </p>
               </div>
-
-              {/* Read More Button */}
-                <button className="flex gap-3 items-center px-4 py-1.5 text-xs font-semibold backdrop-blur-sm border bg-emerald-700/30 focus:outline-none focus:bg-emerald-700/40 hover:bg-emerald-700/40 border-emerald-500/50 hover:border-emerald-500 text-white rounded-full transition-all duration-300 cursor-pointer">
-                  Read More
-                </button>
             </div>
+
+            <button className="flex gap-3 items-center px-4 py-1.5 text-xs font-semibold backdrop-blur-sm border bg-emerald-700/30 focus:outline-none focus:bg-emerald-700/40 hover:bg-emerald-700/40 border-emerald-500/50 hover:border-emerald-500 text-white rounded-full transition-all duration-300 cursor-pointer">
+              Read More
+            </button>
           </div>
         </div>
-      </Link>
-    </>
+      </div>
+    </Link>
   );
 }

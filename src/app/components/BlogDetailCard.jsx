@@ -1,19 +1,15 @@
+"use client";
 import Link from "next/link";
 import { IoShareSocialSharp } from "react-icons/io5";
 import { FaArrowLeft } from "react-icons/fa6";
-import { FaBookReader } from "react-icons/fa";
 import Image from "next/image";
+import { FiEdit, FiTrash2 } from "react-icons/fi";
+import { usePathname } from "next/navigation";
 
-export default function BlogDetailCard({ data, backUrl="/" }) {
-  const {
-    _id: id,
-    image,
-    title,
-    description,
-    author,
-    createdAt,
-  } = data;
-
+export default function BlogDetailCard({ data, backUrl = "/" }) {
+  const { _id: id, image, title, description, author, createdAt } = data;
+  const pathname = usePathname();
+  const showButtons = pathname.startsWith("/my-blogs");
   const dateStr = createdAt
     ? new Date(createdAt).toLocaleDateString("en-GB", {
         year: "numeric",
@@ -47,9 +43,18 @@ export default function BlogDetailCard({ data, backUrl="/" }) {
           >
             <FaArrowLeft /> Back to Blogs
           </Link>
-          <span className="bg-emerald-800/30 text-emerald-300 text-sm px-3 py-1 rounded-full">
-            <FaBookReader className="text-emerald-500" />
-          </span>
+
+         {/* Edit/Delete Buttons */}
+          {showButtons && (
+            <div className="flex gap-2">
+              <button className="p-2 bg-emerald-700 hover:bg-emerald-600 text-white backdrop-blur-sm rounded-full cursor-pointer">
+                <FiEdit size={17} />
+              </button>
+              <button className="p-2 bg-red-800 hover:bg-red-700 text-white rounded-full cursor-pointer">
+                <FiTrash2 size={17} />
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Title */}
@@ -60,9 +65,7 @@ export default function BlogDetailCard({ data, backUrl="/" }) {
         {/* Author Info */}
         <div className="flex items-center gap-3 mb-6">
           <Image
-            src={
-              "https://randomuser.me/api/portraits/men/75.jpg"
-            }
+            src={"https://randomuser.me/api/portraits/men/75.jpg"}
             width={40}
             height={40}
             alt="Blog Author"
@@ -70,7 +73,9 @@ export default function BlogDetailCard({ data, backUrl="/" }) {
             unoptimized
           />
           <div>
-            <p className="text-sm font-medium">{author.username || "Unknown Author"}</p>
+            <p className="text-sm font-medium">
+              {author.username || "Unknown Author"}
+            </p>
             <p className="text-xs text-gray-400">{dateStr}</p>
           </div>
         </div>
@@ -85,12 +90,10 @@ export default function BlogDetailCard({ data, backUrl="/" }) {
             ))
           ) : (
             <>
-              <p>
-                Blog description.
-              </p>
+              <p>Blog description.</p>
               <p className="mt-3">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Integer nec odio. Praesent libero. 
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
+                nec odio. Praesent libero.
               </p>
             </>
           )}
