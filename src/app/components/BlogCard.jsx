@@ -20,9 +20,12 @@ export default function BlogCard({ data, basePath = "blog" }) {
         {/* Edit/Delete Buttons */}
         {showButtons && (
           <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-            <button className="p-1.5 bg-emerald-700 hover:bg-emerald-600 text-white backdrop-blur-sm rounded-full cursor-pointer">
+            <Link
+              href={`/blog/edit/${id}`}
+              className="p-1.5 bg-emerald-700 hover:bg-emerald-600 text-white backdrop-blur-sm rounded-full cursor-pointer"
+            >
               <FiEdit size={15} />
-            </button>
+            </Link>
             <button className="p-1.5 bg-red-800 hover:bg-red-700 text-white rounded-full cursor-pointer">
               <FiTrash2 size={15} />
             </button>

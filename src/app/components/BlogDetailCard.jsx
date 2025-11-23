@@ -44,12 +44,15 @@ export default function BlogDetailCard({ data, backUrl = "/" }) {
             <FaArrowLeft /> Back to Blogs
           </Link>
 
-         {/* Edit/Delete Buttons */}
+          {/* Edit/Delete Buttons */}
           {showButtons && (
             <div className="flex gap-2">
-              <button className="p-2 bg-emerald-700 hover:bg-emerald-600 text-white backdrop-blur-sm rounded-full cursor-pointer">
+              <Link
+                href={`/blog/edit/${id}`}
+                className="p-2 bg-emerald-700 hover:bg-emerald-600 text-white backdrop-blur-sm rounded-full cursor-pointer"
+              >
                 <FiEdit size={17} />
-              </button>
+              </Link>
               <button className="p-2 bg-red-800 hover:bg-red-700 text-white rounded-full cursor-pointer">
                 <FiTrash2 size={17} />
               </button>
