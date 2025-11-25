@@ -64,7 +64,7 @@ export async function PUT(request, { params }) {
 
 export async function DELETE(request, { params }) {
   await ConnectDB();
-  const { id } = params;
+  const { id } = await params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return NextResponse.json({ msg: "Invalid Blog ID" }, { status: 404 });
@@ -76,6 +76,8 @@ export async function DELETE(request, { params }) {
     if (!deleteBlog) {
       return NextResponse.json({ msg: "Blog not found" }, { status: 404 });
     }
+
+    console.log("Blog Deleted =====>", deleteBlog);
 
     return NextResponse.json({ msg: "Blog deleted successfully" });
   } catch (err) {

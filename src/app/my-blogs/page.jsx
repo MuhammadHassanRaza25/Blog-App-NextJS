@@ -5,6 +5,7 @@ import BlogsPagination from "@/app/components/BlogPagination";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { MotionUp } from "@/components/ui/motion-up";
+import { useRouter } from "next/navigation";
 
 export default function MyBlogs({ searchParams }) {
   const [resData, setResData] = useState({
@@ -15,26 +16,44 @@ export default function MyBlogs({ searchParams }) {
   });
   const page = parseInt(searchParams?.page) || 1;
   const limit = parseInt(searchParams?.limit) || 9;
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
 
+  const fetchBlogs = async (fetchPage = page) => {
+    setIsLoading(true);
+    try {
+      const res = await fetch(`/api/myblogs?page=${fetchPage}&limit=${limit}`, {
+        credentials: "include",
+        cache: "no-cache",
+      });
+      const data = await res.json();
+      setResData(data);
+    } catch (err) {
+      console.log("Error fetching blogs:", err);
+      setResData({ data: [], totalPages: 0, page: fetchPage, error: true });
+    }
+    setIsLoading(false);
+  };
+
   useEffect(() => {
-    const fetchBlogs = async () => {
-      setIsLoading(true);
-      try {
-        const res = await fetch(`/api/myblogs?page=${page}&limit=${limit}`, {
-          credentials: "include",
-          cache: "no-cache",
-        });
-        const data = await res.json();
-        setResData(data);
-      } catch (err) {
-        console.log("Error fetching blogs:", err);
-        setResData({ data: [], totalPages: 0, page, error: true });
-      }
-      setIsLoading(false);
-    };
     fetchBlogs();
   }, [page, limit]);
+
+  const handleDeleteFromChild = (id) => {
+    setResData((prev) => {
+      const newData = prev.data.filter((blog) => blog._id !== id);
+
+      // agar page khali ho gaya aur page > 1
+      if (newData.length === 0 && prev.page > 1) {
+        const prevPage = prev.page - 1;
+        router.replace(`/my-blogs?page=${prevPage}&limit=${limit}`);
+        fetchBlogs(prevPage); // previous page load karo
+        return { ...prev, page: prevPage, data: [] };
+      }
+
+      return { ...prev, data: newData };
+    });
+  };
 
   return (
     <>
@@ -73,7 +92,11 @@ export default function MyBlogs({ searchParams }) {
             ) : resData.data.length > 0 ? (
               resData.data.map((blog, index) => (
                 <MotionUp key={blog._id} delay={index * 0.1}>
-                  <BlogCard data={blog} basePath="my-blogs" />
+                  <BlogCard
+                    data={blog}
+                    basePath="my-blogs"
+                    onDelete={handleDeleteFromChild}
+                  />
                 </MotionUp>
               ))
             ) : (

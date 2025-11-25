@@ -4,12 +4,64 @@ import Image from "next/image";
 import Link from "next/link";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { usePathname } from "next/navigation";
+import toast from "react-hot-toast";
 
-export default function BlogCard({ data, basePath = "blog" }) {
+export default function BlogCard({ data, basePath = "blog", onDelete }) {
   const pathname = usePathname();
   const showButtons = pathname.startsWith("/my-blogs");
 
   let { _id: id, image, title, description, author, createdAt } = data;
+
+  const handleDelete = () => {
+    toast((t) => (
+      <div className="text-white">
+        <p className="font-semibold">Are you sure you want to delete?</p>
+
+        <div className="flex justify-center gap-2 mt-3">
+          {/* YES Button */}
+          <button
+            className="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-white cursor-pointer"
+            onClick={async () => {
+              toast.dismiss(t.id);
+
+              try {
+                await toast.promise(
+                  fetch(`/api/myblogs/${id}`, {
+                    method: "DELETE",
+                    credentials: "include",
+                  }).then((res) => {
+                    if (!res.ok) throw new Error("Failed to delete");
+                    return res;
+                  }),
+                  {
+                    loading: "Deleting...",
+                    success: "Blog deleted successfully!",
+                    error: "Failed to delete blog.",
+                  }
+                );
+
+                onDelete && onDelete(id);
+              } catch (err) {
+                console.error(err);
+              }
+            }}
+          >
+            Yes
+          </button>
+
+          {/* NO Button */}
+          <button
+            className="bg-gray-500 hover:bg-gray-600 px-3 py-1 rounded text-white cursor-pointer"
+            onClick={() => toast.dismiss(t.id)}
+          >
+            No
+          </button>
+        </div>
+      </div>
+    ));
+  };
+
+
 
   return (
     <Link href={`/${basePath}/${id}`}>
@@ -26,7 +78,14 @@ export default function BlogCard({ data, basePath = "blog" }) {
             >
               <FiEdit size={15} />
             </Link>
-            <button className="p-1.5 bg-red-800 hover:bg-red-700 text-white rounded-full cursor-pointer">
+            <button
+              className="p-1.5 bg-red-800 hover:bg-red-700 text-white rounded-full cursor-pointer"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleDelete();
+              }}
+            >
               <FiTrash2 size={15} />
             </button>
           </div>
