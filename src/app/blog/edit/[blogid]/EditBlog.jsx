@@ -3,10 +3,60 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Image from "next/image";
-import { useRef } from "react";
+import { useRouter } from "next/navigation";
+import { useRef, useState } from "react";
+import toast from "react-hot-toast";
 
-export default function EditBlog() {
+export default function EditBlog({ blogid }) {
+  const router = useRouter();
   const formRef = useRef(null);
+  const [loading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const formData = new FormData(formRef.current);
+
+    const body = {
+      title: formData.get("title"),
+      description: formData.get("description"),
+    };
+
+    try {
+      const res = await fetch(`/api/myblogs/${blogid}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+        credentials: "include",
+      });
+
+      if (!res.ok) {
+        const result = await res.json();
+        const msg = result.msg;
+        if (msg.includes("less")) {
+          toast.error("title must be at less than 100 characters");
+        } else if (msg.includes("title")) {
+          toast.error("title must be at least 3 characters");
+        } else if (msg.includes("description")) {
+          toast.error("description must be at least 10 characters");
+        } else {
+          toast.error(msg);
+        }
+        setIsLoading(false);
+        return;
+      }
+
+      toast.success("Blog updated successfully");
+      setIsLoading(false);
+      setTimeout(() => {
+        router.push("/my-blogs");
+      }, 1000);
+    } catch (err) {
+      toast.error(err.message);
+      console.log("Error in editing the blog ==>", err);
+      setIsLoading(false);
+    }
+  };
 
   return (
     <>
@@ -17,14 +67,7 @@ export default function EditBlog() {
           {/* edit blog form */}
           <form
             ref={formRef}
-            // action={async (formData) => {
-            //   let obj = {
-            //     title: formData.get("title"),
-            //     description: formData.get("description"),
-            //     author: formData.get("author"),
-            //   };
-            //   // formRef.current?.reset();
-            // }}
+            onSubmit={handleSubmit}
             className="w-full lg:w-1/2 p-8 flex flex-col gap-6"
           >
             {/* Background effect behind the form */}
@@ -67,9 +110,9 @@ export default function EditBlog() {
             />
             <button
               type="submit"
-              className="group relative w-full px-4 py-2 font-semibold text-white bg-emerald-700/40 border border-emerald-500 rounded-full backdrop-blur-sm transition-all duration-300 hover:bg-emerald-400/10 hover:border-emerald-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 active:scale-[0.98] cursor-pointer"
+              className="group relative w-full flex justify-center px-4 py-2 font-semibold text-white bg-emerald-700/40 border border-emerald-500 rounded-full backdrop-blur-sm transition-all duration-300 hover:bg-emerald-400/10 hover:border-emerald-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 active:scale-[0.98] cursor-pointer"
             >
-              Edit Blog
+              {loading ? <div className="formLoader"></div> : "Edit Blog"}
               {/* Underline on Hover */}
               <span className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-gradient-to-r from-transparent via-emerald-400 to-transparent transition-all duration-300 group-hover:w-3/4" />
             </button>

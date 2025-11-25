@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 import BlogModel from "@/app/lib/models/BlogModel";
 import { NextResponse } from "next/server";
 import { ConnectDB } from "@/app/lib/dbConnect";
+import { verifyUser } from "@/app/lib/verifyUser";
+import Joi from "joi";
 
 export async function GET(request, { params }) {
   await ConnectDB();
@@ -35,23 +37,50 @@ export async function GET(request, { params }) {
   }
 }
 
+const blogUpdateSchema = Joi.object({
+  title: Joi.string().min(3).max(100).required(),
+  description: Joi.string().min(10).required(),
+});
+
 export async function PUT(request, { params }) {
   await ConnectDB();
   const { id } = params;
-  const body = await request.json(); // data for edit
+  const body = await request.json();
 
+  // ID check
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return NextResponse.json({ msg: "Invalid Blog ID" }, { status: 404 });
   }
 
+  // Validation
+  const { error } = blogUpdateSchema.validate(body);
+  if (error) {
+    console.log("JOI ERROR IN POST ==>", error.message);
+    return NextResponse.json({ msg: error.message }, { status: 400 });
+  }
+
+  // Verify user
+  const userObj = await verifyUser();
+  if (!userObj) {
+    return NextResponse.json({ msg: "User not logged in" }, { status: 401 });
+  }
+
   try {
-    const updateBlog = await BlogModel.findByIdAndUpdate(id, body, {
-      new: true,
-    });
+    // Update only if user is author
+    const updateBlog = await BlogModel.findOneAndUpdate(
+      { _id: id, author: userObj._id },
+      body,
+      { new: true }
+    );
 
     if (!updateBlog) {
-      return NextResponse.json({ msg: "Blog not found" }, { status: 404 });
+      return NextResponse.json(
+        { msg: "Blog not found or not authorized" },
+        { status: 404 }
+      );
     }
+
+    console.log("Blog Updated ===>", updateBlog);
 
     return NextResponse.json({ data: updateBlog, msg: "Blog updated" });
   } catch (err) {
