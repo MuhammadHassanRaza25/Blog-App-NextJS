@@ -4,13 +4,38 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function EditBlog({ blogid }) {
   const router = useRouter();
   const formRef = useRef(null);
   const [loading, setIsLoading] = useState(false);
+  const [blogData, setBlogData] = useState(null);
+
+  const getBlogData = async () => {
+    try {
+      const res = await fetch(`/api/myblogs/${blogid}`, {
+        credentials: "include",
+        cache: "no-store",
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        toast.error(result.msg);
+        return;
+      }
+
+      setBlogData(result.data);
+    } catch (error) {
+      toast.error("Failed to load blog data");
+    }
+  };
+
+  useEffect(() => {
+    getBlogData();
+  }, [blogid]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -91,6 +116,7 @@ export default function EditBlog({ blogid }) {
               className="w-full text-sm bg-white/10 border border-white/30 text-white placeholder-white/70 py-2 px-4 rounded-full focus:outline-none focus:border-emerald-500 transition"
               type="text"
               name="title"
+              defaultValue={blogData?.title}
               placeholder="Enter Blog Title"
               required
             />
@@ -98,6 +124,7 @@ export default function EditBlog({ blogid }) {
               <textarea
                 className="w-full resize-none box-border text-sm text-white placeholder-white/70 py-2 px-4 focus:outline-none focus:border-emerald-500 transition textarea-scrollbar overflow-y-auto rounded-xl"
                 name="description"
+                defaultValue={blogData?.description}
                 placeholder="Enter Description"
                 required
                 rows={3}
