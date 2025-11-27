@@ -70,11 +70,12 @@ export default function BlogDetailCard({ data, backUrl = "/" }) {
         <Image
           src={
             image ||
-            "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1400&q=80"
+            "https://img.freepik.com/free-photo/coffee-opened-notebook-near-laptop_23-2147777804.jpg?semt=ais_hybrid&w=740&q=80"
           }
           fill
           alt={"Blog Image"}
           className="w-full h-full"
+          unoptimized
         />
       </div>
 

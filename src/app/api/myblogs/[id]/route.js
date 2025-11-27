@@ -4,6 +4,13 @@ import { NextResponse } from "next/server";
 import { ConnectDB } from "@/app/lib/dbConnect";
 import { verifyUser } from "@/app/lib/verifyUser";
 import Joi from "joi";
+import { v2 as cloudinary } from "cloudinary";
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export async function GET(request, { params }) {
   await ConnectDB();
@@ -40,6 +47,7 @@ export async function GET(request, { params }) {
 const blogUpdateSchema = Joi.object({
   title: Joi.string().min(3).max(100).required(),
   description: Joi.string().min(10).required(),
+  image: Joi.string().uri().optional(),
 });
 
 export async function PUT(request, { params }) {
@@ -105,7 +113,7 @@ export async function DELETE(request, { params }) {
     if (!deleteBlog) {
       return NextResponse.json({ msg: "Blog not found" }, { status: 404 });
     }
-
+    
     console.log("Blog Deleted =====>", deleteBlog);
 
     return NextResponse.json({ msg: "Blog deleted successfully" });

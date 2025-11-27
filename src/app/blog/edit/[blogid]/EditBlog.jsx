@@ -12,6 +12,7 @@ export default function EditBlog({ blogid }) {
   const formRef = useRef(null);
   const [loading, setIsLoading] = useState(false);
   const [blogData, setBlogData] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
 
   const getBlogData = async () => {
     try {
@@ -37,14 +38,37 @@ export default function EditBlog({ blogid }) {
     getBlogData();
   }, [blogid]);
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setPreviewImage(URL.createObjectURL(file));
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     const formData = new FormData(formRef.current);
+    const imageFile = formData.get("image");
+    let imageUrl = blogData?.image; // agar image nahi h to purani rahe
+
+    if (imageFile && imageFile.size > 0) {
+      const imgForm = new FormData();
+      imgForm.append("file", imageFile);
+
+      const uploadRes = await fetch("/api/upload", {
+        method: "POST",
+        body: imgForm,
+      });
+
+      const uploadData = await uploadRes.json();
+      imageUrl = uploadData.url;
+    }
 
     const body = {
       title: formData.get("title"),
       description: formData.get("description"),
+      image: imageUrl,
     };
 
     try {
@@ -132,9 +156,19 @@ export default function EditBlog({ blogid }) {
             </div>
             <input
               type="file"
+              name="image"
               accept="image/*"
+              onChange={handleFileChange}
               className="w-full text-sm px-4 py-2 rounded-full bg-white/10 border border-white/30 text-white/70 file:text-white/70 file:bg-transparent file:border-0 file:p-0 placeholder-gray-400 focus:outline-none focus:border-emerald-500/50"
             />
+            {/* Image Preview */}
+            {(previewImage || blogData?.image) && (
+                <img
+                  src={previewImage || blogData.image}
+                  alt="Blog Preview"
+                  className="w-24 object-cover rounded"
+                />
+            )}
             <button
               type="submit"
               className="group relative w-full flex justify-center px-4 py-2 font-semibold text-white bg-emerald-700/40 border border-emerald-500 rounded-full backdrop-blur-sm transition-all duration-300 hover:bg-emerald-400/10 hover:border-emerald-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 active:scale-[0.98] cursor-pointer"

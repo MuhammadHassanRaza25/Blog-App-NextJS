@@ -17,10 +17,26 @@ export default function CreateBlog() {
     setIsLoading(true);
 
     const formData = new FormData(formRef.current);
+    const imageFile = formData.get("image");
+    let imageUrl = null;
+
+    if (imageFile && imageFile.size > 0) {
+      const imgForm = new FormData();
+      imgForm.append("file", imageFile);
+
+      const uploadRes = await fetch("/api/upload", {
+        method: "POST",
+        body: imgForm,
+      });
+
+      const uploadData = await uploadRes.json();
+      imageUrl = uploadData.url;
+    }
+
     let obj = {
-      // image: imageUrl,
       title: formData.get("title"),
       description: formData.get("description"),
+      image: imageUrl,
     };
     try {
       const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;

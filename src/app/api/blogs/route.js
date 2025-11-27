@@ -44,6 +44,7 @@ export async function GET(request) {
 const blogSchema = Joi.object({
   title: Joi.string().min(3).max(100).required(),
   description: Joi.string().min(10).required(),
+  image: Joi.string().uri().optional(),
 });
 
 export async function POST(request) {
