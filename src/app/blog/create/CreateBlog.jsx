@@ -19,6 +19,7 @@ export default function CreateBlog() {
     const formData = new FormData(formRef.current);
     const imageFile = formData.get("image");
     let imageUrl = null;
+    let imagePublicId = null;
 
     if (imageFile && imageFile.size > 0) {
       const imgForm = new FormData();
@@ -31,13 +32,21 @@ export default function CreateBlog() {
 
       const uploadData = await uploadRes.json();
       imageUrl = uploadData.url;
+      imagePublicId = uploadData.public_id;
     }
 
     let obj = {
       title: formData.get("title"),
       description: formData.get("description"),
-      image: imageUrl,
     };
+
+    if (imageUrl && imagePublicId) {
+      obj.image = {
+        url: imageUrl,
+        public_id: imagePublicId,
+      };
+    }
+
     try {
       const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
       let res = await fetch(`${baseUrl}/api/blogs`, {
@@ -128,7 +137,6 @@ export default function CreateBlog() {
               type="file"
               name="image"
               accept="image/*"
-              required
               className="w-full text-sm px-4 py-2 rounded-full bg-white/10 border border-white/30 text-white/70 file:text-white/70 file:bg-transparent file:border-0 file:p-0 placeholder-gray-400 focus:outline-none focus:border-emerald-500/50"
             />
             <button

@@ -68,7 +68,7 @@ export default function BlogDetailCard({ data, backUrl = "/" }) {
       {/* Left Side: Image */}
       <div className="relative md:w-1/2 w-full h-56 md:h-auto">
         <Image
-          src={image || "/images/cardimg.jpg"}
+          src={image?.url || "/images/cardimg.jpg"}
           fill
           alt={"Blog Image"}
           className="w-full h-full"

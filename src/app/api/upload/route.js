@@ -37,6 +37,8 @@ export async function POST(request) {
     });
 
     console.log("<=== Image Uploaded ===>");
+    console.log("Image URL ===>", uploadRes.secure_url);
+    console.log("Image Public ID ===>", uploadRes.public_id);
     
     return NextResponse.json({
       url: uploadRes.secure_url,

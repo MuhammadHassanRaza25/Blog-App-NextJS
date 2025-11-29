@@ -95,7 +95,7 @@ export default function BlogCard({ data, basePath = "blog", onDelete }) {
         <div className="overflow-hidden rounded-t-2xl">
           <Image
             src={
-              image ||
+              image?.url ||
               "/images/cardimg.jpg"
             }
             width={800}
