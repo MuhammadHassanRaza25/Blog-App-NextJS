@@ -68,10 +68,7 @@ export default function BlogDetailCard({ data, backUrl = "/" }) {
       {/* Left Side: Image */}
       <div className="relative md:w-1/2 w-full h-56 md:h-auto">
         <Image
-          src={
-            image ||
-            "https://img.freepik.com/free-photo/coffee-opened-notebook-near-laptop_23-2147777804.jpg?semt=ais_hybrid&w=740&q=80"
-          }
+          src={image || "/images/cardimg.jpg"}
           fill
           alt={"Blog Image"}
           className="w-full h-full"
@@ -110,7 +107,7 @@ export default function BlogDetailCard({ data, backUrl = "/" }) {
         </div>
 
         {/* Title */}
-        <h1 className="text-2xl md:text-3xl font-bold mb-3">
+        <h1 className="text-2xl md:text-3xl font-bold mb-3 h-[60px] overflow-y-auto pr-1">
           {title || "Untitled Blog"}
         </h1>
 

@@ -128,6 +128,7 @@ export default function CreateBlog() {
               type="file"
               name="image"
               accept="image/*"
+              required
               className="w-full text-sm px-4 py-2 rounded-full bg-white/10 border border-white/30 text-white/70 file:text-white/70 file:bg-transparent file:border-0 file:p-0 placeholder-gray-400 focus:outline-none focus:border-emerald-500/50"
             />
             <button

@@ -96,7 +96,7 @@ export default function BlogCard({ data, basePath = "blog", onDelete }) {
           <Image
             src={
               image ||
-              "https://img.freepik.com/free-photo/coffee-opened-notebook-near-laptop_23-2147777804.jpg?semt=ais_hybrid&w=740&q=80"
+              "/images/cardimg.jpg"
             }
             width={800}
             height={192}
@@ -108,8 +108,8 @@ export default function BlogCard({ data, basePath = "blog", onDelete }) {
 
         {/* Content */}
         <div className="p-5 flex flex-col flex-grow justify-between">
-          <h2 className="text-white text-xl font-semibold mb-2 hover:text-emerald-400 transition-colors duration-300">
-            {title || "Untitled Blog"}
+          <h2 className="text-white text-xl font-semibold mb-2 hover:text-emerald-400 transition-colors duration-300 line-clamp-2">
+             {(title || "Untitled Blog").slice(0, 70)}
           </h2>
 
           <p className="text-gray-300 text-sm mb-6 line-clamp-2">
