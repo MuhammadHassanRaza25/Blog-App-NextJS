@@ -47,7 +47,10 @@ export async function GET(request, { params }) {
 const blogUpdateSchema = Joi.object({
   title: Joi.string().min(3).max(100).required(),
   description: Joi.string().min(10).required(),
-  image: Joi.string().uri().optional(),
+  image: Joi.object({
+    url: Joi.string().uri(),
+    public_id: Joi.string(),
+  }).optional(),
 });
 
 export async function PUT(request, { params }) {

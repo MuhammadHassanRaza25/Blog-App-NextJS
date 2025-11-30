@@ -42,17 +42,27 @@ export default function CreateBlog() {
     }
 
     if (imageFile && imageFile.size > 0) {
-      const imgForm = new FormData();
-      imgForm.append("file", imageFile);
+      try {
+        const imgForm = new FormData();
+        imgForm.append("file", imageFile);
 
-      const uploadRes = await fetch("/api/upload-image", {
-        method: "POST",
-        body: imgForm,
-      });
+        const uploadRes = await fetch("/api/upload-image", {
+          method: "POST",
+          body: imgForm,
+        });
 
-      const uploadData = await uploadRes.json();
-      imageUrl = uploadData.url;
-      imagePublicId = uploadData.public_id;
+        const uploadData = await uploadRes.json();
+        if (!uploadRes.ok) {
+          toast.error("Image upload failed");
+        }
+
+        imageUrl = uploadData.url;
+        imagePublicId = uploadData.public_id;
+      } catch (err) {
+        toast.error("Error uploading image. Try again later");
+        setIsLoading(false);
+        return; 
+      }
     }
 
     let obj = {
@@ -161,6 +171,7 @@ export default function CreateBlog() {
             />
             <button
               type="submit"
+              disabled={loading}
               className="group relative w-full flex justify-center px-4 py-2 font-semibold text-white bg-emerald-700/40 border border-emerald-500 rounded-full backdrop-blur-sm transition-all duration-300 hover:bg-emerald-400/10 hover:border-emerald-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 active:scale-[0.98] cursor-pointer"
             >
               {loading ? <div className="formLoader"></div> : "Publish Blog"}

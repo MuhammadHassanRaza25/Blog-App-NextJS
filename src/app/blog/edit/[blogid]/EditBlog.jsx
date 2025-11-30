@@ -49,27 +49,63 @@ export default function EditBlog({ blogid }) {
     e.preventDefault();
     setIsLoading(true);
     const formData = new FormData(formRef.current);
+    const title = formData.get("title");
+    const description = formData.get("description");
     const imageFile = formData.get("image");
-    let imageUrl = blogData?.image; // agar image nahi h to purani rahe
+    let imageUrl = blogData?.image?.url; // agar image nahi h to purani rahe
+    let imagePublicId = blogData?.image?.public_id;
 
     if (imageFile && imageFile.size > 0) {
-      const imgForm = new FormData();
-      imgForm.append("file", imageFile);
+      try {
+        // 1. delete old image
+        if (blogData?.image?.public_id) {
+          const deleteRes = await fetch("/api/delete-image", {
+            method: "POST",
+            body: JSON.stringify({ public_id: blogData.image.public_id }),
+          });
 
-      const uploadRes = await fetch("/api/upload-image", {
-        method: "POST",
-        body: imgForm,
-      });
+          const deleteData = await deleteRes.json();
+          if (!deleteRes.ok) {
+            console.warn("Old image deletion failed:", deleteData.msg);
+          }
+        }
 
-      const uploadData = await uploadRes.json();
-      imageUrl = uploadData.url;
+        // 2. upload new image
+        const imgForm = new FormData();
+        imgForm.append("file", imageFile);
+
+        const uploadRes = await fetch("/api/upload-image", {
+          method: "POST",
+          body: imgForm,
+        });
+
+        const uploadData = await uploadRes.json();
+        if (!uploadRes.ok) {
+          toast.error("Image upload failed");
+          setIsLoading(false);
+          return;
+        }
+
+        imageUrl = uploadData.url;
+        imagePublicId = uploadData.public_id;
+      } catch (err) {
+        console.error("Error handling image:", err);
+        toast.error("Error uploading image. Try again later.");
+        setIsLoading(false);
+        return;
+      }
     }
 
     const body = {
-      title: formData.get("title"),
-      description: formData.get("description"),
-      image: imageUrl,
+      title,
+      description,
     };
+    if (imageUrl && imagePublicId) {
+      body.image = {
+        url: imageUrl,
+        public_id: imagePublicId,
+      };
+    }
 
     try {
       const res = await fetch(`/api/myblogs/${blogid}`, {
@@ -83,7 +119,7 @@ export default function EditBlog({ blogid }) {
         const result = await res.json();
         const msg = result.msg;
         if (msg.includes("less")) {
-          toast.error("title must be at less than 100 characters");
+          toast.error("title must be less than 100 characters");
         } else if (msg.includes("title")) {
           toast.error("title must be at least 3 characters");
         } else if (msg.includes("description")) {
@@ -162,15 +198,16 @@ export default function EditBlog({ blogid }) {
               className="w-full text-sm px-4 py-2 rounded-full bg-white/10 border border-white/30 text-white/70 file:text-white/70 file:bg-transparent file:border-0 file:p-0 placeholder-gray-400 focus:outline-none focus:border-emerald-500/50"
             />
             {/* Image Preview */}
-            {(previewImage || blogData?.image) && (
-                <img
-                  src={previewImage || blogData.image}
-                  alt="Blog Preview"
-                  className="w-24 object-cover rounded"
-                />
+            {(previewImage || blogData?.image?.url) && (
+              <img
+                src={previewImage || blogData?.image?.url}
+                alt="Blog Preview"
+                className="w-24 object-cover rounded"
+              />
             )}
             <button
               type="submit"
+              disabled={loading}
               className="group relative w-full flex justify-center px-4 py-2 font-semibold text-white bg-emerald-700/40 border border-emerald-500 rounded-full backdrop-blur-sm transition-all duration-300 hover:bg-emerald-400/10 hover:border-emerald-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 active:scale-[0.98] cursor-pointer"
             >
               {loading ? <div className="formLoader"></div> : "Edit Blog"}
