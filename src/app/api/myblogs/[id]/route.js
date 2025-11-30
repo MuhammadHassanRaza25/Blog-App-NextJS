@@ -107,14 +107,28 @@ export async function DELETE(request, { params }) {
     return NextResponse.json({ msg: "Invalid Blog ID" }, { status: 404 });
   }
 
+  // Verify user
+  const userObj = await verifyUser();
+  if (!userObj) {
+    return NextResponse.json({ msg: "User not logged in" }, { status: 401 });
+  }
+
   try {
-    const deleteBlog = await BlogModel.findByIdAndDelete(id);
+    const deleteBlog = await BlogModel.findOneAndDelete({
+      _id: id,
+      author: userObj._id,
+    });
 
     if (!deleteBlog) {
       return NextResponse.json({ msg: "Blog not found" }, { status: 404 });
     }
-    
-    console.log("Blog Deleted =====>", deleteBlog);
+
+    // Delete Cloudinary image if exists
+    if (deleteBlog.image?.public_id) {
+      await cloudinary.uploader.destroy(deleteBlog.image.public_id);
+    }
+
+    console.log("Blog Deleted Successfully =====>", deleteBlog);
 
     return NextResponse.json({ msg: "Blog deleted successfully" });
   } catch (err) {

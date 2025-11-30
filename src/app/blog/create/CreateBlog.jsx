@@ -17,15 +17,35 @@ export default function CreateBlog() {
     setIsLoading(true);
 
     const formData = new FormData(formRef.current);
+    const title = formData.get("title");
+    const description = formData.get("description");
     const imageFile = formData.get("image");
     let imageUrl = null;
     let imagePublicId = null;
+
+    if (title.length > 100) {
+      toast.error("title must be less than 100 characters");
+      setIsLoading(false);
+      return;
+    }
+
+    if (title.length < 3) {
+      toast.error("title must be at least 3 characters");
+      setIsLoading(false);
+      return;
+    }
+
+    if (description.length < 10) {
+      toast.error("description must be at least 10 characters");
+      setIsLoading(false);
+      return;
+    }
 
     if (imageFile && imageFile.size > 0) {
       const imgForm = new FormData();
       imgForm.append("file", imageFile);
 
-      const uploadRes = await fetch("/api/upload", {
+      const uploadRes = await fetch("/api/upload-image", {
         method: "POST",
         body: imgForm,
       });
@@ -36,8 +56,8 @@ export default function CreateBlog() {
     }
 
     let obj = {
-      title: formData.get("title"),
-      description: formData.get("description"),
+      title,
+      description,
     };
 
     if (imageUrl && imagePublicId) {
@@ -61,7 +81,7 @@ export default function CreateBlog() {
         const result = await res.json();
         const msg = result.msg;
         if (msg.includes("less")) {
-          toast.error("title must be at less than 100 characters");
+          toast.error("title must be less than 100 characters");
         } else if (msg.includes("title")) {
           toast.error("title must be at least 3 characters");
         } else if (msg.includes("description")) {

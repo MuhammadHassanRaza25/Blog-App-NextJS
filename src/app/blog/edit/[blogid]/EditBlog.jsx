@@ -56,7 +56,7 @@ export default function EditBlog({ blogid }) {
       const imgForm = new FormData();
       imgForm.append("file", imageFile);
 
-      const uploadRes = await fetch("/api/upload", {
+      const uploadRes = await fetch("/api/upload-image", {
         method: "POST",
         body: imgForm,
       });

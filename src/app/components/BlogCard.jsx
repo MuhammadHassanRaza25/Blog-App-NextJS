@@ -61,8 +61,6 @@ export default function BlogCard({ data, basePath = "blog", onDelete }) {
     ));
   };
 
-
-
   return (
     <Link href={`/${basePath}/${id}`}>
       <div
@@ -94,10 +92,7 @@ export default function BlogCard({ data, basePath = "blog", onDelete }) {
         {/* Image */}
         <div className="overflow-hidden rounded-t-2xl">
           <Image
-            src={
-              image?.url ||
-              "/images/cardimg.jpg"
-            }
+            src={image?.url || "/images/cardimg.jpg"}
             width={800}
             height={192}
             alt="Blog Image"
@@ -109,7 +104,7 @@ export default function BlogCard({ data, basePath = "blog", onDelete }) {
         {/* Content */}
         <div className="p-5 flex flex-col flex-grow justify-between">
           <h2 className="text-white text-xl font-semibold mb-2 hover:text-emerald-400 transition-colors duration-300 line-clamp-2">
-             {(title || "Untitled Blog").slice(0, 70)}
+            {(title || "Untitled Blog").slice(0, 70)}
           </h2>
 
           <p className="text-gray-300 text-sm mb-6 line-clamp-2">
