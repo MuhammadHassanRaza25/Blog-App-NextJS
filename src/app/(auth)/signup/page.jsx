@@ -2,6 +2,7 @@
 
 import { signupUser } from "@/app/actions/auth";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
@@ -11,19 +12,48 @@ export default function Signup() {
   const signupRef = useRef(null);
   const router = useRouter();
   const [loading, setIsLoading] = useState(false);
+  const [previewAvatar, setPreviewAvatar] = useState(null);
+
+  const handleAvatarChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setPreviewAvatar(URL.createObjectURL(file));
+    }
+  };
 
   const handleSignup = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
     const data = new FormData(signupRef.current);
-    let userDetails = {
-      username: data.get("username"),
-      email: data.get("email"),
-      password: data.get("password"),
-      // profilepic: data.get("profilepic")
-    };
+
+    // Upload avatar if selected
+    let imageFile = data.get("profilepic");
+    let avatar = null;
+
     try {
+      if (imageFile && imageFile.size > 0) {
+        const imgForm = new FormData();
+        imgForm.append("file", imageFile);
+
+        const uploadRes = await fetch("/api/upload-avatar", {
+          method: "POST",
+          body: imgForm,
+        });
+
+        const uploadData = await uploadRes.json();
+        if (!uploadRes.ok) toast.error("Avatar upload failed");
+
+        avatar = { url: uploadData.url, public_id: uploadData.public_id };
+      }
+
+      let userDetails = {
+        username: data.get("username"),
+        email: data.get("email"),
+        password: data.get("password"),
+      };
+      if (avatar) userDetails.avatar = avatar;
+
       const result = await signupUser(userDetails);
       if (!result.ok) {
         const msg = result.msg;
@@ -43,6 +73,7 @@ export default function Signup() {
         setIsLoading(false);
         return;
       }
+
       toast.success("Signed up successfully");
       setIsLoading(false);
       // console.log("FORM DATA ====>", userDetails);
@@ -146,8 +177,20 @@ export default function Signup() {
                 name="profilepic"
                 id="profilePic"
                 accept="image/*"
+                onChange={handleAvatarChange}
                 className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/30 text-white file:text-white file:bg-transparent file:border-0 file:p-0 placeholder-gray-400 focus:outline-none focus:border-emerald-500/50"
               />
+              {previewAvatar && (
+                <div className="mt-3">
+                  <Image
+                    src={previewAvatar}
+                    alt="Avatar Preview"
+                    width={50}
+                    height={50}
+                    className="w-10 h-10 rounded-full object-cover border border-white/30"
+                  />
+                </div>
+              )}
             </div>
 
             {/* Submit Button */}

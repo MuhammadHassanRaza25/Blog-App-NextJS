@@ -199,8 +199,10 @@ export default function EditBlog({ blogid }) {
             />
             {/* Image Preview */}
             {(previewImage || blogData?.image?.url) && (
-              <img
+              <Image
                 src={previewImage || blogData?.image?.url}
+                width={50}
+                height={50}
                 alt="Blog Preview"
                 className="w-24 object-cover rounded"
               />

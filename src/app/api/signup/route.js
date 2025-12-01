@@ -15,13 +15,17 @@ const signupSchema = Joi.object({
   password: Joi.string()
     .pattern(new RegExp("^[a-zA-Z0-9!@#$%^&*]{5,30}$"))
     .required(),
+  avatar: Joi.object({
+    url: Joi.string().uri(),
+    public_id: Joi.string(),
+  }).optional(),
 });
 
 export async function POST(request) {
   await ConnectDB();
   const newUserData = await request.json();
   const { error, value } = signupSchema.validate(newUserData); //ye check karega ke data exact signupSchema ki tarah hai ya nhi.
-  // console.log("User Validated Data ===>", value);
+  console.log("User Validated Data - Before Save ===>", value);
 
   if (error) {
     console.log("JOI ERROR ==>", error.message);

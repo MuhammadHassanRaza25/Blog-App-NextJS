@@ -11,6 +11,7 @@ export default function Header() {
   let router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
   const pathname = usePathname();
   const isActive = (path) => pathname === path;
 
@@ -25,6 +26,7 @@ export default function Header() {
   };
 
   const handleLogout = async () => {
+    setIsLoading(true)
     try {
       await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/logout`, {
         method: "POST",
@@ -32,6 +34,8 @@ export default function Header() {
       });
       toast.success("Logged out successfully");
       setUser(null);
+      setIsLoading(false)
+      setIsMenuOpen(false);
 
       if (pathname !== "/") {
         router.push("/");
@@ -39,6 +43,7 @@ export default function Header() {
     } catch (error) {
       toast.error("Something went wrong. Please try again.");
       console.error("Logout error:", error);
+      setIsLoading(false)
     }
   };
 
@@ -145,7 +150,7 @@ export default function Header() {
                     className="w-10 h-10 rounded-full overflow-hidden border-2 border-emerald-500 focus:outline-none cursor-pointer"
                   >
                     <Image
-                      src={"/images/avatar.png"}
+                      src={user?.avatar?.url || "/images/avatar.png"}
                       width={30}
                       height={30}
                       alt="User Avatar"
@@ -159,17 +164,18 @@ export default function Header() {
                       {/* Name & Email */}
                       <div className="px-4 py-3 border-b border-emerald-500/50 bg-black">
                         <p className="text-white font-semibold text-sm">
-                          {user.username}
+                          {user?.username}
                         </p>
-                        <p className="text-emerald-300 text-sm">{user.email}</p>
+                        <p className="text-emerald-300 text-sm">{user?.email}</p>
                       </div>
 
                       {/* Logout Button */}
                       <button
+                        disabled={isLoading}
                         onClick={handleLogout}
                         className="group relative flex items-center justify-center gap-2 w-full px-4 py-2 font-semibold text-white bg-emerald-700/30 backdrop-blur-sm border-b border-emerald-500/50 rounded-b-lg transition-all duration-300 hover:bg-emerald-700/40 hover:border-emerald-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 cursor-pointer"
                       >
-                        Logout
+                        {isLoading? <div className="formLoader"></div> : "Logout"}
                         {/* Underline on hover */}
                         <span className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-gradient-to-r from-transparent via-emerald-400 to-transparent transition-all duration-300 group-hover:w-3/4" />
                       </button>
@@ -299,7 +305,7 @@ export default function Header() {
                       className="w-10 h-10 rounded-full overflow-hidden border-2 border-emerald-500 focus:outline-none cursor-pointer"
                     >
                       <Image
-                        src={"/images/avatar.png"}
+                        src={user?.avatar?.url || "/images/avatar.png"}
                         width={30}
                         height={30}
                         alt="User Avatar"
@@ -313,22 +319,19 @@ export default function Header() {
                         {/* Name & Email */}
                         <div className="px-4 py-3 border-b border-emerald-500/50 bg-black">
                           <p className="text-white font-semibold text-sm">
-                            {user.username}
+                            {user?.username}
                           </p>
                           <p className="text-emerald-300 text-sm">
-                            {user.email}
+                            {user?.email}
                           </p>
                         </div>
 
                         {/* Logout Button */}
                         <button
-                          onClick={() => {
-                            handleLogout();
-                            setIsMenuOpen(false);
-                          }}
+                          onClick={handleLogout}
                           className="group relative flex items-center justify-center gap-2 w-full px-4 py-2 font-semibold text-white bg-emerald-700/30 backdrop-blur-sm border-b border-emerald-500/50 rounded-b-lg transition-all duration-300 hover:bg-emerald-700/40 hover:border-emerald-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 cursor-pointer"
                         >
-                          Logout
+                          {isLoading ? <div className="formLoader"></div> : "Logout"}
                           {/* Underline on hover */}
                           <span className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-gradient-to-r from-transparent via-emerald-400 to-transparent transition-all duration-300 group-hover:w-3/4" />
                         </button>
