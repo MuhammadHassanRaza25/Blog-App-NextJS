@@ -46,7 +46,7 @@ export default function Hero() {
               </h1>
             </MotionUp>
             <MotionUp delay={0.3} className="w-full">
-              <p className="lg:w-[70%] md:w-[70%] w-[90%] mx-auto lg:text-lg md:text-base text-sm text-center text-gray-100 mt-5">
+              <p className="lg:w-[70%] md:w-[70%] w-[90%] mx-auto lg:text-lg md:text-base text-base text-center text-gray-100 mt-5">
                 Every day brings a new story, a fresh perspective! Dive into our
                 blogs to discover inspiring tips, heartfelt stories, and
                 everything that fuels your passion to chase your dreams. Join us
