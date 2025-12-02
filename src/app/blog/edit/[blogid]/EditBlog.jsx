@@ -201,10 +201,10 @@ export default function EditBlog({ blogid }) {
             {(previewImage || blogData?.image?.url) && (
               <Image
                 src={previewImage || blogData?.image?.url}
-                width={50}
-                height={50}
-                alt="Blog Preview"
-                className="w-24 object-cover rounded"
+                alt="Blog Image Preview"
+                width={150}
+                height={150}
+                className="rounded-xl object-cover border border-white/30"
               />
             )}
             <button

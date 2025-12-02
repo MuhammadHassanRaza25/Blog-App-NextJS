@@ -10,7 +10,15 @@ import toast from "react-hot-toast";
 export default function CreateBlog() {
   const formRef = useRef(null);
   const [loading, setIsLoading] = useState(false);
+  const [previewImage, setPreviewImage] = useState(null);
   const router = useRouter();
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setPreviewImage(URL.createObjectURL(file));
+    }
+  };
 
   const handleCreateBlog = async (e) => {
     e.preventDefault();
@@ -61,7 +69,7 @@ export default function CreateBlog() {
       } catch (err) {
         toast.error("Error uploading image. Try again later");
         setIsLoading(false);
-        return; 
+        return;
       }
     }
 
@@ -167,8 +175,19 @@ export default function CreateBlog() {
               type="file"
               name="image"
               accept="image/*"
+              onChange={handleImageChange}
               className="w-full text-sm px-4 py-2 rounded-full bg-white/10 border border-white/30 text-white/70 file:text-white/70 file:bg-transparent file:border-0 file:p-0 placeholder-gray-400 focus:outline-none focus:border-emerald-500/50"
             />
+            {previewImage && (
+                <Image
+                  src={previewImage}
+                  alt="Blog Image Preview"
+                  width={150}
+                  height={150}
+                  className="rounded-xl object-cover border border-white/30"
+                />
+            )}
+
             <button
               type="submit"
               disabled={loading}

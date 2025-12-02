@@ -69,7 +69,7 @@ export default function BlogCard({ data, basePath = "blog", onDelete }) {
       >
         {/* Edit/Delete Buttons */}
         {showButtons && (
-          <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+          <div className="absolute top-3 right-3 flex gap-2 z-10">
             <Link
               href={`/blog/edit/${id}`}
               className="p-1.5 bg-emerald-700 hover:bg-emerald-600 text-white backdrop-blur-sm rounded-full cursor-pointer"
