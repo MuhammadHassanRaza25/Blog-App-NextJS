@@ -1,6 +1,7 @@
 import { verifyUser } from "@/app/lib/verifyUser";
 import { ConnectDB } from "../../lib/dbConnect";
 import BlogModel from "@/app/lib/models/BlogModel";
+import UserModel from "@/app/lib/models/UserModel";
 import { NextResponse } from "next/server";
 import mongoose from "mongoose";
 import Joi from "joi";

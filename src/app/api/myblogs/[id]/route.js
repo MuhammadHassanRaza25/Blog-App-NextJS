@@ -55,7 +55,7 @@ const blogUpdateSchema = Joi.object({
 
 export async function PUT(request, { params }) {
   await ConnectDB();
-  const { id } = params;
+  const { id } = await params;
   const body = await request.json();
 
   // ID check

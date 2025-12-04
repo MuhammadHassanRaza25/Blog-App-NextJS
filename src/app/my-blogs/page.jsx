@@ -5,17 +5,18 @@ import BlogsPagination from "@/app/components/BlogPagination";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { MotionUp } from "@/components/ui/motion-up";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export default function MyBlogs({ searchParams }) {
+export default function MyBlogs() {
+  const searchParams = useSearchParams()
   const [resData, setResData] = useState({
     data: [],
     totalPages: 0,
     page: 1,
     error: false,
   });
-  const page = parseInt(searchParams?.page) || 1;
-  const limit = parseInt(searchParams?.limit) || 9;
+  const page = parseInt(searchParams?.get("page")) || 1;
+  const limit = parseInt(searchParams?.get("limit")) || 9;
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
 

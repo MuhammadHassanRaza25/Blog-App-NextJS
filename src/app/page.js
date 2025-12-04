@@ -6,10 +6,11 @@ import { MotionUp } from "@/components/ui/motion-up";
 import BlogsPagination from "./components/BlogPagination";
 
 export default async function Home({ searchParams }) {
+  let params = await searchParams
   let resData = { data: [], totalPages: 0, page: 1 };
 
-  const page = parseInt(searchParams?.page) || 1;
-  const limit = parseInt(searchParams?.limit) || 9;
+  const page = parseInt(params?.page) || 1;
+  const limit = parseInt(params?.limit) || 9;
 
   try {
     const res = await fetch(
