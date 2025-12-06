@@ -60,6 +60,7 @@ export async function POST(request) {
       _id: user._id,
       username: user.username,
       email: user.email,
+      role: user.role
     };
 
     // Generate Token (short-lived)

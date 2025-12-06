@@ -1,3 +1,4 @@
+
 const { default: mongoose } = require("mongoose");
 
 const UserSchema = new mongoose.Schema(
@@ -9,6 +10,11 @@ const UserSchema = new mongoose.Schema(
       url: { type: String }, 
       public_id: { type: String },
     },
+    role: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user"
+    }
   },
   {
     timestamps: true,
