@@ -19,6 +19,7 @@ const signupSchema = Joi.object({
     url: Joi.string().uri(),
     public_id: Joi.string(),
   }).optional(),
+  role: Joi.string().valid("user", "admin"),
 });
 
 export async function POST(request) {
@@ -54,7 +55,7 @@ export async function POST(request) {
   value.password = hashedPassword;
 
   // Add user in DB
-  const addUser = await new UserModel({ ...value });
+  const addUser = await new UserModel({ ...value, role: value.role || "user" });
   await addUser.save();
   console.log("User Registered Successfully ===>", addUser);
 
