@@ -14,7 +14,7 @@ export async function verifyUser() {
     try {
       const decoded = jwt.verify(accessToken, process.env.AUTH_SECRET);
       console.log("verifyUser - Access token valid - User ID ==>", decoded._id);
-      return { _id: decoded._id, role: decoded.role };
+      return { _id: decoded._id };
     } catch (err) {
       console.log("Access token expired or invalid:", err.message);
     }
@@ -28,7 +28,7 @@ export async function verifyUser() {
 
       // Generate new access token
       const newAccessToken = jwt.sign(
-        { _id: decodedRefresh._id, role: decodedRefresh.role },
+        { _id: decodedRefresh._id },
         process.env.AUTH_SECRET,
         { expiresIn: "15m" }
       );
@@ -59,7 +59,7 @@ export async function verifyUser() {
         console.log("verifyUser - Refresh token extended");
       }
 
-      return { _id: decodedRefresh._id, role: decodedRefresh.role };
+      return { _id: decodedRefresh._id };
     } catch (err) {
       console.log("Refresh token expired - clearing cookies", err.message);
       cookieStore.set("accessToken", "", { expires: new Date(0), path: "/" });
