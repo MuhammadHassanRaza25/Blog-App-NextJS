@@ -4,14 +4,14 @@ import { AuthContext } from "@/app/context/AuthContext";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function Header() {
   let router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const pathname = usePathname();
   const isActive = (path) => pathname === path;
 
@@ -26,7 +26,7 @@ export default function Header() {
   };
 
   const handleLogout = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/logout`, {
         method: "POST",
@@ -34,7 +34,7 @@ export default function Header() {
       });
       toast.success("Logged out successfully");
       setUser(null);
-      setIsLoading(false)
+      setIsLoading(false);
       setIsMenuOpen(false);
 
       if (pathname !== "/") {
@@ -43,9 +43,27 @@ export default function Header() {
     } catch (error) {
       toast.error("Something went wrong. Please try again.");
       console.error("Logout error:", error);
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
+
+  const dropdownRef = useRef(null);
+  const avatarRef = useRef(null);
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (
+        dropdownRef.current &&
+        avatarRef.current &&
+        !dropdownRef.current.contains(e.target) &&
+        !avatarRef.current.contains(e.target)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
 
   return (
     <>
@@ -146,6 +164,7 @@ export default function Header() {
                 <>
                   {/* Avatar Button */}
                   <button
+                    ref={avatarRef}
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                     className="w-10 h-10 rounded-full overflow-hidden border-2 border-emerald-500 focus:outline-none cursor-pointer"
                   >
@@ -159,28 +178,42 @@ export default function Header() {
                   </button>
 
                   {/* Dropdown */}
-                  {isDropdownOpen && (
-                    <div className="absolute right-0 mt-2.5 w-52 border border-emerald-500/50 rounded-lg shadow-lg z-50 overflow-hidden">
-                      {/* Name & Email */}
-                      <div className="px-4 py-3 border-b border-emerald-500/50 bg-black">
-                        <p className="text-white font-semibold text-sm">
-                          {user?.username}
-                        </p>
-                        <p className="text-emerald-300 text-sm">{user?.email}</p>
-                      </div>
-
-                      {/* Logout Button */}
-                      <button
-                        disabled={isLoading}
-                        onClick={handleLogout}
-                        className="group relative flex items-center justify-center gap-2 w-full px-4 py-2 font-semibold text-white bg-emerald-700/30 backdrop-blur-sm border-b border-emerald-500/50 rounded-b-lg transition-all duration-300 hover:bg-emerald-700/40 hover:border-emerald-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 cursor-pointer"
-                      >
-                        {isLoading? <div className="formLoader"></div> : "Logout"}
-                        {/* Underline on hover */}
-                        <span className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-gradient-to-r from-transparent via-emerald-400 to-transparent transition-all duration-300 group-hover:w-3/4" />
-                      </button>
+                  <div
+                    ref={dropdownRef}
+                    className={`absolute right-0 mt-2.5 w-52 border border-emerald-500/50 rounded-lg shadow-lg z-50 overflow-hidden transform transition-all duration-200 ease-in-out
+                   ${
+                     isDropdownOpen
+                       ? "max-h-96 opacity-100 scale-y-100"
+                       : "max-h-0 opacity-0 scale-y-95"
+                   }`}
+                  >
+                    {/* {isDropdownOpen && ( */}
+                    {/* <div className="absolute right-0 mt-2.5 w-52 border border-emerald-500/50 rounded-lg shadow-lg z-50 overflow-hidden"> */}
+                    {/* Name & Email */}
+                    <div className="details-scrollbar px-4 py-3 border-b border-emerald-500/50 bg-black overflow-auto">
+                      <p className="text-white font-semibold text-sm">
+                        {user?.username}
+                      </p>
+                      <p className="text-emerald-300 text-sm">{user?.email}</p>
                     </div>
-                  )}
+
+                    {/* Logout Button */}
+                    <button
+                      disabled={isLoading}
+                      onClick={handleLogout}
+                      className="group relative flex items-center justify-center gap-2 w-full px-4 py-2 font-semibold text-white bg-emerald-700/30 backdrop-blur-sm border-b border-emerald-500/50 rounded-b-lg transition-all duration-300 hover:bg-emerald-700/40 hover:border-emerald-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 cursor-pointer"
+                    >
+                      {isLoading ? (
+                        <div className="formLoader"></div>
+                      ) : (
+                        "Logout"
+                      )}
+                      {/* Underline on hover */}
+                      <span className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-gradient-to-r from-transparent via-emerald-400 to-transparent transition-all duration-300 group-hover:w-3/4" />
+                    </button>
+                  </div>
+                  {/* )} */}
+                  {/* </div> */}
                 </>
               ) : (
                 <Link href="/login">
@@ -301,6 +334,7 @@ export default function Header() {
                   <>
                     {/* Avatar Button */}
                     <button
+                      ref={avatarRef}
                       onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                       className="w-10 h-10 rounded-full overflow-hidden border-2 border-emerald-500 focus:outline-none cursor-pointer"
                     >
@@ -314,29 +348,42 @@ export default function Header() {
                     </button>
 
                     {/* Dropdown */}
-                    {isDropdownOpen && (
-                      <div className="absolute left-0 mt-5 w-52 border border-emerald-500/50 rounded-lg shadow-lg z-50 overflow-hidden">
-                        {/* Name & Email */}
-                        <div className="px-4 py-3 border-b border-emerald-500/50 bg-black">
-                          <p className="text-white font-semibold text-sm">
-                            {user?.username}
-                          </p>
-                          <p className="text-emerald-300 text-sm">
-                            {user?.email}
-                          </p>
-                        </div>
-
-                        {/* Logout Button */}
-                        <button
-                          onClick={handleLogout}
-                          className="group relative flex items-center justify-center gap-2 w-full px-4 py-2 font-semibold text-white bg-emerald-700/30 backdrop-blur-sm border-b border-emerald-500/50 rounded-b-lg transition-all duration-300 hover:bg-emerald-700/40 hover:border-emerald-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 cursor-pointer"
-                        >
-                          {isLoading ? <div className="formLoader"></div> : "Logout"}
-                          {/* Underline on hover */}
-                          <span className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-gradient-to-r from-transparent via-emerald-400 to-transparent transition-all duration-300 group-hover:w-3/4" />
-                        </button>
+                    <div
+                      ref={dropdownRef}
+                      className={`absolute left-0 mt-5 w-52 border border-emerald-500/50 rounded-lg shadow-lg z-50 overflow-hidden transform transition-all duration-200 ease-in-out
+                      ${
+                        isDropdownOpen
+                          ? "max-h-96 opacity-100 scale-y-100"
+                          : "max-h-0 opacity-0 scale-y-95"
+                      }`}
+                    >
+                      {/* {isDropdownOpen && (
+                      <div className="absolute left-0 mt-5 w-52 border border-emerald-500/50 rounded-lg shadow-lg z-50 overflow-hidden"> */}
+                      {/* Name & Email */}
+                      <div className="details-scrollbar px-4 py-3 border-b border-emerald-500/50 bg-black overflow-auto">
+                        <p className="text-white font-semibold text-sm">
+                          {user?.username}
+                        </p>
+                        <p className="text-emerald-300 text-sm">
+                          {user?.email}
+                        </p>
                       </div>
-                    )}
+
+                      {/* Logout Button */}
+                      <button
+                        onClick={handleLogout}
+                        className="group relative flex items-center justify-center gap-2 w-full px-4 py-2 font-semibold text-white bg-emerald-700/30 backdrop-blur-sm border-b border-emerald-500/50 rounded-b-lg transition-all duration-300 hover:bg-emerald-700/40 hover:border-emerald-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 cursor-pointer"
+                      >
+                        {isLoading ? (
+                          <div className="formLoader"></div>
+                        ) : (
+                          "Logout"
+                        )}
+                        {/* Underline on hover */}
+                        <span className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-px bg-gradient-to-r from-transparent via-emerald-400 to-transparent transition-all duration-300 group-hover:w-3/4" />
+                      </button>
+                    </div>
+                    {/* )} */}
                   </>
                 ) : (
                   <Link

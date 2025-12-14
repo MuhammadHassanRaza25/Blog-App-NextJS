@@ -96,6 +96,19 @@ a:focus{
   border-bottom-right-radius: 8px;
 }
 
+/* Scrollbar for user details */
+.details-scrollbar::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.details-scrollbar::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+.details-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #34d399; /* emerald-400 */
+}
+
 .loader {
   width: 50px;
   padding: 8px;

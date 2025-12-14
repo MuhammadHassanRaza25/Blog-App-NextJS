@@ -2,10 +2,11 @@
 import BlogDetailCard from "@/app/components/BlogDetailCard";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function MyBlogDetailPage({ params }) {
-  const { blogid } = params;
+export default function MyBlogDetailPage() {
+  const { blogid } = useParams();
   const [blogData, setBlogData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);

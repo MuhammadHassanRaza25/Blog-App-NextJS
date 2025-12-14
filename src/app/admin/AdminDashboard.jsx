@@ -6,7 +6,7 @@ export default function AdminDashboard() {
       <AdminLayout>
         <div className="mt-3 px-5 py-7 bg-emerald-300 rounded-xl shadow-xl">
           <h1 className="text-black text-2xl font-bold">
-            Welcome To Admin Dashboard 👋
+            Welcome To GlassyBlog Admin Dashboard 👋
           </h1>
           <p className="mt-1">
             Efficiently manage blogs and user operations across the GlassyBlog
